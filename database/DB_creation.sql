@@ -8,7 +8,7 @@ FILM_DB;
 DROP TABLE IF EXISTS VOTO CASCADE;
 DROP TABLE IF EXISTS UTENTE CASCADE;
 DROP TABLE IF EXISTS FILM CASCADE;
-DROP TABLE IF EXISTS ATTORE CASCADE;
+DROP TABLE IF EXISTS Actors CASCADE;
 DROP TABLE IF EXISTS FILM_ATTORE CASCADE;
 
 CREATE TABLE UTENTE
@@ -38,11 +38,11 @@ CREATE TABLE VOTO
     CONSTRAINT FK_utente_voto FOREIGN KEY (username) REFERENCES UTENTE (username) on update cascade on delete cascade
 );
 
-CREATE TABLE ATTORE
+CREATE TABLE Actors
 (
     id      INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nome    VARCHAR(20),
-    cognome VARCHAR(20)
+    name    VARCHAR(50),
+    surname VARCHAR(50)
 );
 
 CREATE TABLE FILM_ATTORE
@@ -51,5 +51,5 @@ CREATE TABLE FILM_ATTORE
     attore INT NOT NULL,
     PRIMARY KEY (film, attore),
     CONSTRAINT FK_film_cast FOREIGN KEY (film) REFERENCES FILM (id) on update cascade on delete cascade,
-    CONSTRAINT FK_attore_voto FOREIGN KEY (attore) REFERENCES ATTORE (id) on update cascade on delete cascade
+    CONSTRAINT FK_attore_voto FOREIGN KEY (attore) REFERENCES Actors(id) on update cascade on delete cascade
 );

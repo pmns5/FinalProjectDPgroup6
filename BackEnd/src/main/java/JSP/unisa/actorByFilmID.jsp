@@ -1,6 +1,7 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="dp.project.film.*" %>
 <%@ page import="dp.project.MySqlDbConnection" %>
+<%@ page import="newBackEnd.models.Actor" %>
 <%@ include file="configFilm.jsp" %>
 <%
     String jsonResult;
@@ -9,7 +10,7 @@
     db.setDbPassword(dbPassword);
     db.setDbName(dbName);
 
-    Attore service = new Attore(db);
+    Actor service = new Actor(db);
     response.setContentType("application/json");
     response.setHeader("Access-Control-Allow-Origin", "*");
 

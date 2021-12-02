@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
-    <title>Actors Adding</title>
+    <title>Film Adding</title>
     <!-- Link to Bootstrap and JQuery Libraries -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
@@ -23,10 +23,10 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link " href="FilmAdding.html">Film Adding</a>
-            </li>
             <li class="nav-item active">
+                <a class="nav-link " href="FilmAdding.jsp">Film Adding</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link " href="ActorsAdding.html">Actors Adding</a>
             </li>
         </ul>
@@ -40,7 +40,7 @@
 </nav>
 
 <header class="container">
-    <h5>Actors Adding</h5>
+    <h5>Film Adding</h5>
 </header>
 
 <!-- Banner Alert template and his section -->
@@ -69,27 +69,27 @@
             <thead class="thead-light">
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Surname</th>
+                <th>Title</th>
+                <th>Plot</th>
+                <th>Genre</th>
             </tr>
             </thead>
             <template id="table-template">
                 <tr>
                     <td>{ID}</td>
-                    <td>{Name}</td>
-                    <td>{Surname}</td>
+                    <td>{Title}</td>
+                    <td>{Plot}</td>
+                    <td>{Genre}</td>
                     <td class="myIcon">
                         <button class="btn btn-outline-primary btn-sm" data-toggle="modal"
                                 data-target="#edit-modal" onclick="controller.viewEdit({ID})">
                             <i class="fas fa-edit mr-2"></i>
                         </button>
                     </td>
-                    <td class="myIcon">
-                        <button class="btn btn-outline-danger btn-sm" data-toggle="modal"
-                                data-target="#delete-modal" onclick="controller.deleteView({ID})">
-                            <i class="fas fa-trash mr-2"></i>
-                        </button>
-                    </td>
+                    <td class="myIcon"><button class="btn btn-outline-danger btn-sm"  data-toggle="modal"
+                                               data-target="#delete-modal" onclick="controller.deleteView({ID})">
+                        <i class="fas fa-trash mr-2"></i>
+                    </button></td>
                 </tr>
             </template>
             <tbody id="table-rows"></tbody>
@@ -113,28 +113,47 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Insert new Actor</h5>
+                <h5 class="modal-title">Insert new Film</h5>
                 <button type="button" class="close" aria-label="Close" data-dismiss="modal" onclick="close()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
 
             <div class="modal-body">
-                <form id="insert-form">
-                    <!-- Name -->
+                <form id="insert-form" enctype="multipart/form-data">
+                    <!-- Title -->
                     <div class="form-group col-md-12">
-                        <label for="add-name">Name</label>
-                        <input id="add-name" type="text" name="name" class="form-control"
-                               placeholder="Insert the new actor's name..." value="" required autocomplete="off">
+                        <label for="add-title">Title</label>
+                        <input id="add-title" type="text" name="title" class="form-control"
+                               placeholder="Insert the film's title..." value="" required autocomplete="off">
                     </div>
 
-                    <!-- Surname -->
+                    <!-- Plot -->
                     <div class="form-group col-md-12">
-                        <label for="add-surname">Surname:</label>
-                        <input id="add-surname" class="form-control" name="surname"
-                               placeholder="Insert the actor's surname..." required autocomplete="off">
+                        <label for="add-plot">Plot:</label>
+                        <textarea id="add-plot" class="form-control"
+                                  name="plot"
+                                  placeholder="Insert the film's plot..."
+                                  required
+                                  autocomplete="off"></textarea>
+                    </div>
+                    <!-- Genre  -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="add-genre">Genre</label>
+                        <select class="form-control" id="add-genre" name="genre">
+                            <option selected>Choose...</option>
+                            <option value="1">Action</option>
+                            <option value="2">Adventure</option>
+                            <option value="3">Comedy</option>
+                            <option value="4">Horror</option>
+                            <option value="5">Romance</option>
+                        </select>
                     </div>
 
+                    <!-- Poster -->
+                    <div>
+                        <input type="file" id="file" name="poster" class="form-control" multiple />
+                    </div>
                 </form>
             </div>
 
@@ -154,7 +173,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Actor</h5>
+                <h5 class="modal-title">Edit Film</h5>
                 <button type="button" class="close" aria-label="Close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -165,21 +184,34 @@
                     <!-- ID -->
                     <input id="edit-id" type="hidden" name="id" value="">
 
-                    <!-- Name -->
+                    <!-- Title -->
                     <div class="form-group col-md-12">
-                        <label for="edit-name">Name</label>
-                        <input id="edit-name" type="text" name="name" class="form-control"
-                               placeholder="Insert the actor's name..." value="" required autocomplete="off">
+                        <label for="edit-title">Title</label>
+                        <input id="edit-title" type="text" name="title" class="form-control"
+                               placeholder="Insert the movie's title..." value="" required autocomplete="off">
                     </div>
 
-                    <!-- Surname -->
+                    <!-- Plot -->
                     <div class="form-group col-md-12">
-                        <label for="edit-surname">Plot</label>
-                        <input id="edit-surname" class="form-control"
-                                  name="surname"
-                                  placeholder="Insert the actor's surname..."
+                        <label for="edit-plot">Plot</label>
+                        <textarea id="edit-plot" class="form-control"
+                                  name="plot"
+                                  placeholder="Insert the film's plot..."
                                   required
-                                  autocomplete="off">
+                                  autocomplete="off"></textarea>
+                    </div>
+
+                    <!-- Genre -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="edit-genre">Genre</label>
+                        <select class="form-select" id="edit-genre" name="genre">
+                            <option selected>Choose...</option>
+                            <option value="1">Action</option>
+                            <option value="2">Adventure</option>
+                            <option value="3">Comedy</option>
+                            <option value="4">Horror</option>
+                            <option value="5">Romance</option>
+                        </select>
                     </div>
                 </form>
             </div>
@@ -191,7 +223,6 @@
                     Changes
                 </button>
             </div>
-
         </div>
     </div>
 </div>
@@ -231,7 +262,7 @@
         crossorigin="anonymous"></script>
 
 <!-- Custom js -->
-<script src="../js/ActorsAdding.js" charset="utf-8"></script>
+<script src="../js/FilmAdding.js" charset="utf-8"></script>
 <script src="../js/FormUtil.js" charset="utf-8"></script>
 
 <script type="application/javascript">

@@ -170,20 +170,27 @@ class FilmAdding {
             controller.renderAlert('Error: Not all fields have been entered correctly. Please try again', false);
             return;
         }
-        let data = $('#insert-form').serialize();
-        $.post(this.createEndPoint, data, function () { // waiting for response-
 
-        }).done(function () { // success response-
-            // Set success alert.
-            controller.renderAlert('Film successfully entered.', true);
-            // Reset modal form.
-            $('#add-title').val('');
-            $('#add-plot').val('');
-            // charge new data.
-            controller.fillTable();
-        }).fail(function () { // fail response
-            controller.renderAlert('Error while inserting. Try again.', false);
+        let formData = new FormData($("#insert-form")[0]);
+
+        console.log(formData)
+        $.ajax({
+            url : this.createEndPoint,
+            type : 'POST',
+            data : formData,
+            contentType : false,
+            processData : false,
+            success: function(resp) {
+                // Set success alert.
+                controller.renderAlert('Film successfully entered.', true);
+                // Reset modal form.
+                $('#add-title').val('');
+                $('#add-plot').val('');
+                // charge new data.
+                controller.fillTable();
+            }
         });
+
     }
 }
 
