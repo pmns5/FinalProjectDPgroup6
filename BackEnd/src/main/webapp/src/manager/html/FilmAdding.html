@@ -24,7 +24,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link " href="FilmAdding.jsp">Film Adding</a>
+                <a class="nav-link " href="FilmAdding.html">Film Adding</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link " href="ActorsAdding.html">Actors Adding</a>
@@ -152,8 +152,9 @@
 
                     <!-- Poster -->
                     <div>
-                        <input type="file" id="file" name="poster" class="form-control" multiple />
+                        <input type="file" id="insert-file" name="poster" class="form-control" multiple />
                     </div>
+
                 </form>
             </div>
 
@@ -268,7 +269,7 @@
 <script type="application/javascript">
 
     // Instance controller on this page
-    const controller = new FilmAdding();
+    const controller = new FilmAdding("");
 
     // When document is ready, get data and fill table
     $(document).ready(function () {

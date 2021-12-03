@@ -160,6 +160,10 @@ class FilmAdding {
         });
     }
 
+    hexToBase64(str) {
+        return btoa(String.fromCharCode.apply(null, str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
+    }
+
     /**
      * Call insert service and get requested data with post method. Show an alert showing the response.
      */
@@ -171,23 +175,49 @@ class FilmAdding {
             return;
         }
 
-        let formData = new FormData($("#insert-form")[0]);
 
-        console.log(formData)
+        let aa = new FormData(document.getElementById('insert-form'));
+        console.log(aa.values())
+        let formData = new FormData();
+        formData.append("name", $('#add-name').val())
+        formData.append("plot", $('#add-plot').val())
+        formData.append("genre", $('#add-genre').val())
+        formData.append("poster", $('#insert-file').val())
+        console.log(formData.values());
+
+        const form = $('#insert-form')[0];
+        const data = new FormData(form);
         $.ajax({
-            url : this.createEndPoint,
-            type : 'POST',
-            data : formData,
-            contentType : false,
-            processData : false,
-            success: function(resp) {
-                // Set success alert.
-                controller.renderAlert('Film successfully entered.', true);
-                // Reset modal form.
-                $('#add-title').val('');
-                $('#add-plot').val('');
-                // charge new data.
-                controller.fillTable();
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: controller.createEndPoint,
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 5000,
+            success: function (data) {
+                controller.renderAlert('Film added successfully.', true);
+                //controller.fillTable();
+
+                // var bb = data.blob
+                // const img = document.createElement('img')
+                // img.src = URL.createObjectURL(bb)
+                // document.querySelector(`body`).append(img)
+                // console.log(bb)
+                // convert to Base64
+                //var b64Response = btoa(data);
+
+                // create an image
+                var outputImg = document.createElement('img');
+                outputImg.src = 'data:image/jpeg;base64,' + data;
+
+                // append it to your page
+                document.body.appendChild(outputImg);
+
+            },
+            error: function (e) {
+                controller.renderAlert('Error while uploading. Try again.', false);
             }
         });
 
