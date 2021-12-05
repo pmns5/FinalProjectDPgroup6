@@ -9,6 +9,7 @@ class FilmAdding {
         this.createEndPoint = endPoint + "/add-film";
         this.editEndPoint = endPoint + "/edit-film";
         this.deleteEndPoint = endPoint + "/delete-film";
+        this.actorsEndPoint = endPoint + "/actors";
     }
 
     /**
@@ -175,18 +176,8 @@ class FilmAdding {
             return;
         }
 
-
-        let aa = new FormData(document.getElementById('insert-form'));
-        console.log(aa.values())
-        let formData = new FormData();
-        formData.append("name", $('#add-name').val())
-        formData.append("plot", $('#add-plot').val())
-        formData.append("genre", $('#add-genre').val())
-        formData.append("poster", $('#insert-file').val())
-        console.log(formData.values());
-
         const form = $('#insert-form')[0];
-        const data = new FormData(form);
+        let data = new FormData(form);
         $.ajax({
             type: "POST",
             enctype: 'multipart/form-data',
@@ -200,14 +191,6 @@ class FilmAdding {
                 controller.renderAlert('Film added successfully.', true);
                 //controller.fillTable();
 
-                // var bb = data.blob
-                // const img = document.createElement('img')
-                // img.src = URL.createObjectURL(bb)
-                // document.querySelector(`body`).append(img)
-                // console.log(bb)
-                // convert to Base64
-                //var b64Response = btoa(data);
-
                 // create an image
                 var outputImg = document.createElement('img');
                 outputImg.src = 'data:image/jpeg;base64,' + data;
@@ -220,8 +203,35 @@ class FilmAdding {
                 controller.renderAlert('Error while uploading. Try again.', false);
             }
         });
-
     }
+
+    getActors(modal) {
+        modal.find("tr").remove();
+        let controller = this;
+        $.getJSON(this.actorsEndPoint, function (data) {
+            console.log(data)
+            controller.addCheckBoxes(data, modal);
+        }).done(function () {
+
+        }).fail(function () {
+
+        });
+    }
+
+    insertView() {
+        this.getActors($("#insert-table-actors"))
+    }
+
+    addCheckBoxes(data, modal) {
+        $.each(data, function (index, obj) {
+            modal.append('<tr class="list-group-item py-1">' +
+                            '<td>' +
+                                '<input type="checkbox" class="checkbox" name="actors" value='+obj.id+'>  ' + obj.name+'  '+obj.surname+
+                            '</td>' +
+                        '</tr>');
+        });
+    }
+
 }
 
 

@@ -9,7 +9,8 @@ import java.sql.SQLException;
  * methods based on information.
  */
 public class MySQLDb implements DbInterface {
-    private static final String url = "jdbc:mysql://localhost:3306/film_db?useTimezone=true&serverTimezone=UTC";
+    private static final String url = "jdbc:mysql://localhost:3306";
+    private static final String extra = "/film_db?useTimezone=true&serverTimezone=UTC";
     private static final String userDb = "root";
     private static final String password = "root";
     private Connection conn;
@@ -18,7 +19,6 @@ public class MySQLDb implements DbInterface {
     /**
      * The object represents a particular Postgresql database connection, which will be created based on the specified
      * parameters.
-
      */
     public MySQLDb() {
         try {
@@ -35,8 +35,9 @@ public class MySQLDb implements DbInterface {
     public void connect() {
         if (!connected) {
             try {
-                conn = DriverManager.getConnection(url, userDb, password);
+                conn = DriverManager.getConnection(url+extra, userDb, password);
             } catch (SQLException e) {
+                System.exit(99);
                 return;
             }
             connected = true;
@@ -76,5 +77,10 @@ public class MySQLDb implements DbInterface {
     @Override
     public Connection getConn() {
         return conn;
+    }
+
+    public static void main(String[] args) {
+        ActorsDecorator db = new ActorsDecorator(new MySQLDb());
+        db.connect();
     }
 }

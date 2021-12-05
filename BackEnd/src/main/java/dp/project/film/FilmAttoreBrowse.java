@@ -22,8 +22,8 @@ public class FilmAttoreBrowse {
             Statement stmt = this.con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet rs;
             rs = stmt.executeQuery(
-                    "SELECT attore.id, nome, cognome \n" +
-                            "FROM film_attore as fa, attore WHERE fa.attore=attore.id and id=" + id_film);
+                    "SELECT actors.id, name, surname \n" +
+                            "FROM film_attore as fa, actors WHERE fa.attore=actors.id and id=" + id_film);
 
             if (!rs.next()) {
                 JSONRow = FilmAttoreBrowseJSONFormat.replace("{ID}", "");
@@ -52,7 +52,7 @@ public class FilmAttoreBrowse {
 
     public String getActorsBrowseToJSON(MySqlDbConnection db) {
 
-        String actorsBrowseJSONFormat = "{\"id_attore\":\"{ID}\",\"nome\":\"{NOME}\",\"cognome\":\"{COGNOME}\"}";
+        String actorsBrowseJSONFormat = "{\"id\":\"{ID}\",\"name\":\"{NOME}\",\"surname\":\"{COGNOME}\"}";
         StringBuilder actorsBrowseJSONResult = new StringBuilder();
         String JSONRow;
 
@@ -62,7 +62,7 @@ public class FilmAttoreBrowse {
             Statement stmt = this.con.createStatement();
             ResultSet rs;
 
-            rs = stmt.executeQuery("SELECT * FROM attore ORDER BY id");
+            rs = stmt.executeQuery("SELECT * FROM actors ORDER BY id");
 
             while (rs.next()) {
                 JSONRow = actorsBrowseJSONFormat.replace("{ID}", String.valueOf(rs.getInt(1)));

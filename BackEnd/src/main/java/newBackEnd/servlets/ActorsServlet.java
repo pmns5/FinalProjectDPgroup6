@@ -55,7 +55,7 @@ public class ActorsServlet extends HttpServlet {
     }
 
     /**
-     * Check the entered parameters and, if they are correct, add them. Otherwise it returns an error to the client.
+     * Check the entered parameters and, if they are correct, add them. Otherwise, it returns an error to the client.
      *
      * @param req: the HttpServletRequest from which to get the parameters;
      * @param res: the HttpServletResponse to return the response to.

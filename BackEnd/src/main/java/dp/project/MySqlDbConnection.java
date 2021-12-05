@@ -78,7 +78,8 @@ public class MySqlDbConnection {
                 + "?serverTimezone=" + dbTimeZone;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            return DriverManager.getConnection(dbConnectionUrl, dbUser, dbPassword);
+            Connection con = DriverManager.getConnection(dbConnectionUrl, dbUser, dbPassword);
+            return con;
         } catch (Exception e) {
             System.out.println(e);
             return null;

@@ -2,20 +2,23 @@ package dp.project.film;
 
 import dp.project.MySqlDbConnection;
 
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-public class Attore {
-
+public class Film {
     private final Connection con;
     public int dbOperationStatusCode;
     public String dbOperationMessage;
 
     private int id;
-    private String nome;
-    private String cognome;
+    private String name;
+    private String genre;
+    private String trama;
+    private String trailer;
+    private Blob blob;
 
-    public Attore(MySqlDbConnection db) {
+    public Film(MySqlDbConnection db) {
         this.con = db.connect();
     }
 
@@ -43,20 +46,44 @@ public class Attore {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getCognome() {
-        return cognome;
+    public String getGenre() {
+        return genre;
     }
 
-    public void setCognome(String cognome) {
-        this.cognome = cognome;
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public String getTrama() {
+        return trama;
+    }
+
+    public void setTrama(String trama) {
+        this.trama = trama;
+    }
+
+    public String getTrailer() {
+        return trailer;
+    }
+
+    public void setTrailer(String trailer) {
+        this.trailer = trailer;
+    }
+
+    public Blob getBlob() {
+        return blob;
+    }
+
+    public void setBlob(Blob blob) {
+        this.blob = blob;
     }
 
     public String getCRUDResultToJSON() {
@@ -69,10 +96,14 @@ public class Attore {
 
     public void add() {
         try {
-            String query = "INSERT INTO actors ( name, surname) VALUES (?,?)";
+            String query = "INSERT INTO FILM (id,nome,genere,trama,trailer,copertina) VALUES (?,?,?,?,?,?)";
             PreparedStatement preparedStmt = this.con.prepareStatement(query);
-            preparedStmt.setString(1, this.nome);
-            preparedStmt.setString(2, this.cognome);
+            preparedStmt.setInt(1, this.id);
+            preparedStmt.setString(2, this.name);
+            preparedStmt.setString(3, this.genre);
+            preparedStmt.setString(4, this.trama);
+            preparedStmt.setString(5, this.trailer);
+            preparedStmt.setBlob(6, this.blob);
             preparedStmt.execute();
             this.dbOperationStatusCode = 0;
             this.dbOperationMessage = "Record added";
@@ -84,11 +115,14 @@ public class Attore {
 
     public void update() {
         try {
-            String query = "UPDATE actors SET name=?,surname=? WHERE id = ?";
+            String query = "UPDATE FILM SET nome=?,genere=?,trama=?,trailer=?,copertina=? WHERE id = ?";
             PreparedStatement preparedStmt = this.con.prepareStatement(query);
-            preparedStmt.setString(1, this.nome);
-            preparedStmt.setString(2, this.cognome);
-            preparedStmt.setInt(3, this.id);
+            preparedStmt.setString(1, this.name);
+            preparedStmt.setString(2, this.genre);
+            preparedStmt.setString(3, this.trama);
+            preparedStmt.setString(4, this.trailer);
+            preparedStmt.setBlob(5, this.blob);
+            preparedStmt.setInt(6, this.id);
             preparedStmt.execute();
             this.dbOperationStatusCode = 0;
             this.dbOperationMessage = "Record added";
@@ -100,7 +134,7 @@ public class Attore {
 
     public void delete() {
         try {
-            String query = "DELETE FROM actors WHERE id = ?";
+            String query = "DELETE FROM FILM WHERE id = ?";
             PreparedStatement preparedStmt = this.con.prepareStatement(query);
             preparedStmt.setInt(1, this.id);
             preparedStmt.execute();
@@ -111,6 +145,5 @@ public class Attore {
             this.dbOperationMessage = "Record not deleted: " + e.getMessage();
         }
     }
-
 
 }

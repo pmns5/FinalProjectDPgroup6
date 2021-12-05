@@ -27,6 +27,8 @@ public class TestFilmServlet extends HttpServlet {
 
         String firstName = request.getParameter("title");
         String lastName = request.getParameter("plot");
+        String[] actors = request.getParameterValues("actors");
+
 
         InputStream inputStream = null; // input stream of the upload file
         // obtains the upload file part in this multipart request

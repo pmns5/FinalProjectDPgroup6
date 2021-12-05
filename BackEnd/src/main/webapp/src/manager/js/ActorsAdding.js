@@ -5,10 +5,16 @@ class ActorsAdding {
      * @param endPoint
      */
     constructor(endPoint) {
-        this.viewEndPoint = endPoint + "/actors";
-        this.createEndPoint = endPoint + "/add-actor";
-        this.editEndPoint = endPoint + "/edit-actor";
-        this.deleteEndPoint = endPoint + "/delete-actor";
+        // this.viewEndPoint = endPoint + "/actors";
+        // this.createEndPoint = endPoint + "/add-actor";
+        // this.editEndPoint = endPoint + "/edit-actor";
+        // this.deleteEndPoint = endPoint + "/delete-actor";
+
+        this.viewEndPoint = "/JSP/film/listActors.jsp"
+        this.createEndPoint = "/JSP/film/addActors.jsp";
+        this.editEndPoint = "/JSP/film/updateActors.jsp";
+        this.deleteEndPoint = "JSP/film/deleteActors.jsp";
+
     }
 
     /**
@@ -20,7 +26,7 @@ class ActorsAdding {
         let controller = this;
         /* Call the microservice and evaluate data and result status */
         $.getJSON(this.viewEndPoint, function (data) {
-
+            console.log(data);
             controller.renderGUI(data);
         }).done(function () {
             //controller.renderAlert('Data charged successfully.', true);
@@ -168,6 +174,7 @@ class ActorsAdding {
             return;
         }
         let data = $('#insert-form').serialize();
+        console.log(data)
         $.post(this.createEndPoint, data, function () { // waiting for response-
 
         }).done(function () { // success response-
