@@ -1,3 +1,5 @@
+
+
 class FilmAdding {
     /**
      * Constructor
@@ -192,11 +194,12 @@ class FilmAdding {
                 //controller.fillTable();
 
                 // create an image
-                var outputImg = document.createElement('img');
-                outputImg.src = 'data:image/jpeg;base64,' + data;
-
-                // append it to your page
-                document.body.appendChild(outputImg);
+                // var outputImg = document.createElement('img');
+                // outputImg.src = 'data:image/jpeg;base64,' + data;
+                //
+                // // append it to your page
+                // document.body.appendChild(outputImg);
+                controller.addFilmView($('#view'))
 
             },
             error: function (e) {
@@ -232,6 +235,20 @@ class FilmAdding {
         });
     }
 
+
+    addFilmView(modal) {
+        modal.append('<div class="col-sm-4">' +
+            '<div class="our_2">' +
+            ' <div class="ih-item square effect5 left_to_right"><a href="#">' +
+            ' <div class="img"><img src="../images/image.jpeg" alt="img"></div>' +
+            '  <div class="info">' +
+            '<h3>MIO</h3>' +
+            '   <p>mauris.</p>' +
+            ' </div>' +
+            ' </a></div>' +
+            ' </div>' +
+            ' </div>');
+    }
 }
 
 

@@ -5,15 +5,10 @@ class ActorsAdding {
      * @param endPoint
      */
     constructor(endPoint) {
-        // this.viewEndPoint = endPoint + "/actors";
-        // this.createEndPoint = endPoint + "/add-actor";
-        // this.editEndPoint = endPoint + "/edit-actor";
-        // this.deleteEndPoint = endPoint + "/delete-actor";
-
-        this.viewEndPoint = "/JSP/film/listActors.jsp"
-        this.createEndPoint = "/JSP/film/addActors.jsp";
-        this.editEndPoint = "/JSP/film/updateActors.jsp";
-        this.deleteEndPoint = "JSP/film/deleteActors.jsp";
+        this.viewEndPoint = endPoint + "/actors";
+        this.createEndPoint = endPoint + "/add-actor";
+        this.editEndPoint = endPoint + "/edit-actor";
+        this.deleteEndPoint = endPoint + "/delete-actor";
 
     }
 

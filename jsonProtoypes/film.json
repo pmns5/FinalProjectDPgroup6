@@ -2,5 +2,11 @@
   "id" : "1",
   "title" : "TITLE",
   "plot" : "plot of the film",
-  "genre" : 1
+  "genre" : 1,
+  "actors" : {
+        "id" : 1,
+        "name":  "Tom",
+        "surname": "Cruise"
+  },
+  "poster" : "stringbase64"
 }
