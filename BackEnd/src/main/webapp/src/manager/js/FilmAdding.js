@@ -1,5 +1,3 @@
-
-
 class FilmAdding {
     /**
      * Constructor
@@ -12,6 +10,8 @@ class FilmAdding {
         this.editEndPoint = endPoint + "/edit-film";
         this.deleteEndPoint = endPoint + "/delete-film";
         this.actorsEndPoint = endPoint + "/actors";
+        this.count = 0;
+        this.newElem;
     }
 
     /**
@@ -24,7 +24,7 @@ class FilmAdding {
         /* Call the microservice and evaluate data and result status */
         $.getJSON(this.viewEndPoint, function (data) {
 
-            controller.renderGUI(data);
+            controller.renderGUI2(data);
         }).done(function () {
             //controller.renderAlert('Data charged successfully.', true);
             $('#insert-button').prop('disabled', false);
@@ -65,6 +65,20 @@ class FilmAdding {
                 $("tfoot tr:first").remove();
             })
         }
+    }
+
+    renderGUI2(data) {
+        $('#view .our_2').remove();
+        var array = [];
+        $.each(data, function (index, obj) {
+            if(controller.count === 0) array.push('<div class="col-sm-12 row">');
+            array.push(controller.constructFilmView(obj));
+            if(controller.count === 2) array.push('</div>')
+            controller.count = (controller.count + 1) % 3;
+        });
+        console.log(array.join(''));
+        $('#view').append(array.join(''));
+        controller.count = 0;
     }
 
     /**
@@ -191,15 +205,13 @@ class FilmAdding {
             timeout: 5000,
             success: function (data) {
                 controller.renderAlert('Film added successfully.', true);
-                //controller.fillTable();
-
+                controller.fillTable();
+                console.log(data)
                 // create an image
-                // var outputImg = document.createElement('img');
-                // outputImg.src = 'data:image/jpeg;base64,' + data;
-                //
-                // // append it to your page
-                // document.body.appendChild(outputImg);
-                controller.addFilmView($('#view'))
+                var outputImg = document.createElement('img');
+                outputImg.src = 'data:image/jpeg;base64,' + data;
+                document.body.appendChild(outputImg);
+                //controller.addFilmView($('#view'), data)
 
             },
             error: function (e) {
@@ -212,7 +224,6 @@ class FilmAdding {
         modal.find("tr").remove();
         let controller = this;
         $.getJSON(this.actorsEndPoint, function (data) {
-            console.log(data)
             controller.addCheckBoxes(data, modal);
         }).done(function () {
 
@@ -228,26 +239,28 @@ class FilmAdding {
     addCheckBoxes(data, modal) {
         $.each(data, function (index, obj) {
             modal.append('<tr class="list-group-item py-1">' +
-                            '<td>' +
-                                '<input type="checkbox" class="checkbox" name="actors" value='+obj.id+'>  ' + obj.name+'  '+obj.surname+
-                            '</td>' +
-                        '</tr>');
+                '<td>' +
+                '<input type="checkbox" class="checkbox" name="actors" value=' + obj.id + '>  ' + obj.name + '  ' + obj.surname +
+                '</td>' +
+                '</tr>');
         });
     }
 
 
-    addFilmView(modal) {
-        modal.append('<div class="col-sm-4">' +
-            '<div class="our_2">' +
-            ' <div class="ih-item square effect5 left_to_right"><a href="#">' +
-            ' <div class="img"><img src="../images/image.jpeg" alt="img"></div>' +
-            '  <div class="info">' +
-            '<h3>MIO</h3>' +
-            '   <p>mauris.</p>' +
-            ' </div>' +
-            ' </a></div>' +
-            ' </div>' +
-            ' </div>');
+    constructFilmView(obj) {
+
+        return '<div class="col-sm-4">' +
+            '   <div class="our_2">' +
+            '       <div class="ih-item square effect5 left_to_right"><a href="#">' +
+            '           <div class="img"><img src=data:image/jpeg;base64,' + obj.poster + ' alt="img" >' +' </div>' +
+            '            <div class="info">' +
+            '               <h3>' + obj.title + '</h3>' +
+            '               <p>' + obj.plot + '</p>' +
+            '                <ul> </ul> ' +
+            '            </div>' +
+            '       </a></div>' +
+            '   </div>' +
+            '</div>';
     }
 }
 

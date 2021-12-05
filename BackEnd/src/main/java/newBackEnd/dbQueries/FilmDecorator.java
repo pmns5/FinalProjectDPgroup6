@@ -27,15 +27,18 @@ public class FilmDecorator extends DbDecorator {
 
     public boolean addFilm(@NotNull String title, @NotNull String plot, String genre, byte[] poster, String[] actors) {
         try (PreparedStatement stmt = getConn().prepareStatement(
-                "INSERT INTO film (title, plot, genre, poster) VALUES (?, ?, ?, ?);"
+                "INSERT INTO film (title, plot, genre, poster) VALUES (?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS
         )) {
             stmt.setString(1, title);
             stmt.setString(2, plot);
             stmt.setString(3, genre);
             stmt.setBlob(4, new SerialBlob(poster));
             stmt.execute();
+            ResultSet keys = stmt.getGeneratedKeys();
+            keys.next();
+            int key = keys.getInt(1);
 
-            return addCast(actors);
+            return addCast(key, actors);
         } catch (SQLException e) {
             return false;
         }
@@ -84,30 +87,30 @@ public class FilmDecorator extends DbDecorator {
         return result;
     }
 
-    private boolean addCast(String[] actors) {
+    private boolean addCast(int id_film, String[] actors) {
 
-        ResultSet rs;
-        int id_film;
-        try {
-            rs = getConn().createStatement().executeQuery("SELECT AUTO_INCREMENT\n" +
-                    "FROM information_schema.TABLES\n" +
-                    "WHERE TABLE_SCHEMA = 'film_db'\n" +
-                    "  AND TABLE_NAME = 'film'");
-            rs.next();
-
-            id_film =  rs.getInt(0);
-            id_film = id_film - 1;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+//        ResultSet rs;
+//        int id_film;
+//        try {
+//            rs = getConn().createStatement().executeQuery("SELECT AUTO_INCREMENT\n" +
+//                    "FROM information_schema.TABLES\n" +
+//                    "WHERE TABLE_SCHEMA = 'film_db'\n" +
+//                    "  AND TABLE_NAME = 'film'");
+//            rs.next();
+//
+//            id_film =  rs.getInt(0);
+//            id_film = id_film - 1;
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
 
 
         for (String curr_actor : actors) {
             try (PreparedStatement stmt = getConn().prepareStatement(
                     "INSERT INTO cast (id_film, id_actor) VALUES (?, ?);"
             )) {
-                stmt.setString(1, String.valueOf(id_film));
+                stmt.setString(1, String.valueOf(id_film-1));
                 stmt.setString(2, curr_actor);
                 stmt.execute();
             } catch (SQLException e) {

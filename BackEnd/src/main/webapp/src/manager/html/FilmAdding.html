@@ -62,69 +62,24 @@
 </template>
 <div id="response-alert-section" class="container message"></div>
 
-<!-- Table  -->
-<section class="container">
-    <div class="row">
-        <table class="table table-bordered table-hover " id="table">
-            <thead class="thead-light">
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Plot</th>
-                <th>Genre</th>
-            </tr>
-            </thead>
-            <template id="table-template">
-                <tr>
-                    <td>{ID}</td>
-                    <td>{Title}</td>
-                    <td>{Plot}</td>
-                    <td>{Genre}</td>
-                    <td class="myIcon">
-                        <button class="btn btn-outline-primary btn-sm" data-toggle="modal"
-                                data-target="#edit-modal" onclick="controller.viewEdit({ID})">
-                            <i class="fas fa-edit mr-2"></i>
-                        </button>
-                    </td>
-                    <td class="myIcon">
-                        <button class="btn btn-outline-danger btn-sm" data-toggle="modal"
-                                data-target="#delete-modal" onclick="controller.deleteView({ID})">
-                            <i class="fas fa-trash mr-2"></i>
-                        </button>
-                    </td>
-                </tr>
-            </template>
-            <tbody id="table-rows"></tbody>
-            <tfoot></tfoot>
-        </table>
-    </div>
-    <div class="row">
-        <button id="insert-button" class="btn btn-outline-primary fixedbutton" data-toggle="modal"
-                data-target="#insert-modal" onclick="controller.insertView()">
-            Insert
-        </button>
+<section id="our">
+    <div class="container">
+        <div class="our_1">
+            <h2>List Of Films</h2>
+            <p>Press on the single movie to modify its data </p>
+        </div>
+        <div class="row">
+            <object id="view"></object>
+        </div>
+        <!--div class="col-sm-12">
+            <div class="our_3">
+                <p><a href="#">View More</a></p>
+            </div>
+        </div-->
+
     </div>
 </section>
 
-<section id="our">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="our_1">
-                    <h2>Conubia Nostra</h2>
-                    <p>Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu
-                        eget nulla.torquent </p>
-                </div>
-                <div id="view">
-                </div>
-                <div class="col-sm-12">
-                    <div class="our_3">
-                        <p><a href="#">View More</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-</section>
 <footer class="container">Copyright &copy Group 6, 2021</footer>
 
 <!-- MODAL --------------------->

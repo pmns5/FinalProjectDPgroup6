@@ -82,7 +82,7 @@ public class Film implements Model {
                 "\"title\":\"" + title + "\"," +
                 "\"plot\":\"" + plot + "\"," +
                 "\"genre\":\"" + genre + "\"," +
-                "\"poster\":\"" + Arrays.toString(Base64.getEncoder().encode(poster)) + "\"," +
+                "\"poster\":\"" + new String(Base64.getEncoder().encode(poster)) + "\"," +
                 "\"actors\":" + JsonUtil.toJson(actors) + "}";
     }
 
@@ -90,4 +90,5 @@ public class Film implements Model {
     public boolean equals(Object o) {
         return false;
     }
+
 }
