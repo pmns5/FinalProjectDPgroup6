@@ -1,6 +1,5 @@
 package newBackEnd.models;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class JsonUtil {
@@ -10,7 +9,7 @@ public class JsonUtil {
      * @param l: a list of object that implement the ModelInterface interface. It can not be 'null'.
      * @return a JSON string who represent the list.
      */
-    static public String toJson(@NotNull List<? extends Model> l) {
+    static public String toJson(List<? extends Model> l) {
         StringBuilder sb = new StringBuilder("[");
         for (Model m : l) {
             sb.append(m.toJSON()).append(",");

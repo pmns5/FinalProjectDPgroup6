@@ -43,9 +43,9 @@ public class FilmDecorator extends DbDecorator {
         }
     }
 
-    public Film getFilm(long id) {
-        try (PreparedStatement stmt = getConn().prepareStatement("SELECT id_film, title, genre, plot, trailer, poster FROM film WHERE id = ?;")) {
-            stmt.setLong(1, id);
+    public Film getFilm(long idFilm) {
+        try (PreparedStatement stmt = getConn().prepareStatement("SELECT id_film, title, genre, plot, trailer, poster FROM film WHERE id_film = ?;")) {
+            stmt.setLong(1, idFilm);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (!rs.next()) {
                     return null;

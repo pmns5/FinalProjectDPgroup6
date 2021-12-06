@@ -2,7 +2,6 @@ package newBackEnd.dbQueries;
 
 import newBackEnd.models.Actor;
 
-import javax.validation.constraints.NotNull;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,7 +25,7 @@ public class ActorsDecorator extends DbDecorator {
      * @param surname: the description of the role.
      * @return true if no error occur, else false.
      */
-    public boolean addActor(@NotNull String name, @NotNull String surname) {
+    public boolean addActor(String name, String surname) {
         try (PreparedStatement stmt = getConn().prepareStatement(
                 "INSERT INTO actor (name, surname) VALUES (?, ?);"
         )) {
@@ -47,12 +46,12 @@ public class ActorsDecorator extends DbDecorator {
     public ArrayList<Actor> getActors() {
         ArrayList<Actor> result = new ArrayList<>();
         try (Statement stmt = getConn().createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM actor ORDER BY id;")) {
+             ResultSet rs = stmt.executeQuery("SELECT * FROM actor ORDER BY id_actor;")) {
             while (rs.next()) {
-                long id = rs.getLong("id");
+                long id_actor = rs.getLong("id_actor");
                 String name = rs.getString("name");
                 String surname = rs.getString("surname");
-                result.add(new Actor((int) id, name, surname));
+                result.add(new Actor((int) id_actor, name, surname));
             }
         } catch (SQLException e) {
             return null;
@@ -64,17 +63,17 @@ public class ActorsDecorator extends DbDecorator {
      * This method displays an MaintainerRole elements with the selected id, which represent data from the
      * maintainer_role and related tables.
      *
-     * @param id: the role id;
+     * @param id_actor: the role id;
      * @return a MaintainerRole object or null if an error occur.
      */
-    public Actor getActor(long id) {
-        try (PreparedStatement stmt = getConn().prepareStatement("SELECT * FROM actor WHERE id = ?;")) {
-            stmt.setLong(1, id);
+    public Actor getActor(long id_actor) {
+        try (PreparedStatement stmt = getConn().prepareStatement("SELECT * FROM actor WHERE id_actor = ?;")) {
+            stmt.setLong(1, id_actor);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (!rs.next()) {
                     return null;
                 }
-                return new Actor((int) rs.getLong("id"), rs.getString("name"),
+                return new Actor((int) rs.getLong("id_actor"), rs.getString("name"),
                         rs.getString("surname"));
             }
         } catch (SQLException e) {
@@ -85,14 +84,14 @@ public class ActorsDecorator extends DbDecorator {
     /**
      * This method delete a tuple from the maintainer_role table based on its id.
      *
-     * @param id: id of the tuple to delete.
+     * @param id_actor: id of the tuple to delete.
      * @return true if no error occur, else false.
      */
-    public boolean deleteActor(long id) {
+    public boolean deleteActor(long id_actor) {
         try (PreparedStatement stmt = getConn().prepareStatement(
-                "DELETE FROM actor WHERE id = ?;"
+                "DELETE FROM actor WHERE id_actor = ?;"
         )) {
-            stmt.setLong(1, id);
+            stmt.setLong(1, id_actor);
             stmt.execute();
         } catch (SQLException e) {
             return false;
@@ -103,18 +102,18 @@ public class ActorsDecorator extends DbDecorator {
     /**
      * This method edit a tuple from the maintainer_role table based on its id. Need the parameter to edit.
      *
-     * @param id:     the id of the tuple to edit.
-     * @param name:   the new name to assign.
-     * @param surname : the new description to assign.
+     * @param id_actor: the id of the tuple to edit.
+     * @param name:     the new name to assign.
+     * @param surname   : the new description to assign.
      * @return true if no error occur, else false.
      */
-    public boolean editActor(long id, @NotNull String name, @NotNull String surname) {
+    public boolean editActor(long id_actor, String name, String surname) {
         try (PreparedStatement stmt = getConn().prepareStatement(
-                "UPDATE actor SET name = ?, surname = ? WHERE id = ?"
+                "UPDATE actor SET name = ?, surname = ? WHERE id_actor = ?"
         )) {
             stmt.setString(1, name);
             stmt.setString(2, surname);
-            stmt.setLong(3, id);
+            stmt.setLong(3, id_actor);
             stmt.execute();
         } catch (SQLException e) {
             return false;

@@ -14,12 +14,12 @@ public class CastDecorator extends DbDecorator {
     }
 
     public boolean addCast(int id_film, String[] actors) {
-        for (String curr_actor : actors) {
+        for (String id_actor : actors) {
             try (PreparedStatement stmt = getConn().prepareStatement(
                     "INSERT INTO cast (id_film, id_actor) VALUES (?, ?);"
             )) {
                 stmt.setString(1, String.valueOf(id_film));
-                stmt.setString(2, curr_actor);
+                stmt.setString(2, id_actor);
                 stmt.execute();
             } catch (SQLException e) {
                 e.printStackTrace();
