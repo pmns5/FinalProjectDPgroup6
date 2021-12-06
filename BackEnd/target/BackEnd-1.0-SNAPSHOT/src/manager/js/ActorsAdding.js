@@ -1,16 +1,15 @@
-class FilmAdding {
+class ActorsAdding {
     /**
      * Constructor
      *
      * @param endPoint
      */
     constructor(endPoint) {
-        this.viewEndPoint = endPoint + "/films";
-        this.createEndPoint = endPoint + "/add-film";
-        this.editEndPoint = endPoint + "/edit-film";
-        this.deleteEndPoint = endPoint + "/delete-film";
-        this.actorsEndPoint = endPoint + "/actors";
-        this.count = 0;
+        this.viewEndPoint = endPoint + "/actors";
+        this.createEndPoint = endPoint + "/add-actor";
+        this.editEndPoint = endPoint + "/edit-actor";
+        this.deleteEndPoint = endPoint + "/delete-actor";
+
     }
 
     /**
@@ -22,7 +21,7 @@ class FilmAdding {
         let controller = this;
         /* Call the microservice and evaluate data and result status */
         $.getJSON(this.viewEndPoint, function (data) {
-
+            console.log(data);
             controller.renderGUI(data);
         }).done(function () {
             //controller.renderAlert('Data charged successfully.', true);
@@ -39,16 +38,30 @@ class FilmAdding {
      * @param data a JSON representation of data
      */
     renderGUI(data) {
-        $('#view .our_2').remove();
-        var array = [];
+        // If table not empty
+        $('#table td').remove();
+
+        // Get the html template for table rows
+        let staticHtml = $("#table-template").html();
+
+        /* Bind obj data to the template, then append to table body */
         $.each(data, function (index, obj) {
-            if (controller.count === 0) array.push('<div class="col-sm-12 row">');
-            array.push(controller.constructFilmView(obj));
-            if (controller.count === 2) array.push('</div>')
-            controller.count = (controller.count + 1) % 3;
+            let row = staticHtml;
+            row = row.replace(/{ID}/ig, obj.id);
+            row = row.replace(/{Name}/ig, obj.name);
+            row = row.replace(/{Surname}/ig, obj.surname);
+
+            $('#table-rows').append(row);
         });
-        $('#view').append(array.join(''));
-        controller.count = 0;
+
+        /* When empty address-book */
+        if (data.length === 0) {
+            $("tfoot").html('<tr><th colspan="3">No records</th></tr>');
+        } else {
+            $("tfoot tr:first").fadeOut(100, function () {
+                $("tfoot tr:first").remove();
+            })
+        }
     }
 
     /**
@@ -80,9 +93,8 @@ class FilmAdding {
     viewEdit(id) {
         $.get(this.viewEndPoint, {id: id}, function (data) {
             $('#edit-id').val(data.id);
-            $('#edit-title').val(data.title);
-            $('#edit-plot').val(data.plot);
-            $('#edit-genre').val(data.genre);
+            $('#edit-name').val(data.name);
+            $('#edit-surname').val(data.surname);
         }).done(function () {
             $('#edit-modal').modal('show');
         });
@@ -103,12 +115,11 @@ class FilmAdding {
             // waiting
         }).done(function () {
             // show alert
-            controller.renderAlert('Film edited entered.', true);
+            controller.renderAlert('Actor edited entered.', true);
             // success
             $('#edit-id').val('');
-            $('#edit-title').val('');
-            $('#edit-plot').val('');
-            $('#edit-genre').val('');
+            $('#edit-name').val('');
+            $('#edit-surname').val('');
             controller.fillTable();
         }).fail(function () {
             controller.renderAlert('Error while editing. Try again.', false);
@@ -138,17 +149,13 @@ class FilmAdding {
             // waiting
         }).done(function () {
             // show alert
-            controller.renderAlert('Film successfully deleted.', true);
+            controller.renderAlert('Actor successfully deleted.', true);
             // charge new data.
             controller.fillTable();
             controller.unselect();
         }).fail(function () {
             controller.renderAlert('Error while deleting. Try again.', false);
         });
-    }
-
-    hexToBase64(str) {
-        return btoa(String.fromCharCode.apply(null, str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
     }
 
     /**
@@ -161,84 +168,21 @@ class FilmAdding {
             controller.renderAlert('Error: Not all fields have been entered correctly. Please try again', false);
             return;
         }
+        let data = $('#insert-form').serialize();
+        console.log(data)
+        $.post(this.createEndPoint, data, function () { // waiting for response-
 
-        const form = $('#insert-form')[0];
-        let data = new FormData(form);
-        $.ajax({
-            type: "POST",
-            enctype: 'multipart/form-data',
-            url: controller.createEndPoint,
-            data: data,
-            processData: false,
-            contentType: false,
-            cache: false,
-            timeout: 5000,
-            success: function (data) {
-                controller.renderAlert('Film added successfully.', true);
-                controller.fillTable();
-                // create an image
-                var outputImg = document.createElement('img');
-                outputImg.src = 'data:image/jpeg;base64,' + data;
-                document.body.appendChild(outputImg);
-                //controller.addFilmView($('#view'), data)
-
-            },
-            error: function (e) {
-                controller.renderAlert('Error while uploading. Try again.', false);
-            }
+        }).done(function () { // success response-
+            // Set success alert.
+            controller.renderAlert('Actor successfully entered.', true);
+            // Reset modal form.
+            $('#add-name').val('');
+            $('#add-surname').val('');
+            // charge new data.
+            controller.fillTable();
+        }).fail(function () { // fail response
+            controller.renderAlert('Error while inserting. Try again.', false);
         });
-    }
-
-    getActors(modal) {
-        modal.find("tr").remove();
-        let controller = this;
-        $.getJSON(this.actorsEndPoint, function (data) {
-            controller.addCheckBoxes(data, modal);
-        }).done(function () {
-
-        }).fail(function () {
-
-        });
-    }
-
-    insertView() {
-        this.getActors($("#insert-table-actors"))
-    }
-
-    addCheckBoxes(data, modal) {
-        $.each(data, function (index, obj) {
-            modal.append('<tr class="list-group-item py-1">' +
-                '<td>' +
-                '<input type="checkbox" class="checkbox" name="actors" value=' + obj.id + '>  ' + obj.name + '  ' + obj.surname +
-                '</td>' +
-                '</tr>');
-        });
-    }
-
-    addActors(actorList) {
-        let arr = [];
-        arr.push('<ul>');
-        $.each(actorList, function (index, obj) {
-            arr.push('<li><p class="filmText" >' + obj.name + ' ' + obj.surname + "</p></li>");
-        });
-        arr.push('</ul>');
-        return arr.join('');
-    }
-
-
-    constructFilmView(obj) {
-        return '<div class="col-sm-4">' +
-            '   <div class="our_2">' +
-            '       <div class="ih-item square effect5 left_to_right"><a data-toggle="modal" data-target="#edit-modal" onClick="controller.viewEdit(' + obj.id + ')">' +
-            '           <div class="img"><img src=data:image/jpeg;base64,' + obj.poster + ' alt="img" >' + ' </div>' +
-            '            <div class="info">' +
-            '               <h3>' + obj.title + '</h3>' +
-            '               <p>' + obj.plot + '</p>' +
-            controller.addActors(obj.actors) +
-            '            </div>' +
-            '       </a></div>' +
-            '   </div>' +
-            '</div>';
     }
 }
 

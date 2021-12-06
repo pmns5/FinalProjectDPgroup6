@@ -2,11 +2,8 @@ DROP DATABASE IF EXISTS FILM_DB;
 CREATE DATABASE FILM_DB;
 USE FILM_DB;
 
-DROP TABLE IF EXISTS VOTO CASCADE;
-
-
-DROP TABLE IF EXISTS UTENTE CASCADE;
-CREATE TABLE UTENTE
+DROP TABLE IF EXISTS user CASCADE;
+CREATE TABLE user
 (
     username VARCHAR(20) PRIMARY KEY
 );
@@ -23,20 +20,21 @@ CREATE TABLE film
     PRIMARY KEY (id)
 );
 
-CREATE TABLE VOTO
+DROP TABLE IF EXISTS vote CASCADE;
+CREATE TABLE vote
 (
     film     INT         NOT NULL,
     username VARCHAR(20) NOT NULL,
     voto     FLOAT CHECK (voto > 0 and voto < 5),
     commento VARCHAR(500),
     PRIMARY KEY (film, username),
-    CONSTRAINT FK_film_voto FOREIGN KEY (film) REFERENCES FILM (id) on update cascade on delete cascade,
-    CONSTRAINT FK_utente_voto FOREIGN KEY (username) REFERENCES UTENTE (username) on update cascade on delete cascade
+    CONSTRAINT fk_film_vote FOREIGN KEY (film) REFERENCES FILM (id) on update cascade on delete cascade,
+    CONSTRAINT fk_user_vote FOREIGN KEY (username) REFERENCES UTENTE (username) on update cascade on delete cascade
 );
 
 
-DROP TABLE IF EXISTS Actors CASCADE;
-CREATE TABLE Actors
+DROP TABLE IF EXISTS actor CASCADE;
+CREATE TABLE actor
 (
     id      INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name    VARCHAR(50),

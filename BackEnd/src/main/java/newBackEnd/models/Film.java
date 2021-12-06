@@ -14,12 +14,6 @@ public class Film implements Model {
     private ArrayList<Actor> actors;
     private byte[] poster;
 
-    public Film(String title, String plot, String genre, ArrayList<Actor> actors) {
-        this.title = title;
-        this.plot = plot;
-        this.genre = Integer.parseInt(genre);
-        this.actors = actors;
-    }
     public Film(int id, String title, String plot, String genre, ArrayList<Actor> actors, byte[] poster){
         this.id = id;
         this.title = title;
