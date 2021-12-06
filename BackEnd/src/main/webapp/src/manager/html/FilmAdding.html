@@ -39,10 +39,6 @@
     </div>
 </nav>
 
-<header class="container">
-    <h5>Film Adding</h5>
-</header>
-
 <!-- Banner Alert template and his section -->
 <template id="success-alert-template">
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -69,6 +65,12 @@
             <p>Press on the single movie to modify its data </p>
         </div>
         <div class="row">
+            <button id="insert-button" class="btn btn-outline-primary " data-toggle="modal"
+                    data-target="#insert-modal" onclick="controller.insertView()">
+                Insert
+            </button>
+        </div>
+        <div class="row">
             <object id="view"></object>
         </div>
         <!--div class="col-sm-12">
@@ -76,7 +78,6 @@
                 <p><a href="#">View More</a></p>
             </div>
         </div-->
-
     </div>
 </section>
 

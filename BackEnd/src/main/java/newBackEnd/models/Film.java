@@ -20,13 +20,13 @@ public class Film implements Model {
         this.genre = Integer.parseInt(genre);
         this.actors = actors;
     }
-    public Film(String id, String title, String plot, String genre, byte[] poster){
-        this.id = Integer.parseInt(id);
+    public Film(int id, String title, String plot, String genre, ArrayList<Actor> actors, byte[] poster){
+        this.id = id;
         this.title = title;
         this.plot = plot;
         this.genre = Integer.parseInt(genre);
         this.poster = poster;
-        this.actors = new ArrayList<>();
+        this.actors = actors;
     }
 
     public int getId() {

@@ -51,7 +51,7 @@ public class FilmDecorator extends DbDecorator {
                 if (!rs.next()) {
                     return null;
                 }
-                String idFilm = rs.getString(1);
+                int idFilm = rs.getInt(1);
                 String title = rs.getString(2);
                 String plot = rs.getString(3);
                 String genre = rs.getString(4);
@@ -59,7 +59,13 @@ public class FilmDecorator extends DbDecorator {
                 int blobLength = (int) blob.length();
                 byte[] blobAsBytes = blob.getBytes(1, blobLength);
                 blob.free();
-                return new Film(idFilm, title, plot, genre, blobAsBytes);
+
+                ArrayList<Actor> actors = new ArrayList<>();
+                ResultSet rs2 = stmt.executeQuery("SELECT actors.id, name, surname from actors join cast c on actors.id = c.id_actor join film f on f.id = c.id_film where f.id = " + id);
+                while (rs2.next()) {
+                    actors.add(new Actor(rs2.getInt("id"), rs2.getString("name"), rs2.getString("surname")));
+                }
+                return new Film(idFilm, title, plot, genre, actors, blobAsBytes);
             }
         } catch (SQLException e) {
             return null;
@@ -67,11 +73,11 @@ public class FilmDecorator extends DbDecorator {
     }
 
     public ArrayList<Film> getFilms() {
+
         ArrayList<Film> result = new ArrayList<>();
-        try (Statement stmt = getConn().createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT id, title, plot, genre, poster FROM film ORDER BY id;")) {
+        try (Statement stmt = getConn().createStatement(); ResultSet rs = stmt.executeQuery("SELECT id, title, plot, genre, poster FROM film ORDER BY id;")) {
             while (rs.next()) {
-                String id = rs.getString("id");
+                int id = rs.getInt("id");
                 String title = rs.getString("title");
                 String plot = rs.getString("plot");
                 String genre = rs.getString("genre");
@@ -79,7 +85,13 @@ public class FilmDecorator extends DbDecorator {
                 int blobLength = (int) blob.length();
                 byte[] blobAsBytes = blob.getBytes(1, blobLength);
                 blob.free();
-                result.add(new Film(id, title, plot, genre, blobAsBytes));
+
+                ArrayList<Actor> actors = new ArrayList<>();
+                ResultSet rs2 = getConn().createStatement().executeQuery("SELECT actors.id, name, surname from actors join cast c on actors.id = c.id_actor join film f on f.id = c.id_film where f.id = " + id);
+                while (rs2.next()) {
+                    actors.add(new Actor(rs2.getInt("id"), rs2.getString("name"), rs2.getString("surname")));
+                }
+                result.add(new Film(id, title, plot, genre, actors, blobAsBytes));
             }
         } catch (SQLException e) {
             return null;
@@ -110,7 +122,7 @@ public class FilmDecorator extends DbDecorator {
             try (PreparedStatement stmt = getConn().prepareStatement(
                     "INSERT INTO cast (id_film, id_actor) VALUES (?, ?);"
             )) {
-                stmt.setString(1, String.valueOf(id_film-1));
+                stmt.setString(1, String.valueOf(id_film - 1));
                 stmt.setString(2, curr_actor);
                 stmt.execute();
             } catch (SQLException e) {
@@ -122,4 +134,5 @@ public class FilmDecorator extends DbDecorator {
 
         return true;
     }
+
 }
