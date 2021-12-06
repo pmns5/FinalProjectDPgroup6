@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 public class ServletUtil {
 
 
-
     /**
      * Transform an array of strings into an array of longs. If the array is null, it creates an empty long array.
      *

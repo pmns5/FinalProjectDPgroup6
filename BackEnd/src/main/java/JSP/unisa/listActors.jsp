@@ -1,6 +1,5 @@
-<%@ page import="java.sql.*" %>
-<%@ page import="dp.project.film.*" %>
 <%@ page import="dp.project.MySqlDbConnection" %>
+<%@ page import="dp.project.film.FilmAttoreBrowse" %>
 <%@ include file="configFilm.jsp" %>
 <%
     String jsonResult;

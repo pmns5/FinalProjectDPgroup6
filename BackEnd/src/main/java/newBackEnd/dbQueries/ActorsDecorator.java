@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class ActorsDecorator extends DbDecorator{
+public class ActorsDecorator extends DbDecorator {
 
     /**
      * Class used to decorate a Db Interface object and use the queries provided on the maintainer_role table.
@@ -23,14 +23,14 @@ public class ActorsDecorator extends DbDecorator{
     /**
      * This method allows add a tuple to the maintainer_role table in the db. It takes the fields of the tuple as a parameter.
      *
-     * @param name:        the name of the role.
+     * @param name:    the name of the role.
      * @param surname: the description of the role.
      * @return true if no error occur, else false.
      */
     public boolean addActor(@NotNull String name, @NotNull String surname) {
         try (PreparedStatement stmt = getConn().prepareStatement(
                 "INSERT INTO Actors ( name, surname) VALUES ( ?, ?);"
-        )){
+        )) {
             stmt.setString(1, name);
             stmt.setString(2, surname);
             stmt.execute();
@@ -48,7 +48,7 @@ public class ActorsDecorator extends DbDecorator{
     public ArrayList<Actor> getActors() {
         ArrayList<Actor> result = new ArrayList<>();
         try (Statement stmt = getConn().createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM Actors ORDER BY id;")){
+             ResultSet rs = stmt.executeQuery("SELECT * FROM Actors ORDER BY id;")) {
             while (rs.next()) {
                 long id = rs.getLong("id");
                 String name = rs.getString("name");
@@ -69,9 +69,9 @@ public class ActorsDecorator extends DbDecorator{
      * @return a MaintainerRole object or null if an error occur.
      */
     public Actor getActor(long id) {
-        try (PreparedStatement stmt = getConn().prepareStatement("SELECT * FROM Actors WHERE id = ?;")){
+        try (PreparedStatement stmt = getConn().prepareStatement("SELECT * FROM Actors WHERE id = ?;")) {
             stmt.setLong(1, id);
-            try (ResultSet rs = stmt.executeQuery()){
+            try (ResultSet rs = stmt.executeQuery()) {
                 if (!rs.next()) {
                     return null;
                 }
@@ -92,7 +92,7 @@ public class ActorsDecorator extends DbDecorator{
     public boolean deleteActor(long id) {
         try (PreparedStatement stmt = getConn().prepareStatement(
                 "DELETE FROM actors WHERE id = ?;"
-        )){
+        )) {
             stmt.setLong(1, id);
             stmt.execute();
         } catch (SQLException e) {
@@ -104,15 +104,15 @@ public class ActorsDecorator extends DbDecorator{
     /**
      * This method edit a tuple from the maintainer_role table based on its id. Need the parameter to edit.
      *
-     * @param id:          the id of the tuple to edit.
-     * @param name:        the new name to assign.
+     * @param id:     the id of the tuple to edit.
+     * @param name:   the new name to assign.
      * @param surname : the new description to assign.
      * @return true if no error occur, else false.
      */
     public boolean editActor(long id, @NotNull String name, @NotNull String surname) {
         try (PreparedStatement stmt = getConn().prepareStatement(
                 "UPDATE actors SET name = ?, surname = ? WHERE id = ?"
-        )){
+        )) {
             stmt.setString(1, name);
             stmt.setString(2, surname);
             stmt.setLong(3, id);

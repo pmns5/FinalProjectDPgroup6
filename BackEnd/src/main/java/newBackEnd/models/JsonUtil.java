@@ -1,4 +1,5 @@
 package newBackEnd.models;
+
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class JsonUtil {
         for (Model m : l) {
             sb.append(m.toJSON()).append(",");
         }
-        if(sb.length() != 1) {
+        if (sb.length() != 1) {
             sb.deleteCharAt(sb.length() - 1);       // Delete last comma
         }
         sb.append("]");

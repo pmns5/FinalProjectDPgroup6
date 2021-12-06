@@ -1,29 +1,18 @@
 package newBackEnd.servlets;
 
-import newBackEnd.dbQueries.ActorsDecorator;
 import newBackEnd.dbQueries.FilmDecorator;
 import newBackEnd.dbQueries.MySQLDb;
-import newBackEnd.models.Actor;
 import newBackEnd.models.Film;
 import newBackEnd.models.JsonUtil;
-import newBackEnd.models.Model;
-import org.apache.commons.io.FileUtils;
 
-import javax.imageio.ImageIO;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.Base64;
-import java.util.Collection;
-import java.util.Enumeration;
+import java.io.IOException;
 import java.util.List;
 
 @WebServlet(name = "TestFilmServlet", value = {"/add-film", "/edit-film", "/delete-film", "/films"})

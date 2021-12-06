@@ -1,9 +1,6 @@
 package newBackEnd.models;
 
-import com.mysql.cj.jdbc.Blob;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 
 public class Film implements Model {
@@ -14,7 +11,7 @@ public class Film implements Model {
     private ArrayList<Actor> actors;
     private byte[] poster;
 
-    public Film(int id, String title, String plot, String genre, ArrayList<Actor> actors, byte[] poster){
+    public Film(int id, String title, String plot, String genre, ArrayList<Actor> actors, byte[] poster) {
         this.id = id;
         this.title = title;
         this.plot = plot;

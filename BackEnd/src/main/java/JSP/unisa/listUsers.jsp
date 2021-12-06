@@ -1,5 +1,5 @@
-<%@ page import="java.sql.*" %>
-<%@ page import="dp.project.*" %>
+<%@ page import="dp.project.MySqlDbConnection" %>
+<%@ page import="dp.project.UserBrowse" %>
 <%@ include file="config.jsp" %>
 <%
     String jsonResult;

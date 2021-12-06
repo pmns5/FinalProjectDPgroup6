@@ -28,6 +28,11 @@ public class MySQLDb implements DbInterface {
         this.connected = false;
     }
 
+    public static void main(String[] args) {
+        ActorsDecorator db = new ActorsDecorator(new MySQLDb());
+        db.connect();
+    }
+
     /**
      * This method connects the current object to a database, making them usable.
      */
@@ -35,7 +40,7 @@ public class MySQLDb implements DbInterface {
     public void connect() {
         if (!connected) {
             try {
-                conn = DriverManager.getConnection(url+extra, userDb, password);
+                conn = DriverManager.getConnection(url + extra, userDb, password);
             } catch (SQLException e) {
                 System.exit(99);
                 return;
@@ -77,10 +82,5 @@ public class MySQLDb implements DbInterface {
     @Override
     public Connection getConn() {
         return conn;
-    }
-
-    public static void main(String[] args) {
-        ActorsDecorator db = new ActorsDecorator(new MySQLDb());
-        db.connect();
     }
 }

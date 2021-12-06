@@ -1,11 +1,6 @@
 package newBackEnd.models;
 
-import dp.project.MySqlDbConnection;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-
-public class Actor implements Model{
+public class Actor implements Model {
     private final int id;
     private String name;
     private String surname;

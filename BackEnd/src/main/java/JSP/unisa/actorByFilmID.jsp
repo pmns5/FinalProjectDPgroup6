@@ -1,5 +1,3 @@
-<%@ page import="java.sql.*" %>
-<%@ page import="dp.project.film.*" %>
 <%@ page import="dp.project.MySqlDbConnection" %>
 <%@ page import="newBackEnd.models.Actor" %>
 <%@ include file="configFilm.jsp" %>
