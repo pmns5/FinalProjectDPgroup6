@@ -18,7 +18,6 @@ import java.util.List;
 @WebServlet(name = "TestFilmServlet", value = {"/add-film", "/edit-film", "/delete-film", "/films"})
 @MultipartConfig(maxFileSize = 16177215)
 public class TestFilmServlet extends HttpServlet {
-
     private FilmDecorator db;
 
     @Override
@@ -36,7 +35,6 @@ public class TestFilmServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setHeader("Access-Control-Allow-Origin", "*");
         String path = ServletUtil.getRequestPath(request);
-
         // Add role
         if ("/add-film".equals(path)) {
             create(request, response);
@@ -45,7 +43,6 @@ public class TestFilmServlet extends HttpServlet {
             edit(request, response);
         }
         response.flushBuffer();
-
     }
 
     @Override
@@ -110,8 +107,6 @@ public class TestFilmServlet extends HttpServlet {
         String plot = req.getParameter("plot");
         String genre = req.getParameter("genre");
         String[] actors = req.getParameterValues("actors");
-
-
         byte[] image = new byte[0];
         try {
             Part filePart = req.getPart("poster");
@@ -119,8 +114,6 @@ public class TestFilmServlet extends HttpServlet {
         } catch (IOException | ServletException e) {
             e.printStackTrace();
         }
-
-
         if (title != null && plot != null && actors != null && image != null) {
             if (db.addFilm(title, plot, genre, image, actors)) {
                 // add success
@@ -134,5 +127,4 @@ public class TestFilmServlet extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
-
 }

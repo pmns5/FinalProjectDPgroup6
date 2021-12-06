@@ -3,7 +3,6 @@ package newBackEnd.dbQueries;
 import java.sql.Connection;
 
 public interface DbInterface {
-
     /**
      * This method connects the current object to a database, making them usable.
      */

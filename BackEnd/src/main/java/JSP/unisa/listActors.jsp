@@ -7,10 +7,8 @@
     db.setDbUser(dbUser);
     db.setDbPassword(dbPassword);
     db.setDbName(dbName);
-
     FilmAttoreBrowse service = new FilmAttoreBrowse();
     response.setContentType("application/json");
     response.setHeader("Access-Control-Allow-Origin", "*");
-
 %>
 <%= service.getActorsBrowseToJSON(db) %>

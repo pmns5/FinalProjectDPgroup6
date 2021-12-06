@@ -6,16 +6,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 public class Voto {
-
     private final Connection con;
     public int dbOperationStatusCode;
     public String dbOperationMessage;
-
     private int film;
     private String username;
     private float voto;
     private String commento;
-
 
     public Voto(MySqlDbConnection db) {
         this.con = db.connect();
@@ -144,6 +141,4 @@ public class Voto {
             this.dbOperationMessage = "Record not updated: " + e.getMessage();
         }
     }
-
-
 }

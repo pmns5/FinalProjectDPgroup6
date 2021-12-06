@@ -1,23 +1,22 @@
 package newBackEnd.models;
 
-import java.util.ArrayList;
 import java.util.Base64;
 
 public class Film implements Model {
     private int id;
     private String title;
+    private String genre;
     private String plot;
-    private int genre;
-    private ArrayList<Actor> actors;
+    private String trailer;
     private byte[] poster;
 
-    public Film(int id, String title, String plot, String genre, ArrayList<Actor> actors, byte[] poster) {
+    public Film(int id, String title, String genre, String plot, String trailer, byte[] poster) {
         this.id = id;
         this.title = title;
+        this.genre = genre;
         this.plot = plot;
-        this.genre = Integer.parseInt(genre);
+        this.trailer = trailer;
         this.poster = poster;
-        this.actors = actors;
     }
 
     public int getId() {
@@ -36,6 +35,14 @@ public class Film implements Model {
         this.title = title;
     }
 
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
     public String getPlot() {
         return plot;
     }
@@ -44,20 +51,12 @@ public class Film implements Model {
         this.plot = plot;
     }
 
-    public int getGenre() {
-        return genre;
+    public String getTrailer() {
+        return trailer;
     }
 
-    public void setGenre(int genre) {
-        this.genre = genre;
-    }
-
-    public ArrayList<Actor> getActors() {
-        return actors;
-    }
-
-    public void setActors(ArrayList<Actor> actors) {
-        this.actors = actors;
+    public void setTrailer(String trailer) {
+        this.trailer = trailer;
     }
 
     public byte[] getPoster() {
@@ -71,15 +70,14 @@ public class Film implements Model {
     public String toJSON() {
         return "{" + "\"id\":\"" + id + "\"," +
                 "\"title\":\"" + title + "\"," +
-                "\"plot\":\"" + plot + "\"," +
                 "\"genre\":\"" + genre + "\"," +
-                "\"poster\":\"" + new String(Base64.getEncoder().encode(poster)) + "\"," +
-                "\"actors\":" + JsonUtil.toJson(actors) + "}";
+                "\"plot\":\"" + plot + "\"," +
+                "\"trailer\":\"" + trailer + "\"," +
+                "\"poster\":\"" + new String(Base64.getEncoder().encode(poster)) + "}";
     }
 
     @Override
     public boolean equals(Object o) {
         return false;
     }
-
 }

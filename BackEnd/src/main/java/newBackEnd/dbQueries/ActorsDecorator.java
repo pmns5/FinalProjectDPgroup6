@@ -10,7 +10,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class ActorsDecorator extends DbDecorator {
-
     /**
      * Class used to decorate a Db Interface object and use the queries provided on the maintainer_role table.
      *
@@ -29,7 +28,7 @@ public class ActorsDecorator extends DbDecorator {
      */
     public boolean addActor(@NotNull String name, @NotNull String surname) {
         try (PreparedStatement stmt = getConn().prepareStatement(
-                "INSERT INTO Actors ( name, surname) VALUES ( ?, ?);"
+                "INSERT INTO actor (name, surname) VALUES (?, ?);"
         )) {
             stmt.setString(1, name);
             stmt.setString(2, surname);
@@ -48,7 +47,7 @@ public class ActorsDecorator extends DbDecorator {
     public ArrayList<Actor> getActors() {
         ArrayList<Actor> result = new ArrayList<>();
         try (Statement stmt = getConn().createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM Actors ORDER BY id;")) {
+             ResultSet rs = stmt.executeQuery("SELECT * FROM actor ORDER BY id;")) {
             while (rs.next()) {
                 long id = rs.getLong("id");
                 String name = rs.getString("name");
@@ -69,7 +68,7 @@ public class ActorsDecorator extends DbDecorator {
      * @return a MaintainerRole object or null if an error occur.
      */
     public Actor getActor(long id) {
-        try (PreparedStatement stmt = getConn().prepareStatement("SELECT * FROM Actors WHERE id = ?;")) {
+        try (PreparedStatement stmt = getConn().prepareStatement("SELECT * FROM actor WHERE id = ?;")) {
             stmt.setLong(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (!rs.next()) {
@@ -91,7 +90,7 @@ public class ActorsDecorator extends DbDecorator {
      */
     public boolean deleteActor(long id) {
         try (PreparedStatement stmt = getConn().prepareStatement(
-                "DELETE FROM actors WHERE id = ?;"
+                "DELETE FROM actor WHERE id = ?;"
         )) {
             stmt.setLong(1, id);
             stmt.execute();
@@ -111,7 +110,7 @@ public class ActorsDecorator extends DbDecorator {
      */
     public boolean editActor(long id, @NotNull String name, @NotNull String surname) {
         try (PreparedStatement stmt = getConn().prepareStatement(
-                "UPDATE actors SET name = ?, surname = ? WHERE id = ?"
+                "UPDATE actor SET name = ?, surname = ? WHERE id = ?"
         )) {
             stmt.setString(1, name);
             stmt.setString(2, surname);
@@ -122,6 +121,4 @@ public class ActorsDecorator extends DbDecorator {
         }
         return true;
     }
-
-
 }

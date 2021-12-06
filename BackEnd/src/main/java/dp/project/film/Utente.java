@@ -6,11 +6,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 public class Utente {
-
     private final Connection con;
     public int dbOperationStatusCode;
     public String dbOperationMessage;
-
     private String username;
 
     public Utente(MySqlDbConnection db) {
@@ -44,7 +42,6 @@ public class Utente {
     public void setUsername(String username) {
         this.username = username;
     }
-
 
     public void add() {
         try {

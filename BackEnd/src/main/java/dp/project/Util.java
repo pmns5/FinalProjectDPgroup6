@@ -3,7 +3,6 @@ package dp.project;
 import java.nio.charset.StandardCharsets;
 
 public class Util {
-
     public static String removeLastChar(String s) {
         return s.substring(0, s.length() - 1);
     }
@@ -13,5 +12,4 @@ public class Util {
         String utf8EncodedString = new String(bytes, StandardCharsets.UTF_8);
         return utf8EncodedString;
     }
-
 }

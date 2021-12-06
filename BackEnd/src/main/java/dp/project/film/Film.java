@@ -10,7 +10,6 @@ public class Film {
     private final Connection con;
     public int dbOperationStatusCode;
     public String dbOperationMessage;
-
     private int id;
     private String name;
     private String genre;
@@ -145,5 +144,4 @@ public class Film {
             this.dbOperationMessage = "Record not deleted: " + e.getMessage();
         }
     }
-
 }

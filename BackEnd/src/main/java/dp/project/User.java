@@ -6,11 +6,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class User {
-
     private final Connection con;
     public int dbOperationStatusCode;
     public String dbOperationMessage;
-
     private String username;
     private String email;
     private String password;
@@ -80,7 +78,6 @@ public class User {
             this.dbOperationStatusCode = 1;
             this.dbOperationMessage = "Record not selected: " + e.getMessage();
         }
-
     }
 
     public void add() {
@@ -112,5 +109,4 @@ public class User {
             this.dbOperationMessage = "Record not deleted: " + e.getMessage();
         }
     }
-
 }

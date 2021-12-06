@@ -6,11 +6,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 public class Attore {
-
     private final Connection con;
     public int dbOperationStatusCode;
     public String dbOperationMessage;
-
     private int id;
     private String nome;
     private String cognome;
@@ -111,6 +109,4 @@ public class Attore {
             this.dbOperationMessage = "Record not deleted: " + e.getMessage();
         }
     }
-
-
 }

@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class MySqlDbConnection {
-
     private String dbDriver = "jdbc:mysql";
     private String dbHost = "localhost";
     private String dbPort = "3306";
@@ -69,7 +68,6 @@ public class MySqlDbConnection {
         this.dbTimeZone = dbTimeZone;
     }
 
-
     public Connection connect() {
         String dbConnectionUrl = this.dbDriver + "://"
                 + this.dbHost + ":"
@@ -85,5 +83,4 @@ public class MySqlDbConnection {
             return null;
         }
     }
-
 }

@@ -4,7 +4,6 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class JsonUtil {
-
     /**
      * Function used to convert a List of objects that implement the ModelInterface interface into a JSON string.
      *
