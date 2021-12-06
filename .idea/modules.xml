@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BackEnd/BackEnd.iml" filepath="$PROJECT_DIR$/BackEnd/BackEnd.iml" />
-      <module fileurl="file://$PROJECT_DIR$/FilmReviewProject.iml" filepath="$PROJECT_DIR$/FilmReviewProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FinalProjectDPgroup6.iml" filepath="$PROJECT_DIR$/FinalProjectDPgroup6.iml" />
     </modules>
   </component>
 </project>
