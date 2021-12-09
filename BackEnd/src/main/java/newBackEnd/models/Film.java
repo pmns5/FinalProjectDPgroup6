@@ -73,7 +73,7 @@ public class Film implements Model {
                 "\"genre\":\"" + genre + "\"," +
                 "\"plot\":\"" + plot + "\"," +
                 "\"trailer\":\"" + trailer + "\"," +
-                "\"poster\":\"" + new String(Base64.getEncoder().encode(poster)) + "}";
+                "\"poster\":\"" + new String(Base64.getEncoder().encode(poster)) + "\"}";
     }
 
     @Override

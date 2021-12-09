@@ -107,6 +107,7 @@ public class TestFilmServlet extends HttpServlet {
         String plot = req.getParameter("plot");
         String genre = req.getParameter("genre");
         String[] actors = req.getParameterValues("actors");
+        String trailer = "";
         byte[] image = new byte[0];
         try {
             Part filePart = req.getPart("poster");
@@ -115,7 +116,7 @@ public class TestFilmServlet extends HttpServlet {
             e.printStackTrace();
         }
         if (title != null && plot != null && actors != null && image != null) {
-            if (db.addFilm(title, plot, genre, image, actors)) {
+            if (db.addFilm(title, genre, plot, trailer, image, actors)) {
                 // add success
                 resp.setStatus(HttpServletResponse.SC_OK);
             } else {

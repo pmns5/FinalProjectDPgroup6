@@ -27,7 +27,7 @@ public class Cast implements Model {
 
     public String toJSON() {
         return "{" + "\"id_film\":\"" + id_film + "\"," +
-                "\"id_actor\":\"" + id_actor + "}";
+                "\"id_actor\":\"" + id_actor + "\"}";
     }
 
     @Override

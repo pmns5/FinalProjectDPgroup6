@@ -27,7 +27,7 @@ public class User implements Model {
 
     public String toJSON() {
         return "{" + "\"id\":\"" + id + "\"," +
-                "\"title\":\"" + username + "}";
+                "\"title\":\"" + username + "\"}";
     }
 
     @Override

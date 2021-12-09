@@ -49,7 +49,7 @@ public class Feedback implements Model {
         return "{" + "\"id_film\":\"" + id_film + "\"," +
                 "\"id_user\":\"" + id_user + "\"," +
                 "\"score\":\"" + score + "\"," +
-                "\"comment\":\"" + comment + "}";
+                "\"comment\":\"" + comment + "\"}";
     }
 
     @Override
