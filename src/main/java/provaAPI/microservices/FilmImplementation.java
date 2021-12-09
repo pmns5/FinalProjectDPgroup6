@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Microservice for management of Data associated of a film
@@ -98,7 +99,7 @@ public class FilmImplementation extends DBConnection implements FilmInterface {
     }
 
     @Override
-    public ArrayList<Film> getAllFilms() {
+    public List<Film> getAllFilms() {
         ArrayList<Film> listFilms = new ArrayList<>();
         try (Statement stmt = db.getConn().createStatement(); ResultSet rs = stmt.executeQuery("SELECT id_film, title, genre, plot, trailer, poster FROM film ORDER BY id_film")) {
             while (rs.next()) {
@@ -108,6 +109,28 @@ public class FilmImplementation extends DBConnection implements FilmInterface {
                 String plot = rs.getString(4);
                 String trailer = rs.getString(5);
                 Blob poster = (Blob) rs.getBlob(6);
+                int blobLength = (int) poster.length();
+                byte[] blobAsBytes = poster.getBytes(1, blobLength);
+                poster.free();
+                listFilms.add(new Film(id_film, title, plot, genre, trailer, blobAsBytes));
+            }
+        } catch (SQLException e) {
+            return null;
+        }
+        return listFilms;
+    }
+
+    @Override
+    public List<Film> getByGenre(int genre) {
+        ArrayList<Film> listFilms = new ArrayList<>();
+        try (Statement stmt = db.getConn().createStatement(); ResultSet rs = stmt.executeQuery("SELECT id_film," +
+                " title, plot, trailer, poster FROM film WHERE genre="+ genre +"  ORDER BY id_film")) {
+            while (rs.next()) {
+                int id_film = rs.getInt(1);
+                String title = rs.getString(2);
+                String plot = rs.getString(3);
+                String trailer = rs.getString(4);
+                Blob poster = (Blob) rs.getBlob(5);
                 int blobLength = (int) poster.length();
                 byte[] blobAsBytes = poster.getBytes(1, blobLength);
                 poster.free();

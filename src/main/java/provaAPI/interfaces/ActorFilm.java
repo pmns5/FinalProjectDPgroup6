@@ -3,17 +3,18 @@ package provaAPI.interfaces;
 import provaAPI.models.Actor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface ActorFilm {
 
-    public boolean addActor(Actor actor);
+    boolean addActor(Actor actor);
 
-    public boolean editActor(Actor actor);
+    boolean editActor(Actor actor);
 
-    public boolean deleteActor(int idFilm);
+    boolean deleteActor(int idActor);
 
-    public Actor getOneActor(int idFilm);
+    Actor getOneActor(int idActor);
 
-    public ArrayList<Actor> getAllActors();
+    List<Actor> getAllActors();
 
 }

@@ -2,10 +2,14 @@ package provaAPI.microservices;
 
 import provaAPI.interfaces.CastFilm;
 import provaAPI.interfaces.DBConnection;
+import provaAPI.models.Actor;
 import provaAPI.models.Cast;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CastImplementation extends DBConnection implements CastFilm {
 
@@ -14,6 +18,7 @@ public class CastImplementation extends DBConnection implements CastFilm {
         db.connect();
     }
 
+    @Override
     public boolean addCast(int id_film, String[] actors) {
         for (String id_actor : actors) {
             if (!addCast(new Cast(id_film, Integer.parseInt(id_actor))))
@@ -22,12 +27,14 @@ public class CastImplementation extends DBConnection implements CastFilm {
         return true;
     }
 
+    @Override
     public boolean editCast(int id_film, String[] actors) {
         if (deleteCast(id_film))
             return addCast(id_film, actors);
         return false;
     }
 
+    @Override
     public boolean deleteCast(int id_film) {
         try (PreparedStatement stmt = db.getConn().prepareStatement(
                 "DELETE FROM cast WHERE  id_film = " + id_film
@@ -38,6 +45,22 @@ public class CastImplementation extends DBConnection implements CastFilm {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public List<Cast> getByFilm(int id_film) {
+        ArrayList<Cast> cast = new ArrayList<>();
+        try (PreparedStatement stmt = db.getConn().prepareStatement("SELECT * FROM cast WHERE  id_film = "
+                + id_film)) {
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                cast.add(new Cast(rs.getInt(0), rs.getInt(1)));
+            }
+            return cast;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     // Private Utilities
