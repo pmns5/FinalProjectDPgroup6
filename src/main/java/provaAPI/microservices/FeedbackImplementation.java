@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 public class FeedbackImplementation extends DBConnection implements FeedbackFilm {
 
-
     @Override
     public boolean addFeedback(Feedback feedback) {
         try (PreparedStatement stmt = db.getConn().prepareStatement(

@@ -36,15 +36,15 @@ public class FilmServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setHeader("Access-Control-Allow-Origin", "*");
-        String path = ServletUtil.getRequestPath(request);
+ //       String path = ServletUtil.getRequestPath(request);
         // Get role data
-        if ("/view-film".equals(path)) {
-            response.setContentType("application/json");
-            // gateway.viewFilm(request, response);
-            // Delete a role
-        } else if ("/delete-film".equals(path)) {
+//        if ("/view-film".equals(path)) {
+//            response.setContentType("application/json");
+//            gateway.viewFilm(request, response);
+//            // Delete a role
+//        } else if ("/delete-film".equals(path)) {
             gateway.deleteFilm(request, response);
-        }
+//        }
         response.flushBuffer();
     }
 

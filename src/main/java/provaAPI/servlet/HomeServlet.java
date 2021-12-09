@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet(name = "HomeServlet", value = {"/getAll", "/getPerGenre"})
+@WebServlet(name = "HomeServlet", value = {"/getAll", "/getPerGenre", "/getFilm"})
 public class HomeServlet extends HttpServlet {
 
     private HomeGateway gateway;
@@ -25,13 +25,12 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setHeader("Access-Control-Allow-Origin", "*");
         String path = ServletUtil.getRequestPath(request);
+        response.setContentType("application/json");
 
-        if ("/getAll".equals(path)) {
-            response.setContentType("application/json");
-            gateway.getAll(request, response);
-
-        } else if ("/getPerGenre".equals(path)) {
-            gateway.getPerGenre(request, response);
+        switch (path) {
+            case "/getAll" -> gateway.getAll(request, response);
+            case "/getPerGenre" -> gateway.getPerGenre(request, response);
+            case "/getFilm" -> gateway.getFilm(request, response);
         }
         response.flushBuffer();
     }
