@@ -26,11 +26,9 @@ public class ActorServlet extends HttpServlet {
         response.setHeader("Access-Control-Allow-Origin", "*");
         String path = ServletUtil.getRequestPath(request);
 
-        if ("/add-actor".equals(path)) {
-            gateway.addActor(request, response);
-
-        } else if ("/edit-actor".equals(path)) {
-            gateway.editActor(request, response);
+        switch (path) {
+            case "/add-actor" -> gateway.addActor(request, response);
+            case "/edit-actor" -> gateway.editActor(request, response);
         }
         response.flushBuffer();
     }
@@ -38,15 +36,14 @@ public class ActorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setContentType("application/json");
         String path = ServletUtil.getRequestPath(request);
 
-        if ("/actors".equals(path)) {
-            response.setContentType("application/json");
-            gateway.viewActor(request, response);
-
-        } else if ("/delete-actor".equals(path)) {
-            gateway.deleteActor(request, response);
+        switch (path) {
+            case "/actors" -> gateway.viewActor(request, response);
+            case "/delete-actor" -> gateway.deleteActor(request, response);
         }
+
         response.flushBuffer();
     }
 

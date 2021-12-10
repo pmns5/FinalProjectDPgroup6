@@ -11,9 +11,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilmGateway extends APIGateway {
+public class FilmManagementGateway extends APIGateway {
 
-    public FilmGateway() {
+    public FilmManagementGateway() {
         super();
     }
 
@@ -32,6 +32,7 @@ public class FilmGateway extends APIGateway {
             e.printStackTrace();
         }
 
+        trailer ="";
         // Recall Microservices for Completion
         if (title != null && plot != null && genre != -1 && trailer != null && poster != null) {
             Film film = new Film(-1, title, plot, genre, trailer, poster);
@@ -65,6 +66,7 @@ public class FilmGateway extends APIGateway {
             e.printStackTrace();
         }
 
+        trailer ="";
         // Recall Microservices for Completion
         if (title != null && plot != null && genre != -1 && trailer != null && poster != null) {
             Film film = new Film(id, title, plot, genre, trailer, poster);
@@ -97,6 +99,24 @@ public class FilmGateway extends APIGateway {
         } else {
             // No id passed as parameter
             res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+    }
+
+    public void getFilm(HttpServletRequest req, HttpServletResponse res) {
+        String idFilmStr = req.getParameter("id");
+        try {
+            if (idFilmStr != null) {
+                int idFilm = Integer.parseInt(idFilmStr);
+                Film film = filmInterface.getOneFilm(idFilm);
+                List<Cast> castList = castFilm.getByFilm(idFilm);
+                List<Actor> actorList = new ArrayList<>();
+                for (Cast c : castList) actorList.add(actorFilm.getOneActor(c.getId_actor()));
+                HomePageFilm homePageFilm = new HomePageFilm(film, actorList, feedbackFilm.getAverageScore(idFilm));
+                res.getWriter().print(Utils.toJSON(homePageFilm));
+                res.setStatus(HttpServletResponse.SC_OK);
+            }
+        } catch (Exception e) {
+            res.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
         }
     }
 

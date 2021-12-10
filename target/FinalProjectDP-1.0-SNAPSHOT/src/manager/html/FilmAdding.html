@@ -128,12 +128,16 @@
                     </div>
 
                     <!-- Cast -->
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
-                            <label class="mr-sm-2" for="insert-table-actors"> Actors: </label>
-                            <table id="insert-table-actors">
+                    <div class="panel panel-primary">
+                        <div class="panel-body" style="overflow: auto; max-height: 300px">
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class="mr-sm-2" for="insert-table-actors"> Actors: </label>
+                                <table id="insert-table-actors">
 
-                            </table>
+                                </table>
+                            </div>
+                        </div>
                         </div>
                     </div>
 
@@ -208,8 +212,7 @@
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-danger" data-dismiss="modal" id='confirmDelete' onclick="controller.delete()"
-                        type="submit"
+                <button class="btn btn-danger" data-dismiss="modal" onclick="controller.delete()" type="submit"
                         value="Submit">Delete
                 </button>
                 <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>

@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS FILM_DB;
-CREATE DATABASE FILM_DB;
-USE FILM_DB;
+DROP DATABASE IF EXISTS Film_Db;
+CREATE DATABASE Film_Db;
+USE Film_Db;
 
 DROP TABLE IF EXISTS feedback CASCADE;
 DROP TABLE IF EXISTS user CASCADE;
@@ -10,7 +10,8 @@ DROP TABLE IF EXISTS cast CASCADE;
 
 CREATE TABLE user
 (
-    id_user VARCHAR(20) NOT NULL PRIMARY KEY
+    id_user  INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(20)
 );
 
 CREATE TABLE film
@@ -25,8 +26,8 @@ CREATE TABLE film
 
 CREATE TABLE feedback
 (
-    id_film INT         NOT NULL,
-    id_user VARCHAR(20) NOT NULL,
+    id_film INT NOT NULL,
+    id_user INT NOT NULL,
     score   FLOAT CHECK (score > 0 and score < 5),
     comment VARCHAR(500),
     PRIMARY KEY (id_film, id_user),

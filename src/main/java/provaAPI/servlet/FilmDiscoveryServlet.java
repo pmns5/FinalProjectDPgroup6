@@ -1,9 +1,8 @@
 package provaAPI.servlet;
 
 
-import provaAPI.gateway.HomeGateway;
+import provaAPI.gateway.FilmDiscoveryGateway;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,14 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet(name = "HomeServlet", value = {"/getAll", "/getPerGenre", "/getFilm"})
-public class HomeServlet extends HttpServlet {
+@WebServlet(name = "FilmDiscoveryServlet", value = {"/getAll", "/getPerGenre", "/getFilmDetails"})
+public class FilmDiscoveryServlet extends HttpServlet {
 
-    private HomeGateway gateway;
+    private FilmDiscoveryGateway gateway;
 
     @Override
     public void init() {
-        gateway = new HomeGateway();
+        gateway = new FilmDiscoveryGateway();
     }
 
     @Override
@@ -28,9 +27,9 @@ public class HomeServlet extends HttpServlet {
         response.setContentType("application/json");
 
         switch (path) {
-            case "/getAll" -> gateway.getAll(request, response);
+            case "/getAll" -> gateway.getAll(response);
             case "/getPerGenre" -> gateway.getPerGenre(request, response);
-            case "/getFilm" -> gateway.getFilm(request, response);
+            case "/getFilmDetails" -> gateway.getFilmDataAndFeedbacks(request, response);
         }
         response.flushBuffer();
     }

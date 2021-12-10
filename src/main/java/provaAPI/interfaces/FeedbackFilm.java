@@ -11,7 +11,9 @@ public interface FeedbackFilm {
 
     boolean editFeedback(Feedback feedback);
 
-    boolean deleteFeedback(Feedback feedback);
+    boolean deleteFeedback(int id_film, int id_user);
+
+    Feedback getOneFeedback(int id_film, int id_user);
 
     ArrayList<Feedback> getByFilm(int id_film);
 
@@ -19,5 +21,4 @@ public interface FeedbackFilm {
 
     Float getAverageScore(int id_film);
 
-    Feedback getOneFeedback(int id_film, int id_user);
 }

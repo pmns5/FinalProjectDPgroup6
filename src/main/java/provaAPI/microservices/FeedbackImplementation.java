@@ -44,12 +44,12 @@ public class FeedbackImplementation extends DBConnection implements FeedbackFilm
     }
 
     @Override
-    public boolean deleteFeedback(Feedback feedback) {
+    public boolean deleteFeedback(int id_film, int id_user) {
         try (PreparedStatement stmt = db.getConn().prepareStatement(
                 "DELETE FROM feedback WHERE id_film = ? AND id_user = ?"
         )) {
-            stmt.setInt(0, feedback.getId_film());
-            stmt.setInt(1, feedback.getId_user());
+            stmt.setInt(0, id_film);
+            stmt.setInt(1, id_user);
             stmt.execute();
         } catch (SQLException e) {
             return false;

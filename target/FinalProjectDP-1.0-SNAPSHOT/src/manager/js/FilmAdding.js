@@ -209,7 +209,7 @@ class FilmAdding {
         str += '</h6>';
         return str;
     }
-    
+
     constructFilmView(obj) {
         return '<div class="col-sm-4">' +
             '   <div class="our_2">' +
