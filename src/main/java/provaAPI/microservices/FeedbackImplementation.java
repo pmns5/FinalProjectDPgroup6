@@ -2,7 +2,6 @@ package provaAPI.microservices;
 
 import provaAPI.interfaces.DBConnection;
 import provaAPI.interfaces.FeedbackFilm;
-import provaAPI.models.Actor;
 import provaAPI.models.Feedback;
 
 import java.sql.PreparedStatement;
@@ -49,7 +48,7 @@ public class FeedbackImplementation extends DBConnection implements FeedbackFilm
         try (PreparedStatement stmt = db.getConn().prepareStatement(
                 "DELETE FROM feedback WHERE id_film = ? AND id_user = ?"
         )) {
-            stmt.setInt(1, feedback.getId_film());
+            stmt.setInt(0, feedback.getId_film());
             stmt.setInt(1, feedback.getId_user());
             stmt.execute();
         } catch (SQLException e) {
@@ -111,4 +110,25 @@ public class FeedbackImplementation extends DBConnection implements FeedbackFilm
         }
         return (float) 0;
     }
+
+    @Override
+    public Feedback getOneFeedback(int id_film, int id_user) {
+        try (PreparedStatement stmt = db.getConn().prepareStatement("SELECT score, comment FROM feedback" +
+                " WHERE id_film = ? AND id_user=?")) {
+            stmt.setInt(1, id_film);
+            stmt.setInt(2, id_user);
+            ResultSet rs = stmt.executeQuery();
+            if (rs != null) {
+                rs.next();
+                float score = rs.getFloat(0);
+                String comment = rs.getString(1);
+                return new Feedback(id_user, id_film, comment, score);
+            }
+
+        } catch (SQLException ignored) {
+
+        }
+        return null;
+    }
+
 }
