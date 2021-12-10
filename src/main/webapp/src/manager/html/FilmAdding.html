@@ -128,12 +128,16 @@
                     </div>
 
                     <!-- Cast -->
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
-                            <label class="mr-sm-2" for="insert-table-actors"> Actors: </label>
-                            <table id="insert-table-actors">
+                    <div class="panel panel-primary">
+                        <div class="panel-body" style="overflow: auto; max-height: 300px">
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class="mr-sm-2" for="insert-table-actors"> Actors: </label>
+                                <table id="insert-table-actors">
 
-                            </table>
+                                </table>
+                            </div>
+                        </div>
                         </div>
                     </div>
 
@@ -208,36 +212,13 @@
             </div>
 
             <div class="modal-footer">
+                <button class="btn btn-danger" data-dismiss="modal" onclick="controller.delete()" type="submit"
+                        value="Submit">Delete
+                </button>
                 <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
                 <button class="btn btn-primary" data-dismiss="modal" onclick="controller.edit()" type="submit"
                         value="Submit">Save
                     Changes
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Popup per la conferma della cancellazione -->
-<div class="modal fade" id="delete-modal" role='dialog'>
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Delete</h5>
-                <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times</button>
-            </div>
-            <div class="modal-body">
-                <p>Do You Really Want to Delete <strong id="delete-name"></strong> ?</p>
-                <form id="delete-form">
-                    <input id="delete-id" name="id" type="hidden" value="">
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" type="button">Cancel
-                </button>
-                <button class="btn btn-danger" data-dismiss="modal" id='confirmDelete' onclick="controller.delete()"
-                        type="submit"
-                        value="Submit">Confirm
                 </button>
             </div>
         </div>

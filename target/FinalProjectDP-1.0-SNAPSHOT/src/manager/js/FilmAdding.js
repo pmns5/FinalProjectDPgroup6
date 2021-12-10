@@ -5,7 +5,8 @@ class FilmAdding {
      * @param endPoint
      */
     constructor(endPoint) {
-        this.viewEndPoint = endPoint + "/films";
+        this.viewOneEndPoint = endPoint + "/getFilm";
+        this.viewAllEndPoint = endPoint + "/getAll"
         this.createEndPoint = endPoint + "/add-film";
         this.editEndPoint = endPoint + "/edit-film";
         this.deleteEndPoint = endPoint + "/delete-film";
@@ -21,7 +22,7 @@ class FilmAdding {
     fillTable() {
         let controller = this;
         /* Call the microservice and evaluate data and result status */
-        $.getJSON(this.viewEndPoint, function (data) {
+        $.getJSON(this.viewAllEndPoint, function (data) {
 
             controller.renderGUI(data);
         }).done(function () {
@@ -78,7 +79,7 @@ class FilmAdding {
      * @param id the id of the row to edit.
      */
     viewEdit(id) {
-        $.get(this.viewEndPoint, {id: id}, function (data) {
+        $.get(this.viewOneEndPoint, {id: id}, function (data) {
             $('#edit-id').val(data.id);
             $('#edit-title').val(data.title);
             $('#edit-plot').val(data.plot);
@@ -116,25 +117,12 @@ class FilmAdding {
     }
 
     /**
-     * Open Model, download Json data and render.
-     * @param id the id of the row to delete
-     */
-    deleteView(id) {
-        $.get(this.viewEndPoint, {id: id}, function (data) {
-            $('#delete-id').val(data.id);
-            $('#delete-name').html(data.name);
-        }).done(function () {
-            $('#delete-modal').modal('show');
-        });
-    }
-
-    /**
      * Call delete service and get requested data with get method. Show an alert showing the response.
      */
     delete() {
         let controller = this;
-        let data = $('#delete-form').serialize();
-        $.get(this.deleteEndPoint, data, function () {
+        let id = $('#edit-id').val();
+        $.get(this.deleteEndPoint, {id:id}, function () {
             // waiting
         }).done(function () {
             // show alert
@@ -212,7 +200,6 @@ class FilmAdding {
     }
 
     addActors(actorList) {
-        console.log(actorList);
         let str = '';
         str += '<h4 class="filmText">';
         $.each(actorList, function (index, obj) {
@@ -222,12 +209,11 @@ class FilmAdding {
         str += '</h6>';
         return str;
     }
-
-
+    
     constructFilmView(obj) {
         return '<div class="col-sm-4">' +
             '   <div class="our_2">' +
-            '       <div class="ih-item square effect5 left_to_right"><a data-toggle="modal" data-target="#edit-modal" onClick="controller.viewEdit(' + obj.id + ')">' +
+            '       <div class="ih-item square effect5 left_to_right"><a data-toggle="modal" data-target="#edit-modal" onclick="controller.viewEdit(obj.id)">' +
             '           <div class="img"><img src=data:image/jpeg;base64,' + obj.poster + ' alt="img" >' + ' </div>' +
             '            <div class="info">' +
             '               <h3>' + obj.title + '</h3>' +
