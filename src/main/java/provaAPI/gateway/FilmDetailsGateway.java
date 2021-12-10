@@ -14,7 +14,7 @@ public class FilmDetailsGateway extends APIGateway {
         super();
     }
 
-    public void getAll(HttpServletRequest req, HttpServletResponse res) {
+    public void getAllFeedbackFromFilm(HttpServletRequest req, HttpServletResponse res) {
 
         try {
             // Aggregate Data From Different Microservices

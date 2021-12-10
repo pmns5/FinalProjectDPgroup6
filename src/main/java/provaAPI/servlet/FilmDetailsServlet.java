@@ -1,24 +1,21 @@
 package provaAPI.servlet;
 
+import provaAPI.gateway.FilmDetailsGateway;
 
-import provaAPI.gateway.HomeGateway;
-
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@WebServlet(name = "FilmDetailsServlet", value = {"/getAllFeedbacks"})
+public class FilmDetailsServlet extends HttpServlet {
 
-@WebServlet(name = "HomeServlet", value = {"/getAll", "/getPerGenre", "/getFilm"})
-public class HomeServlet extends HttpServlet {
-
-    private HomeGateway gateway;
+    private FilmDetailsGateway gateway;
 
     @Override
     public void init() {
-        gateway = new HomeGateway();
+        gateway = new FilmDetailsGateway();
     }
 
     @Override
@@ -26,16 +23,9 @@ public class HomeServlet extends HttpServlet {
         response.setHeader("Access-Control-Allow-Origin", "*");
         String path = ServletUtil.getRequestPath(request);
         response.setContentType("application/json");
-
-        switch (path) {
-            case "/getAll" -> gateway.getAll(request, response);
-            case "/getPerGenre" -> gateway.getPerGenre(request, response);
-            case "/getFilm" -> gateway.getFilm(request, response);
-        }
+        gateway.getAllFeedbackFromFilm(request, response);
         response.flushBuffer();
     }
 
 
 }
-
-
