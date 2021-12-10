@@ -54,7 +54,7 @@ public class CastImplementation extends DBConnection implements CastFilm {
                 + id_film)) {
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
-                cast.add(new Cast(rs.getInt(0), rs.getInt(1)));
+                cast.add(new Cast(rs.getInt(1), rs.getInt(2)));
             }
             return cast;
         } catch (SQLException e) {

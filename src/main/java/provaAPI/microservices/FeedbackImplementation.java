@@ -109,6 +109,6 @@ public class FeedbackImplementation extends DBConnection implements FeedbackFilm
         } catch (SQLException ignored) {
 
         }
-        return (float) -1;
+        return (float) 0;
     }
 }

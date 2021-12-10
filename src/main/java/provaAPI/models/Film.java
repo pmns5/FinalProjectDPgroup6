@@ -84,6 +84,9 @@ public class Film {
         protected FilmSerializer(Class<Film> t) {
             super(t);
         }
+        protected FilmSerializer(){
+            this(null);
+        }
 
         @Override
         public void serialize(Film film, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
