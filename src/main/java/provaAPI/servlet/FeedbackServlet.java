@@ -24,7 +24,7 @@ public class FeedbackServlet extends HttpServlet {
         response.setHeader("Access-Control-Allow-Origin", "*");
         String path = ServletUtil.getRequestPath(request);
         switch (path) {
-            case "/feedback" -> gateway.getOneFeedbackFromFilm(request, response);
+            case "/feedback" -> gateway.viewFeedback(request, response);
             case "/delete-feedback" -> gateway.deleteFeedback(request, response);
         }
         response.flushBuffer();
