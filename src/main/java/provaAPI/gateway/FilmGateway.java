@@ -1,13 +1,15 @@
 package provaAPI.gateway;
 
 
-import provaAPI.models.Film;
+import provaAPI.models.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FilmGateway extends APIGateway {
 
