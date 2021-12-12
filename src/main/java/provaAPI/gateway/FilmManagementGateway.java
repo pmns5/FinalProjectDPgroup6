@@ -21,7 +21,7 @@ public class FilmManagementGateway extends APIGateway {
         // Extract Data From Request
         String title = req.getParameter("title");
         String plot = req.getParameter("plot");
-        int genre = Integer.parseInt(req.getParameter("genre"));
+        String genreStr = req.getParameter("genre");
         String trailer = req.getParameter("trailer");
         byte[] poster = null;
         String[] actors = req.getParameterValues("actors");
@@ -34,7 +34,8 @@ public class FilmManagementGateway extends APIGateway {
 
         trailer ="";
         // Recall Microservices for Completion
-        if (title != null && plot != null && genre != -1 && trailer != null && poster != null) {
+        if (title != null && plot != null && genreStr != null && trailer != null && poster != null) {
+            int genre = Integer.parseInt(genreStr);
             Film film = new Film(-1, title, plot, genre, trailer, poster);
             int id_film = filmInterface.addFilm(film);
             if (id_film != -1 && castFilm.addCast(id_film, actors)) {

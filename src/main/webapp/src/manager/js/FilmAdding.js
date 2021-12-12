@@ -146,24 +146,19 @@ class FilmAdding {
             return;
         }
 
-        const form = $('#insert-form')[0];
-        let data = new FormData(form);
         $.ajax({
             type: "POST",
-            enctype: 'multipart/form-data',
             url: controller.createEndPoint,
-            data: data,
+            data: new FormData($('#insert-form')[0]),
             processData: false,
             contentType: false,
-            cache: false,
-            timeout: 5000,
             success: function (data) {
                 controller.renderAlert('Film added successfully.', true);
                 controller.fillTable();
                 // create an image
-                var outputImg = document.createElement('img');
-                outputImg.src = 'data:image/jpeg;base64,' + data;
-                document.body.appendChild(outputImg);
+                // var outputImg = document.createElement('img');
+                // outputImg.src = 'data:image/jpeg;base64,' + data;
+                // document.body.appendChild(outputImg);
                 //controller.addFilmView($('#view'), data)
 
             },
@@ -171,6 +166,18 @@ class FilmAdding {
                 controller.renderAlert('Error while uploading. Try again.', false);
             }
         });
+        //
+        // let img = document.querySelector('#insert-form > input[type="file"]').files[0]
+        // let x = this.getBase64(img)
+        // console.log(x)
+        //
+        // let data = $('#insert-form').serialize();
+        // $.post(this.createEndPoint, data, function () {
+        //
+        // }).done(function () {
+        //     controller.renderAlert('Film added successfully.', true);
+        //     controller.fillTable();
+        // });
     }
 
     getActors(modal) {
@@ -223,6 +230,15 @@ class FilmAdding {
             '       </a></div>' +
             '   </div>' +
             '</div>';
+    }
+
+    getBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
     }
 }
 

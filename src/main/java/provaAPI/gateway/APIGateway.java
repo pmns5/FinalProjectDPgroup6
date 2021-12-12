@@ -14,10 +14,17 @@ import provaAPI.models.Film;
 import provaAPI.models.HomePageFilm;
 
 import javax.annotation.Resource;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+@Path("/ciao")
 public class APIGateway {
+    @GET
+    public String hello(){
+        return "CIAOOOOOOO";
+    }
 
     @Resource
     ActorFilm actorFilm;
@@ -37,7 +44,6 @@ public class APIGateway {
         this.castFilm = new CastImplementation();
         this.feedbackFilm = new FeedbackImplementation();
     }
-
 
 
     // Utilities
