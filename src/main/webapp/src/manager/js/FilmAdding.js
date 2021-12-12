@@ -23,7 +23,6 @@ class FilmAdding {
         let controller = this;
         /* Call the microservice and evaluate data and result status */
         $.getJSON(this.viewAllEndPoint, function (data) {
-
             controller.renderGUI(data);
         }).done(function () {
             //controller.renderAlert('Data charged successfully.', true);
@@ -40,6 +39,7 @@ class FilmAdding {
      * @param data a JSON representation of data
      */
     renderGUI(data) {
+        console.log(data)
         $('#view .our_2').remove();
         var array = [];
         $.each(data, function (index, obj) {
@@ -218,13 +218,14 @@ class FilmAdding {
     }
 
     constructFilmView(obj) {
+        console.log(obj)
         return '<div class="col-sm-4">' +
             '   <div class="our_2">' +
-            '       <div class="ih-item square effect5 left_to_right"><a data-toggle="modal" data-target="#edit-modal" onclick="controller.viewEdit(obj.id)">' +
-            '           <div class="img"><img src=data:image/jpeg;base64,' + obj.poster + ' alt="img" >' + ' </div>' +
+            '       <div class="ih-item square effect5 left_to_right"><a data-toggle="modal" data-target="#edit-modal" onclick="controller.viewEdit(obj.film.id)">' +
+            '           <div class="img"><img src=data:image/jpeg;base64,' + obj.film.poster + ' alt="img" >' + ' </div>' +
             '            <div class="info">' +
-            '               <h3>' + obj.title + '</h3>' +
-            '               <p>' + obj.plot + '</p>' +
+            '               <h3>' + obj.film.title + '</h3>' +
+            '               <p>' + obj.film.plot + '</p>' +
             controller.addActors(obj.actors) +
             '            </div>' +
             '       </a></div>' +
