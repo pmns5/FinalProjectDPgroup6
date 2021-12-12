@@ -1,4 +1,5 @@
 function validate(idForm) {
+    return true;
     $(idForm).addClass("needs-validation")
     let flag = true
     let forms = document.getElementsByClassName("needs-validation");

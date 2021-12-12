@@ -143,7 +143,7 @@
 
                     <!-- Link to Trailer -->
                     <div>
-                        <label for="insert-trailer">Trailer Link</label><input class="form-control" id="insert-trailer" name="trailer" type="url">
+                        <label for="insert-trailer">Trailer Link</label><input id="insert-trailer" name="trailer" type="url">
                     </div>
 
                     <!-- Poster -->
@@ -186,23 +186,22 @@
                     <div class="form-group col-md-12">
                         <label for="edit-title">Title</label>
                         <input autocomplete="off" class="form-control" id="edit-title" name="title"
-                               placeholder="Insert the movie's title..." required type="text" value="">
+                               placeholder="Insert the film's title..." required type="text" value="">
                     </div>
 
                     <!-- Plot -->
                     <div class="form-group col-md-12">
-                        <label for="edit-plot">Plot</label>
+                        <label for="edit-plot">Plot:</label>
                         <textarea autocomplete="off" class="form-control"
                                   id="edit-plot"
                                   name="plot"
                                   placeholder="Insert the film's plot..."
                                   required></textarea>
                     </div>
-
-                    <!-- Genre -->
+                    <!-- Genre  -->
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="edit-genre">Genre</label>
-                        <select class="form-select" id="edit-genre" name="genre">
+                        <select class="form-control" id="edit-genre" name="genre">
                             <option selected>Choose...</option>
                             <option value="1">Action</option>
                             <option value="2">Adventure</option>
@@ -211,6 +210,31 @@
                             <option value="5">Romance</option>
                         </select>
                     </div>
+
+                    <!-- Cast -->
+                    <div class="panel panel-primary">
+                        <div class="panel-body" style="overflow: auto; max-height: 300px">
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label class="mr-sm-2" for="edit-table-actors"> Actors: </label>
+                                    <table id="edit-table-actors">
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Link to Trailer -->
+                    <div>
+                        <label for="edit-trailer">Trailer Link</label><input id="edit-trailer" name="trailer" type="url">
+                    </div>
+
+                    <!-- Poster -->
+                    <div>
+                        <input class="form-control" id="edit-file" multiple name="poster" type="file"/>
+                    </div>
+
 
                 </form>
             </div>

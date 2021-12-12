@@ -5,7 +5,7 @@ class FilmAdding {
      * @param endPoint
      */
     constructor(endPoint) {
-        this.viewOneEndPoint = endPoint + "/getFilm";
+        this.viewOneEndPoint = endPoint + "/view-film";
         this.viewAllEndPoint = endPoint + "/getAll"
         this.createEndPoint = endPoint + "/add-film";
         this.editEndPoint = endPoint + "/edit-film";
@@ -79,6 +79,7 @@ class FilmAdding {
      * @param id the id of the row to edit.
      */
     viewEdit(id) {
+        console.log(id)
         $.get(this.viewOneEndPoint, {id: id}, function (data) {
             $('#edit-id').val(data.id);
             $('#edit-title').val(data.title);
@@ -122,7 +123,7 @@ class FilmAdding {
     delete() {
         let controller = this;
         let id = $('#edit-id').val();
-        $.get(this.deleteEndPoint, {id:id}, function () {
+        $.get(this.deleteEndPoint, {id: id}, function () {
             // waiting
         }).done(function () {
             // show alert
@@ -141,10 +142,10 @@ class FilmAdding {
     insert() {
         let controller = this;
 
-        if (validate('#insert-form') === false) {
-            controller.renderAlert('Error: Not all fields have been entered correctly. Please try again', false);
-            return;
-        }
+        // if (validate('#insert-form') === false) {
+        //     controller.renderAlert('Error: Not all fields have been entered correctly. Please try again', false);
+        //     return;
+        // }
 
         $.ajax({
             type: "POST",
@@ -152,32 +153,15 @@ class FilmAdding {
             data: new FormData($('#insert-form')[0]),
             processData: false,
             contentType: false,
-            success: function (data) {
+            success: function () {
                 controller.renderAlert('Film added successfully.', true);
                 controller.fillTable();
-                // create an image
-                // var outputImg = document.createElement('img');
-                // outputImg.src = 'data:image/jpeg;base64,' + data;
-                // document.body.appendChild(outputImg);
-                //controller.addFilmView($('#view'), data)
-
             },
             error: function (e) {
                 controller.renderAlert('Error while uploading. Try again.', false);
             }
         });
-        //
-        // let img = document.querySelector('#insert-form > input[type="file"]').files[0]
-        // let x = this.getBase64(img)
-        // console.log(x)
-        //
-        // let data = $('#insert-form').serialize();
-        // $.post(this.createEndPoint, data, function () {
-        //
-        // }).done(function () {
-        //     controller.renderAlert('Film added successfully.', true);
-        //     controller.fillTable();
-        // });
+
     }
 
     getActors(modal) {
@@ -207,8 +191,10 @@ class FilmAdding {
     }
 
     addActors(actorList) {
+        console.log(actorList)
+
         let str = '';
-        str += '<h4 class="filmText">';
+        str += '<h6 class="filmText" style="color: aquamarine">';
         $.each(actorList, function (index, obj) {
             str += ' ' + obj.name + ' ' + obj.surname + ',';
         });
@@ -218,10 +204,9 @@ class FilmAdding {
     }
 
     constructFilmView(obj) {
-        console.log(obj)
         return '<div class="col-sm-4">' +
             '   <div class="our_2">' +
-            '       <div class="ih-item square effect5 left_to_right"><a data-toggle="modal" data-target="#edit-modal" onclick="controller.viewEdit(obj.film.id)">' +
+            '       <div class="ih-item square effect5 left_to_right"><a data-toggle="modal" data-target="#edit-modal" onclick="controller.viewEdit('+obj.film.id+')">' +
             '           <div class="img"><img src=data:image/jpeg;base64,' + obj.film.poster + ' alt="img" >' + ' </div>' +
             '            <div class="info">' +
             '               <h3>' + obj.film.title + '</h3>' +
@@ -233,14 +218,6 @@ class FilmAdding {
             '</div>';
     }
 
-    getBase64(file) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = error => reject(error);
-        });
-    }
 }
 
 

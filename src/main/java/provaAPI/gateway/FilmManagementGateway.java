@@ -1,6 +1,5 @@
 package provaAPI.gateway;
 
-
 import provaAPI.models.*;
 
 import javax.servlet.ServletException;
@@ -32,7 +31,6 @@ public class FilmManagementGateway extends APIGateway {
             e.printStackTrace();
         }
 
-        trailer ="";
         // Recall Microservices for Completion
         if (title != null && plot != null && genreStr != null && trailer != null && poster != null) {
             int genre = Integer.parseInt(genreStr);
@@ -67,7 +65,6 @@ public class FilmManagementGateway extends APIGateway {
             e.printStackTrace();
         }
 
-        trailer ="";
         // Recall Microservices for Completion
         if (title != null && plot != null && genre != -1 && trailer != null && poster != null) {
             Film film = new Film(id, title, plot, genre, trailer, poster);
