@@ -16,6 +16,6 @@ public interface FilmInterface {
 
     List<Film> getAllFilms();
 
-    List<Film> getByGenre(int genre);
+    List<Film> getByGenre(String genre);
 
 }

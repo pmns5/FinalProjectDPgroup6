@@ -29,7 +29,7 @@ public class FilmImplementation extends DBConnection implements FilmInterface {
                 "INSERT INTO film (title, genre, plot, trailer, poster) VALUES (?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS
         )) {
             stmt.setString(1, film.getTitle());
-            stmt.setInt(2, film.getGenre());
+            stmt.setString(2, film.getGenre());
             stmt.setString(3, film.getPlot());
             stmt.setString(4, film.getTrailer());
             stmt.setBlob(5, new SerialBlob(film.getPoster()));
@@ -49,7 +49,7 @@ public class FilmImplementation extends DBConnection implements FilmInterface {
                         " poster = ? WHERE id_film = ?"
         )) {
             stmt.setString(1, film.getTitle());
-            stmt.setInt(2, film.getGenre());
+            stmt.setString(2, film.getGenre());
             stmt.setString(3, film.getPlot());
             stmt.setString(4, film.getTrailer());
             stmt.setBlob(5, new SerialBlob(film.getPoster()));
@@ -84,7 +84,7 @@ public class FilmImplementation extends DBConnection implements FilmInterface {
                 }
                 int id_film = rs.getInt(1);
                 String title = rs.getString(2);
-                int genre = rs.getInt(3);
+                String genre = rs.getString(3);
                 String plot = rs.getString(4);
                 String trailer = rs.getString(5);
                 Blob poster = (Blob) rs.getBlob(6);
@@ -105,7 +105,7 @@ public class FilmImplementation extends DBConnection implements FilmInterface {
             while (rs.next()) {
                 int id_film = rs.getInt(1);
                 String title = rs.getString(2);
-                int genre = rs.getInt(3);
+                String genre = rs.getString(3);
                 String plot = rs.getString(4);
                 String trailer = rs.getString(5);
                 Blob poster = (Blob) rs.getBlob(6);
@@ -121,7 +121,7 @@ public class FilmImplementation extends DBConnection implements FilmInterface {
     }
 
     @Override
-    public List<Film> getByGenre(int genre) {
+    public List<Film> getByGenre(String genre) {
         ArrayList<Film> listFilms = new ArrayList<>();
         try (Statement stmt = db.getConn().createStatement(); ResultSet rs = stmt.executeQuery("SELECT id_film," +
                 " title, plot, trailer, poster FROM film WHERE genre=" + genre + "  ORDER BY id_film")) {

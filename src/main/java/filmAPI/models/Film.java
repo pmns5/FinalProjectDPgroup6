@@ -13,11 +13,11 @@ public class Film {
     private int id;
     private String title;
     private String plot;
-    private int genre;
+    private String genre;
     private String trailer;
     private byte[] poster;
 
-    public Film(int id, String title, String plot, int genre, String trailer, byte[] poster) {
+    public Film(int id, String title, String plot, String genre, String trailer, byte[] poster) {
         this.id = id;
         this.title = title;
         this.plot = plot;
@@ -50,11 +50,11 @@ public class Film {
         this.plot = plot;
     }
 
-    public int getGenre() {
+    public String getGenre() {
         return genre;
     }
 
-    public void setGenre(int genre) {
+    public void setGenre(String genre) {
         this.genre = genre;
     }
 
@@ -95,7 +95,7 @@ public class Film {
             jsonGenerator.writeNumberField("id", film.id);
             jsonGenerator.writeStringField("title", film.title);
             jsonGenerator.writeStringField("plot", film.plot);
-            jsonGenerator.writeNumberField("genre", film.genre);
+            jsonGenerator.writeStringField("genre", film.genre);
             jsonGenerator.writeStringField("trailer", film.trailer);
             jsonGenerator.writeStringField("poster", new String(Base64.getEncoder().encode(film.poster)));
             jsonGenerator.writeEndObject();
