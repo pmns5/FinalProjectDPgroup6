@@ -19,12 +19,8 @@ import javax.ws.rs.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-@Path("/ciao")
+
 public class APIGateway {
-    @GET
-    public String hello(){
-        return "CIAOOOOOOO";
-    }
 
     @Resource
     ActorFilm actorFilm;

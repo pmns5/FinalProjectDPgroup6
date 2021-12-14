@@ -80,11 +80,17 @@ class FilmAdding {
      */
     viewEdit(id) {
         console.log(id)
-        $.get(this.viewOneEndPoint, {id: id}, function (data) {
-            $('#edit-id').val(data.id);
-            $('#edit-title').val(data.title);
-            $('#edit-plot').val(data.plot);
-            $('#edit-genre').val(data.genre);
+        $.getJSON(this.viewOneEndPoint, {id: id}, function (obj) {
+            console.log(obj)
+
+            console.log(obj.film)
+            console.log(obj.actors)
+            console.log(obj.avgScore)
+
+            $('#edit-id').val(obj.film.id);
+            $('#edit-title').val(obj.film.title);
+            $('#edit-plot').val(obj.film.plot);
+            $('#edit-genre').val(obj.film.genre);
         }).done(function () {
             $('#edit-modal').modal('show');
         });
@@ -123,6 +129,8 @@ class FilmAdding {
     delete() {
         let controller = this;
         let id = $('#edit-id').val();
+        console.log("DELETE : ")
+        console.log(id)
         $.get(this.deleteEndPoint, {id: id}, function () {
             // waiting
         }).done(function () {
@@ -206,7 +214,7 @@ class FilmAdding {
     constructFilmView(obj) {
         return '<div class="col-sm-4">' +
             '   <div class="our_2">' +
-            '       <div class="ih-item square effect5 left_to_right"><a data-toggle="modal" data-target="#edit-modal" onclick="controller.viewEdit('+obj.film.id+')">' +
+            '       <div class="ih-item square effect5 left_to_right"><a data-toggle="modal" data-target="#edit-modal" onclick="controller.viewEdit(' + obj.film.id + ')">' +
             '           <div class="img"><img src=data:image/jpeg;base64,' + obj.film.poster + ' alt="img" >' + ' </div>' +
             '            <div class="info">' +
             '               <h3>' + obj.film.title + '</h3>' +
