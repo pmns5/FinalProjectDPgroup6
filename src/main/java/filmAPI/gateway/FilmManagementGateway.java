@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FilmManagementGateway extends APIGateway {
-
     public FilmManagementGateway() {
         super();
     }
@@ -30,7 +29,6 @@ public class FilmManagementGateway extends APIGateway {
         } catch (IOException | ServletException e) {
             e.printStackTrace();
         }
-
         // Recall Microservices for Completion
         if (title != null && plot != null && genreStr != null && trailer != null && poster != null) {
             int genre = Integer.parseInt(genreStr);
@@ -65,7 +63,6 @@ public class FilmManagementGateway extends APIGateway {
         } catch (IOException | ServletException e) {
             e.printStackTrace();
         }
-
         // Recall Microservices for Completion
         if (title != null && plot != null && genre != -1 && trailer != null && poster != null) {
             Film film = new Film(-1, title, plot, EnumGenre.valueOf(genre), trailer, poster);
@@ -118,5 +115,4 @@ public class FilmManagementGateway extends APIGateway {
             res.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
         }
     }
-
 }

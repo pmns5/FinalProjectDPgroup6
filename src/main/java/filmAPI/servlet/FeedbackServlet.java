@@ -8,10 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
 @WebServlet(name = "FeedbackServlet", value = {"/feedback", "/add-feedback", "/delete-feedback", "/edit-feedback"})
 public class FeedbackServlet extends HttpServlet {
-
     private FeedbackGateway gateway;
 
     @Override
@@ -40,5 +38,4 @@ public class FeedbackServlet extends HttpServlet {
         }
         response.flushBuffer();
     }
-
 }

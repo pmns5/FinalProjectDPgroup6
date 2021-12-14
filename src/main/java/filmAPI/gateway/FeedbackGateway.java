@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class FeedbackGateway extends APIGateway {
-
     public FeedbackGateway() {
         super();
     }
@@ -18,12 +17,10 @@ public class FeedbackGateway extends APIGateway {
         String id_userStr = req.getParameter("id_user");
         String scoreStr = req.getParameter("score");
         String comment = req.getParameter("comment");
-
         if (id_filmStr != null && id_userStr != null && scoreStr != null && comment != null) {
             int id_film = Integer.parseInt(id_filmStr);
             int id_user = Integer.parseInt(id_userStr);
             float score = Float.parseFloat(scoreStr);
-
             Feedback feedback = new Feedback(id_user, id_film, comment, score);
             if (feedbackFilm.addFeedback(feedback)) {
                 // add success
@@ -43,12 +40,10 @@ public class FeedbackGateway extends APIGateway {
         String id_userStr = req.getParameter("id_user");
         String scoreStr = req.getParameter("score");
         String comment = req.getParameter("comment");
-
         if (id_filmStr != null && id_userStr != null && scoreStr != null && comment != null) {
             int id_film = Integer.parseInt(id_filmStr);
             int id_user = Integer.parseInt(id_userStr);
             float score = Float.parseFloat(scoreStr);
-
             Feedback feedback = new Feedback(id_user, id_film, comment, score);
             if (feedbackFilm.editFeedback(feedback)) {
                 // add success
@@ -66,11 +61,9 @@ public class FeedbackGateway extends APIGateway {
     public void viewFeedback(HttpServletRequest req, HttpServletResponse res) throws IOException {
         String id_filmStr = req.getParameter("id_film");
         String id_userStr = req.getParameter("id_user");
-
         if (id_filmStr != null && id_userStr != null) {
             int id_film = Integer.parseInt(id_filmStr);
             int id_user = Integer.parseInt(id_userStr);
-
             Feedback feedback = feedbackFilm.getOneFeedback(id_film, id_user);
             if (feedback != null) {
                 res.getWriter().print(Utils.toJSON(feedback));
@@ -87,11 +80,9 @@ public class FeedbackGateway extends APIGateway {
     public void deleteFeedback(HttpServletRequest req, HttpServletResponse res) {
         String id_filmStr = req.getParameter("id_film");
         String id_userStr = req.getParameter("id_user");
-
         if (id_filmStr != null && id_userStr != null) {
             int id_film = Integer.parseInt(id_filmStr);
             int id_user = Integer.parseInt(id_userStr);
-
             // Do delete
             if (feedbackFilm.deleteFeedback(id_film, id_user)) {
                 // Send success
@@ -105,5 +96,4 @@ public class FeedbackGateway extends APIGateway {
             res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
-
 }

@@ -5,7 +5,6 @@ import filmAPI.models.Feedback;
 import java.util.ArrayList;
 
 public interface FeedbackFilm {
-
     boolean addFeedback(Feedback feedback);
 
     boolean editFeedback(Feedback feedback);
@@ -19,5 +18,4 @@ public interface FeedbackFilm {
     ArrayList<Feedback> getByUser(int id_user);
 
     Float getAverageScore(int id_film);
-
 }

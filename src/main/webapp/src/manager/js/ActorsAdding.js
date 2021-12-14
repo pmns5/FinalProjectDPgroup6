@@ -9,7 +9,6 @@ class ActorsAdding {
         this.createEndPoint = endPoint + "/add-actor";
         this.editEndPoint = endPoint + "/edit-actor";
         this.deleteEndPoint = endPoint + "/delete-actor";
-
     }
 
     /**
@@ -29,7 +28,6 @@ class ActorsAdding {
         }).fail(function () {
             controller.renderAlert('Error while charging data. Retry in a few second.', false);
         });
-
     }
 
     /**
@@ -40,20 +38,16 @@ class ActorsAdding {
     renderGUI(data) {
         // If table not empty
         $('#table td').remove();
-
         // Get the html template for table rows
         let staticHtml = $("#table-template").html();
-
         /* Bind obj data to the template, then append to table body */
         $.each(data, function (index, obj) {
             let row = staticHtml;
             row = row.replace(/{ID}/ig, obj.id);
             row = row.replace(/{Name}/ig, obj.name);
             row = row.replace(/{Surname}/ig, obj.surname);
-
             $('#table-rows').append(row);
         });
-
         /* When empty address-book */
         if (data.length === 0) {
             $("tfoot").html('<tr><th colspan="3">No records</th></tr>');
@@ -163,7 +157,6 @@ class ActorsAdding {
      */
     insert() {
         let controller = this;
-
         if (validate('#insert-form') === false) {
             controller.renderAlert('Error: Not all fields have been entered correctly. Please try again', false);
             return;
@@ -171,7 +164,6 @@ class ActorsAdding {
         let data = $('#insert-form').serialize();
         console.log(data)
         $.post(this.createEndPoint, data, function () { // waiting for response-
-
         }).done(function () { // success response-
             // Set success alert.
             controller.renderAlert('Actor successfully entered.', true);
@@ -185,5 +177,3 @@ class ActorsAdding {
         });
     }
 }
-
-

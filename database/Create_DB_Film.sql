@@ -13,7 +13,6 @@ CREATE TABLE user
     id_user  INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(20)
 );
-
 CREATE TABLE film
 (
     id_film INT AUTO_INCREMENT PRIMARY KEY,
@@ -23,7 +22,6 @@ CREATE TABLE film
     trailer VARCHAR(50),
     poster  LONGBLOB
 );
-
 CREATE TABLE feedback
 (
     id_film INT NOT NULL,
@@ -34,14 +32,12 @@ CREATE TABLE feedback
     CONSTRAINT FK_film_feedback FOREIGN KEY (id_film) REFERENCES FILM (id_film) on update cascade on delete cascade,
     CONSTRAINT FK_user_feedback FOREIGN KEY (id_user) REFERENCES USER (id_user) on update cascade on delete cascade
 );
-
 CREATE TABLE actor
 (
     id_actor INT AUTO_INCREMENT PRIMARY KEY,
     name     VARCHAR(20),
     surname  VARCHAR(20)
 );
-
 CREATE TABLE cast
 (
     id_film  INT NOT NULL,

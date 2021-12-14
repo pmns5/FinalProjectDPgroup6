@@ -79,7 +79,6 @@ public class Film {
         return false;
     }
 
-
     static class FilmSerializer extends StdSerializer<Film> {
         protected FilmSerializer(Class<Film> t) {
             super(t);
@@ -100,6 +99,5 @@ public class Film {
             jsonGenerator.writeStringField("poster", new String(Base64.getEncoder().encode(film.poster)));
             jsonGenerator.writeEndObject();
         }
-
     }
 }

@@ -1,6 +1,5 @@
 package filmAPI.servlet;
 
-
 import filmAPI.gateway.FilmDiscoveryGateway;
 
 import javax.servlet.annotation.WebServlet;
@@ -9,10 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
 @WebServlet(name = "FilmDiscoveryServlet", value = {"/getAll", "/getPerGenre", "/getFilmDetails"})
 public class FilmDiscoveryServlet extends HttpServlet {
-
     private FilmDiscoveryGateway gateway;
 
     @Override
@@ -25,7 +22,6 @@ public class FilmDiscoveryServlet extends HttpServlet {
         response.setHeader("Access-Control-Allow-Origin", "*");
         String path = ServletUtil.getRequestPath(request);
         response.setContentType("application/json");
-
         switch (path) {
             case "/getAll" -> gateway.getAll(response);
             case "/getPerGenre" -> gateway.getPerGenre(request, response);
@@ -33,8 +29,4 @@ public class FilmDiscoveryServlet extends HttpServlet {
         }
         response.flushBuffer();
     }
-
-
 }
-
-

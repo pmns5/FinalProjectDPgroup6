@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CastImplementation extends DBConnection implements CastFilm {
-
     public CastImplementation() {
         super();
         db.connect();
@@ -76,5 +75,4 @@ public class CastImplementation extends DBConnection implements CastFilm {
         }
         return true;
     }
-
 }

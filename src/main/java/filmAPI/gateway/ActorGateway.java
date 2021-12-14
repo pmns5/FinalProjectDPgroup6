@@ -8,9 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-
 public class ActorGateway extends APIGateway {
-
     public ActorGateway() {
         super();
     }
@@ -93,5 +91,4 @@ public class ActorGateway extends APIGateway {
             res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
-
 }

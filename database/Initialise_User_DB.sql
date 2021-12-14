@@ -20,4 +20,3 @@ INSERT INTO user(username, email, user_password, ban)
 VALUES ('michele', 'michele@gmail.com', 'michele', 1);
 INSERT INTO user(username, email, user_password, ban)
 VALUES ('rita', 'rita@gmail.com', 'rita', 0);
-

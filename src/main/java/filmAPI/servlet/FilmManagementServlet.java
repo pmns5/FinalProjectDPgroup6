@@ -12,7 +12,6 @@ import java.io.IOException;
 @WebServlet(name = "FilmManagementServlet", value = {"/view-film", "/add-film", "/delete-film", "/edit-film"})
 @MultipartConfig(maxFileSize = 16177215)
 public class FilmManagementServlet extends HttpServlet {
-
     private FilmManagementGateway gateway;
 
     @Override
@@ -24,7 +23,6 @@ public class FilmManagementServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setHeader("Access-Control-Allow-Origin", "*");
         String path = ServletUtil.getRequestPath(request);
-
         switch (path) {
             case "/add-film" -> gateway.addFilm(request, response);
             case "/edit-film" -> gateway.editFilm(request, response);
@@ -36,12 +34,10 @@ public class FilmManagementServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setHeader("Access-Control-Allow-Origin", "*");
         String path = ServletUtil.getRequestPath(request);
-
         switch (path) {
             case "/delete-film" -> gateway.deleteFilm(request, response);
             case "/view-film" -> gateway.getFilm(request, response);
         }
         response.flushBuffer();
     }
-
 }

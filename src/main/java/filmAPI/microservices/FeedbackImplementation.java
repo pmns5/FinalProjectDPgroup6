@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class FeedbackImplementation extends DBConnection implements FeedbackFilm {
-
     @Override
     public boolean addFeedback(Feedback feedback) {
         try (PreparedStatement stmt = db.getConn().prepareStatement(
@@ -104,9 +103,7 @@ public class FeedbackImplementation extends DBConnection implements FeedbackFilm
                 rs.next();
                 return rs.getFloat(0);
             }
-
         } catch (SQLException ignored) {
-
         }
         return (float) 0;
     }
@@ -124,11 +121,8 @@ public class FeedbackImplementation extends DBConnection implements FeedbackFilm
                 String comment = rs.getString(1);
                 return new Feedback(id_user, id_film, comment, score);
             }
-
         } catch (SQLException ignored) {
-
         }
         return null;
     }
-
 }

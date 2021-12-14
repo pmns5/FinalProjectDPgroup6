@@ -17,7 +17,6 @@ import java.util.List;
  * Microservice for management of Data associated of a film
  */
 public class FilmImplementation extends DBConnection implements FilmInterface {
-
     public FilmImplementation() {
         super();
         db.connect();

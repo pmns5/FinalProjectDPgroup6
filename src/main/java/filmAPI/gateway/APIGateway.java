@@ -17,18 +17,13 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class APIGateway {
-
     @Resource
     ActorFilm actorFilm;
-
     @Resource
     FilmInterface filmInterface;
-
     @Resource
     CastFilm castFilm;
-
     @Resource
     FeedbackFilm feedbackFilm;
 
@@ -38,7 +33,6 @@ public class APIGateway {
         this.castFilm = new CastImplementation();
         this.feedbackFilm = new FeedbackImplementation();
     }
-
 
     // Utilities
     // Private Utility for Requesting to the microservices the data associated to the current film
@@ -67,5 +61,4 @@ public class APIGateway {
         for (Cast c : castList) actorList.add(actorFilm.getOneActor(c.getId_actor()));
         return actorList;
     }
-
 }

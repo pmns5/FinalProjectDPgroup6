@@ -14,7 +14,6 @@ import java.util.ArrayList;
  * Microservice for Actor Management
  */
 public class ActorImplementation extends DBConnection implements ActorFilm {
-
     public ActorImplementation() {
         super();
         db.connect();
@@ -94,5 +93,4 @@ public class ActorImplementation extends DBConnection implements ActorFilm {
         }
         return result;
     }
-
 }
