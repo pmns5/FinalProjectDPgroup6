@@ -4,7 +4,6 @@ import filmAPI.models.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 
 public class FilmDiscoveryGateway extends APIGateway {
@@ -37,14 +36,7 @@ public class FilmDiscoveryGateway extends APIGateway {
         int genre = Integer.parseInt(genreStr);
         try {
             // Aggregate Data From Different Microservices
-            List<Film> films = new ArrayList<>();
-            switch (genre) {
-                case 1 -> films = filmInterface.getByGenre(EnumGenre._1.label);
-                case 2 -> films = filmInterface.getByGenre(EnumGenre._2.label);
-                case 3 -> films = filmInterface.getByGenre(EnumGenre._3.label);
-                case 4 -> films = filmInterface.getByGenre(EnumGenre._4.label);
-                case 5 -> films = filmInterface.getByGenre(EnumGenre._5.label);
-            }
+            List<Film> films = filmInterface.getByGenre(EnumGenre.valueOf(genre));
             List<HomePageFilm> homePageFilms = extractAllData(films);
             // No error, send Json
             res.getWriter().print(Utils.toJSON(homePageFilms));

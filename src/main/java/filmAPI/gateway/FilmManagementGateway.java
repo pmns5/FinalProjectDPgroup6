@@ -34,14 +34,8 @@ public class FilmManagementGateway extends APIGateway {
         // Recall Microservices for Completion
         if (title != null && plot != null && genreStr != null && trailer != null && poster != null) {
             int genre = Integer.parseInt(genreStr);
-            Film film = null;
-            switch (genre) {
-                case 1 -> film = new Film(-1, title, plot, EnumGenre._1.label, trailer, poster);
-                case 2 -> film = new Film(-1, title, plot, EnumGenre._2.label, trailer, poster);
-                case 3 -> film = new Film(-1, title, plot, EnumGenre._3.label, trailer, poster);
-                case 4 -> film = new Film(-1, title, plot, EnumGenre._4.label, trailer, poster);
-                case 5 -> film = new Film(-1, title, plot, EnumGenre._5.label, trailer, poster);
-            }
+            Film film = new Film(-1, title, plot, EnumGenre.valueOf(genre), trailer, poster);
+            ;
             int id_film = filmInterface.addFilm(film);
             if (id_film != -1 && castFilm.addCast(id_film, actors)) {
                 // add success
@@ -74,14 +68,7 @@ public class FilmManagementGateway extends APIGateway {
 
         // Recall Microservices for Completion
         if (title != null && plot != null && genre != -1 && trailer != null && poster != null) {
-            Film film = null;
-            switch (genre) {
-                case 1 -> film = new Film(-1, title, plot, EnumGenre._1.label, trailer, poster);
-                case 2 -> film = new Film(-1, title, plot, EnumGenre._2.label, trailer, poster);
-                case 3 -> film = new Film(-1, title, plot, EnumGenre._3.label, trailer, poster);
-                case 4 -> film = new Film(-1, title, plot, EnumGenre._4.label, trailer, poster);
-                case 5 -> film = new Film(-1, title, plot, EnumGenre._5.label, trailer, poster);
-            }
+            Film film = new Film(-1, title, plot, EnumGenre.valueOf(genre), trailer, poster);
             int id_film = filmInterface.editFilm(film);
             if (id_film != -1 && castFilm.editCast(id_film, actors)) {
                 // add success
