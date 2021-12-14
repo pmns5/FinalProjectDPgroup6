@@ -97,7 +97,7 @@
             </div>
 
             <div class="modal-body">
-                <form id="insert-form" enctype="multipart/form-data">
+                <form enctype="multipart/form-data" id="insert-form">
                     <!-- Title -->
                     <div class="form-group col-md-12">
                         <label for="add-title">Title</label>
@@ -130,20 +130,21 @@
                     <!-- Cast -->
                     <div class="panel panel-primary">
                         <div class="panel-body" style="overflow: auto; max-height: 300px">
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label class="mr-sm-2" for="insert-table-actors"> Actors: </label>
-                                <table id="insert-table-actors">
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label class="mr-sm-2" for="insert-table-actors"> Actors: </label>
+                                    <table id="insert-table-actors">
 
-                                </table>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
                         </div>
                     </div>
 
                     <!-- Link to Trailer -->
                     <div>
-                        <label for="insert-trailer">Trailer Link</label><input id="insert-trailer" name="trailer" type="url">
+                        <label for="insert-trailer">Trailer Link</label><input id="insert-trailer" name="trailer"
+                                                                               type="url">
                     </div>
 
                     <!-- Poster -->
@@ -227,7 +228,8 @@
 
                     <!-- Link to Trailer -->
                     <div>
-                        <label for="edit-trailer">Trailer Link</label><input id="edit-trailer" name="trailer" type="url">
+                        <label for="edit-trailer">Trailer Link</label><input id="edit-trailer" name="trailer"
+                                                                             type="url">
                     </div>
 
                     <!-- Poster -->
