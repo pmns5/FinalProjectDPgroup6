@@ -78,13 +78,13 @@ class FilmAdding {
      * @param id the id of the row to edit.
      */
     viewEdit(id) {
-        console.log("********************************")
+        console.log("********************************");
         $.getJSON(this.viewOneEndPoint, {id: id}, function (obj) {
             $('#edit-id').val(obj.film.id);
             $('#edit-title').val(obj.film.title);
             $('#edit-plot').val(obj.film.plot);
             $('#edit-genre').val(obj.film.genre);
-            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!")
+            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!");
             controller.getActors($('#edit-table-actors'));
             controller.markActors(obj.actors);
 
@@ -103,21 +103,21 @@ class FilmAdding {
             controller.renderAlert('Error: The input fields cannot be left empty. Edit rejected', false);
             return;
         }
-        let data = $('#edit-form').serialize();
-        $.post(this.editEndPoint, data, function () {
-            // waiting
-        }).done(function () {
-            // show alert
-            controller.renderAlert('Film edited entered.', true);
-            // success
-            $('#edit-id').val('');
-            $('#edit-title').val('');
-            $('#edit-plot').val('');
-            $('#edit-genre').val('');
-            controller.fillTable();
-        }).fail(function () {
-            controller.renderAlert('Error while editing. Try again.', false);
+        $.ajax({
+            type: "POST",
+            url: controller.editEndPoint,
+            data: new FormData($('#edit-form')[0]),
+            processData: false,
+            contentType: false,
+            success: function () {
+                controller.renderAlert('Film edited successfully.', true);
+                controller.fillTable();
+            },
+            error: function (e) {
+                controller.renderAlert('Error while editing. Try again.', false);
+            }
         });
+
     }
 
     /**
@@ -126,8 +126,7 @@ class FilmAdding {
     delete() {
         let controller = this;
         let id = $('#edit-id').val();
-        console.log("DELETE : ")
-        console.log(id)
+
         $.get(this.deleteEndPoint, {id: id}, function () {
             // waiting
         }).done(function () {
@@ -135,7 +134,6 @@ class FilmAdding {
             controller.renderAlert('Film successfully deleted.', true);
             // charge new data.
             controller.fillTable();
-            controller.unselect();
         }).fail(function () {
             controller.renderAlert('Error while deleting. Try again.', false);
         });
@@ -167,7 +165,6 @@ class FilmAdding {
     }
 
     getActors(modal) {
-        console.log("QUERY ATTORI")
         modal.find("tr").remove();
         let controller = this;
         $.getJSON(this.actorsEndPoint, function (data) {
@@ -185,7 +182,7 @@ class FilmAdding {
         $.each(data, function (index, obj) {
             modal.append('<tr class="list-group-item py-1">' +
                 '<td>' +
-                '<input type="checkbox" class="checkbox" name="actors" value=' + obj.id + '>  ' + obj.name + '  ' + obj.surname +
+                '<input type="checkbox" class="form-check-input" name="actors" value="' + obj.id + '">  ' + obj.name + '  ' + obj.surname +
                 '</td>' +
                 '</tr>');
         });
@@ -204,12 +201,19 @@ class FilmAdding {
     }
 
     markActors(actorList){
+        console.log("DA AGGIUNGERE: ")
+        console.log(actorList)
         $.each(actorList, function(index, obj){
-            $("input:checkbox[value='"+obj.id+"']").attr("checked", true);
+            console.log(obj.id)
+            $(":checkbox").filter(function(x) {
+                console.log(x)
+                return this.value === '11';
+            }).prop("checked","true");
         });
     }
 
     constructFilmView(obj) {
+        console.log("CIAO");
         return '<div class="col-sm-4">' +
             '   <div class="our_2">' +
             '       <div class="ih-item square effect5 left_to_right"><a data-toggle="modal" data-target="#edit-modal" onclick="controller.viewEdit(' + obj.film.id + ')">' +

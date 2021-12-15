@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import filmAPI.gateway.EnumGenre;
 
 import java.io.IOException;
 import java.util.Base64;
@@ -13,11 +14,11 @@ public class Film {
     private int id;
     private String title;
     private String plot;
-    private String genre;
+    private EnumGenre genre;
     private String trailer;
     private byte[] poster;
 
-    public Film(int id, String title, String plot, String genre, String trailer, byte[] poster) {
+    public Film(int id, String title, String plot, EnumGenre genre, String trailer, byte[] poster) {
         this.id = id;
         this.title = title;
         this.plot = plot;
@@ -50,11 +51,11 @@ public class Film {
         this.plot = plot;
     }
 
-    public String getGenre() {
+    public EnumGenre getGenre() {
         return genre;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(EnumGenre genre) {
         this.genre = genre;
     }
 
@@ -94,7 +95,7 @@ public class Film {
             jsonGenerator.writeNumberField("id", film.id);
             jsonGenerator.writeStringField("title", film.title);
             jsonGenerator.writeStringField("plot", film.plot);
-            jsonGenerator.writeStringField("genre", film.genre);
+            jsonGenerator.writeStringField("genre", film.genre.toString());
             jsonGenerator.writeStringField("trailer", film.trailer);
             jsonGenerator.writeStringField("poster", new String(Base64.getEncoder().encode(film.poster)));
             jsonGenerator.writeEndObject();

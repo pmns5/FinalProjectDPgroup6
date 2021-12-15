@@ -1,6 +1,7 @@
 package filmAPI.microservices;
 
 import com.mysql.cj.jdbc.Blob;
+import filmAPI.gateway.EnumGenre;
 import filmAPI.interfaces.DBConnection;
 import filmAPI.interfaces.FilmInterface;
 import filmAPI.models.Film;
@@ -28,7 +29,7 @@ public class FilmImplementation extends DBConnection implements FilmInterface {
                 "INSERT INTO film (title, genre, plot, trailer, poster) VALUES (?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS
         )) {
             stmt.setString(1, film.getTitle());
-            stmt.setString(2, film.getGenre());
+            stmt.setString(2, film.getGenre().toString());
             stmt.setString(3, film.getPlot());
             stmt.setString(4, film.getTrailer());
             stmt.setBlob(5, new SerialBlob(film.getPoster()));
@@ -48,7 +49,7 @@ public class FilmImplementation extends DBConnection implements FilmInterface {
                         " poster = ? WHERE id_film = ?"
         )) {
             stmt.setString(1, film.getTitle());
-            stmt.setString(2, film.getGenre());
+            stmt.setString(2, film.getGenre().toString());
             stmt.setString(3, film.getPlot());
             stmt.setString(4, film.getTrailer());
             stmt.setBlob(5, new SerialBlob(film.getPoster()));
@@ -90,7 +91,7 @@ public class FilmImplementation extends DBConnection implements FilmInterface {
                 int blobLength = (int) poster.length();
                 byte[] blobAsBytes = poster.getBytes(1, blobLength);
                 poster.free();
-                return new Film(id_film, title, plot, genre, trailer, blobAsBytes);
+                return new Film(id_film, title, plot, EnumGenre.valueOf(genre), trailer, blobAsBytes);
             }
         } catch (SQLException e) {
             return null;
@@ -111,7 +112,7 @@ public class FilmImplementation extends DBConnection implements FilmInterface {
                 int blobLength = (int) poster.length();
                 byte[] blobAsBytes = poster.getBytes(1, blobLength);
                 poster.free();
-                listFilms.add(new Film(id_film, title, plot, genre, trailer, blobAsBytes));
+                listFilms.add(new Film(id_film, title, plot, EnumGenre.valueOf(genre), trailer, blobAsBytes));
             }
         } catch (SQLException e) {
             return null;
@@ -120,10 +121,10 @@ public class FilmImplementation extends DBConnection implements FilmInterface {
     }
 
     @Override
-    public List<Film> getByGenre(String genre) {
+    public List<Film> getByGenre(EnumGenre genre) {
         ArrayList<Film> listFilms = new ArrayList<>();
         try (Statement stmt = db.getConn().createStatement(); ResultSet rs = stmt.executeQuery("SELECT id_film," +
-                " title, plot, trailer, poster FROM film WHERE genre=" + genre + "  ORDER BY id_film")) {
+                " title, plot, trailer, poster FROM film WHERE genre=" + genre.toString() + "  ORDER BY id_film")) {
             while (rs.next()) {
                 int id_film = rs.getInt(1);
                 String title = rs.getString(2);

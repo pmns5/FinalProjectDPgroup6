@@ -1,5 +1,6 @@
 package filmAPI.interfaces;
 
+import filmAPI.gateway.EnumGenre;
 import filmAPI.models.Film;
 
 import java.util.List;
@@ -15,5 +16,5 @@ public interface FilmInterface {
 
     List<Film> getAllFilms();
 
-    List<Film> getByGenre(String genre);
+    List<Film> getByGenre(EnumGenre genre);
 }

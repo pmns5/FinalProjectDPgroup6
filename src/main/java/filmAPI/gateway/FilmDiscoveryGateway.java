@@ -28,8 +28,7 @@ public class FilmDiscoveryGateway extends APIGateway {
 
     // Extract Film Data, Cast and Score according to the Specific Genre
     public void getPerGenre(HttpServletRequest req, HttpServletResponse res) {
-        String genreStr = req.getParameter("genre");
-        int genre = Integer.parseInt(genreStr);
+        String genre = req.getParameter("genre");
         try {
             // Aggregate Data From Different Microservices
             List<Film> films = filmInterface.getByGenre(EnumGenre.valueOf(genre));
