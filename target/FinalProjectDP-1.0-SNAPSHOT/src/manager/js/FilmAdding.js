@@ -30,7 +30,6 @@ class FilmAdding {
         }).fail(function () {
             controller.renderAlert('Error while charging data. Retry in a few second.', false);
         });
-
     }
 
     /**
@@ -79,18 +78,16 @@ class FilmAdding {
      * @param id the id of the row to edit.
      */
     viewEdit(id) {
-        console.log(id)
+        console.log("********************************")
         $.getJSON(this.viewOneEndPoint, {id: id}, function (obj) {
-            console.log(obj)
-
-            console.log(obj.film)
-            console.log(obj.actors)
-            console.log(obj.avgScore)
-
             $('#edit-id').val(obj.film.id);
             $('#edit-title').val(obj.film.title);
             $('#edit-plot').val(obj.film.plot);
             $('#edit-genre').val(obj.film.genre);
+            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!")
+            controller.getActors($('#edit-table-actors'));
+            controller.markActors(obj.actors);
+
         }).done(function () {
             $('#edit-modal').modal('show');
         });
@@ -149,12 +146,10 @@ class FilmAdding {
      */
     insert() {
         let controller = this;
-
         // if (validate('#insert-form') === false) {
         //     controller.renderAlert('Error: Not all fields have been entered correctly. Please try again', false);
         //     return;
         // }
-
         $.ajax({
             type: "POST",
             url: controller.createEndPoint,
@@ -169,18 +164,16 @@ class FilmAdding {
                 controller.renderAlert('Error while uploading. Try again.', false);
             }
         });
-
     }
 
     getActors(modal) {
+        console.log("QUERY ATTORI")
         modal.find("tr").remove();
         let controller = this;
         $.getJSON(this.actorsEndPoint, function (data) {
             controller.addCheckBoxes(data, modal);
         }).done(function () {
-
         }).fail(function () {
-
         });
     }
 
@@ -200,7 +193,6 @@ class FilmAdding {
 
     addActors(actorList) {
         console.log(actorList)
-
         let str = '';
         str += '<h6 class="filmText" style="color: aquamarine">';
         $.each(actorList, function (index, obj) {
@@ -209,6 +201,12 @@ class FilmAdding {
         str = str.substring(0, str.length - 1);
         str += '</h6>';
         return str;
+    }
+
+    markActors(actorList){
+        $.each(actorList, function(index, obj){
+            $("input:checkbox[value='"+obj.id+"']").attr("checked", true);
+        });
     }
 
     constructFilmView(obj) {
@@ -225,7 +223,4 @@ class FilmAdding {
             '   </div>' +
             '</div>';
     }
-
 }
-
-

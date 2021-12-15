@@ -11,6 +11,3 @@ function validate(idForm) {
     $(idForm).removeClass("needs-validation")
     return flag
 }
-
-
-

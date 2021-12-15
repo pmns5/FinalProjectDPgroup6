@@ -39,7 +39,6 @@ tr.selected {
     right: 40px;
 }
 
-
 .pw {
     -webkit-text-security: disc;
 }
@@ -61,4 +60,3 @@ tr.selected {
 .avail {
     border-width: 0;
 }
-

@@ -144,11 +144,8 @@ class ActorsAdding {
         }).done(function () {
             // show alert
             controller.renderAlert('Actor successfully deleted.', true);
-            // charge new data.
+        }).always(function (){
             controller.fillTable();
-            controller.unselect();
-        }).fail(function () {
-            controller.renderAlert('Error while deleting. Try again.', false);
         });
     }
 
