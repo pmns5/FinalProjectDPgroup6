@@ -30,7 +30,6 @@ class FilmAdding {
         }).fail(function () {
             controller.renderAlert('Error while charging data. Retry in a few second.', false);
         });
-
     }
 
     /**
@@ -82,11 +81,9 @@ class FilmAdding {
         console.log(id)
         $.getJSON(this.viewOneEndPoint, {id: id}, function (obj) {
             console.log(obj)
-
             console.log(obj.film)
             console.log(obj.actors)
             console.log(obj.avgScore)
-
             $('#edit-id').val(obj.film.id);
             $('#edit-title').val(obj.film.title);
             $('#edit-plot').val(obj.film.plot);
@@ -149,12 +146,10 @@ class FilmAdding {
      */
     insert() {
         let controller = this;
-
         // if (validate('#insert-form') === false) {
         //     controller.renderAlert('Error: Not all fields have been entered correctly. Please try again', false);
         //     return;
         // }
-
         $.ajax({
             type: "POST",
             url: controller.createEndPoint,
@@ -169,7 +164,6 @@ class FilmAdding {
                 controller.renderAlert('Error while uploading. Try again.', false);
             }
         });
-
     }
 
     getActors(modal) {
@@ -178,9 +172,7 @@ class FilmAdding {
         $.getJSON(this.actorsEndPoint, function (data) {
             controller.addCheckBoxes(data, modal);
         }).done(function () {
-
         }).fail(function () {
-
         });
     }
 
@@ -200,7 +192,6 @@ class FilmAdding {
 
     addActors(actorList) {
         console.log(actorList)
-
         let str = '';
         str += '<h6 class="filmText" style="color: aquamarine">';
         $.each(actorList, function (index, obj) {
@@ -225,7 +216,4 @@ class FilmAdding {
             '   </div>' +
             '</div>';
     }
-
 }
-
-

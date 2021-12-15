@@ -1,4 +1,3 @@
-
 #our {
     padding-top: 40px;
     padding-bottom: 60px;
@@ -160,14 +159,11 @@
     border: 2px solid #8e0606;
 }
 
-.filmText h6{
+.filmText h6 {
     color: aquamarine;
 }
 
-
 /********************* our_end ****************/
-
-
 @media screen and (max-width: 767px) {
     #our .ih-item.square {
         width: 100%;
@@ -178,7 +174,6 @@
     #our .ih-item.square.effect5 .info p {
         font-size: 12px;
     }
-
 
     #our {
         padding-top: 30px;
@@ -207,7 +202,6 @@
     }
 }
 
-
 @media (min-width: 961px) and (max-width: 1200px) {
     #our .ih-item.square {
         width: 100%;
@@ -220,5 +214,4 @@
 }
 
 @media (min-width: 1201px) and (max-width: 1320px) {
-
 }
