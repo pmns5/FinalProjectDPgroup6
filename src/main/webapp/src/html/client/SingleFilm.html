@@ -8,6 +8,7 @@
     <link href="../../css/myStyle.css" rel="stylesheet">
     <link href="../../css/FilmView.css" rel="stylesheet">
     <link href="../../css/feedback.css" rel="stylesheet">
+    <link href="../../css/starRating.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" rel="stylesheet">
 </head>
@@ -35,44 +36,72 @@
 
 <!-- Film Details -->
 <section id="filmSection">
-    <div class="row">
-        <!-- Poster / Trailer -->
-        <div class="col-sm-6 ">
-            <div class="img filmPoster m-2" style="width: auto">
-                <img id="filmPoster" alt="img" src="../../images/imageError.jpeg" style="height: auto; width: 95%">
+    <div class="container">
+        <div class="row">
+            <!-- Poster -->
+            <div class="col-sm-6 ">
+                <div class="img filmPoster m-2" style="width: auto">
+                    <img id="filmPoster" alt="img" src="../../images/imageError.jpeg" style="height: auto; width: 85%">
+                </div>
             </div>
-        </div>
-        <!-- Title + Score / Trama / Cast -->
-        <div class="col-sm-6">
-            <!-- Title + Score-->
-            <div>
-                <h2 id="title"></h2>
+            <!-- Title + Score / Trama / Cast -->
+            <div class="col-sm-6">
+                <!-- Title + Score-->
+                <div>
+                    <h2 id="title"></h2>
+                </div>
+                <div class="row">
+                    <div class="col" >
+                        <div class="row">
+                            <label for="genre">GENRE: </label>
+                            <p id="genre"></p>
+                        </div>
+                    </div>
+                    <div class="col" >
+                        <div class="row">
+                            <div class="rating">
+                                <div class="rating-upper" style="width: 0">
+                                    <span>★</span>
+                                    <span>★</span>
+                                    <span>★</span>
+                                    <span>★</span>
+                                    <span>★</span>
+                                </div>
+                                <div class="rating-lower">
+                                    <span>★</span>
+                                    <span>★</span>
+                                    <span>★</span>
+                                    <span>★</span>
+                                    <span>★</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="plot">PLOT: </label>
+                    <p id="plot"></p>
+                </div>
+                <div class="row">
+                    <label for="cast">CAST: </label>
+                    <p id="cast"></p>
+                </div>
+                <div class="">
+                    <iframe id="trailerFilm" width="100%" height=300px
+                            src="" allowfullscreen>
+                    </iframe>
+                </div>
             </div>
-            <div class="row">
-                <label for="genre">GENRE: </label>
-                <p id="genre"></p>
-            </div>
-            <div class="row">
-                <label for="plot">PLOT: </label>
-                <p id="plot"></p>
-            </div>
-            <div class="row">
-                <label for="cast">CAST: </label>
-                <p id="cast"></p>
-            </div>
-            <div class="">
-                <iframe id="trailerFilm" width="350" height="300"
-                        src="https://www.youtube.com/embed/1iYEwFDLVnM" allowfullscreen>
-                </iframe>
-            </div>
-        </div>
 
+        </div>
     </div>
 </section>
 
 <!-- Feedbacks -->
 <section>
-    <object id="feedbackList"></object>
+    <div class="container" style="background-color: chartreuse">
+        <object id="feedbackList"></object>
+    </div>
 </section>
 
 <!-- JQuery api -->
@@ -90,5 +119,7 @@
         let controller = new SingleFilm("", window.location.href.split("?id=")[1]);
     });
 </script>
+
+
 </body>
 </html>

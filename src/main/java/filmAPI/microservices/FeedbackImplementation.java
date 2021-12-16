@@ -101,7 +101,7 @@ public class FeedbackImplementation extends DBConnection implements FeedbackFilm
             ResultSet rs = stmt.executeQuery();
             if (rs != null) {
                 rs.next();
-                return rs.getFloat(0);
+                return rs.getFloat(1);
             }
         } catch (SQLException ignored) {
         }
@@ -117,8 +117,8 @@ public class FeedbackImplementation extends DBConnection implements FeedbackFilm
             ResultSet rs = stmt.executeQuery();
             if (rs != null) {
                 rs.next();
-                float score = rs.getFloat(0);
-                String comment = rs.getString(1);
+                float score = rs.getFloat(1);
+                String comment = rs.getString(2);
                 return new Feedback(id_user, id_film, comment, score);
             }
         } catch (SQLException ignored) {

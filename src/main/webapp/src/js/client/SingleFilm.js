@@ -22,6 +22,10 @@ class SingleFilm {
                 $('#feedbackList').append(feedback)
             });
 
+            console.log(obj.avgScore * 20)
+            $(".rating-upper").css({
+                width: obj.avgScore * 20 + "%"
+            });
         });
     }
 
@@ -39,30 +43,12 @@ class SingleFilm {
             '           <div class="user d-flex flex-row align-items-center">'+
             '               <img src="../../images/user.jpeg" width="30" class="user-img rounded-circle mr-2" alt="">' +
             '               <span>' +
-            '                   <small class="font-weight-bold text-primary">olan_sams</small>' +
-            '                   <small class="font-weight-bold">Loving your work and profile! </small>' +
+            '                   <small class="font-weight-bold text-primary">'+obj.id_user+'</small>' +
+            '                   <small class="font-weight-bold">'+obj.comment+'</small>' +
             '               </span>' +
             '           </div>'+
             '       <small>3 days ago</small>'+
             '       </div>'+
             '   </div>'
-
-
-        // return ' < div className = "card p-3 mt-2" > ' +
-        //     '     <div className="d-flex justify-content-between align-items-center">' +
-        //     '         <div className="user d-flex flex-row align-items-center"><img src="https://i.imgur.com/C4egmYM.jpg"' +
-        //     '                                                                       width="30"' +
-        //     '                                                                       className="user-img rounded-circle mr-2">' +
-        //     '             <span><small className="font-weight-bold text-primary">olan_sams</small> <small' +
-        //     '                 className="font-weight-bold">Loving your work and profile! </small></span></div>' +
-        //     '         <small>3 days ago</small>' +
-        //     '     </div>' +
-        //     '     <div className="action d-flex justify-content-between mt-2 align-items-center">' +
-        //     '         <div className="reply px-4"><small>Remove</small> <span className="dots"></span> <small>Reply</small>' +
-        //     '             <span className="dots"></span> <small>Translate</small></div>' +
-        //     '         <div className="icons align-items-center"><i' +
-        //     '             className="fa fa-check-circle-o check-icon text-primary"></i></div>' +
-        //     '     </div>' +
-        //     ' </div>'
     }
 }

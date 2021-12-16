@@ -62,3 +62,7 @@ body {
     color: green;
     cursor: pointer
 }
+
+.checked{
+    color:orange;
+}
