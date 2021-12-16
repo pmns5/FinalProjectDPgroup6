@@ -11,3 +11,13 @@ function validate(idForm) {
     $(idForm).removeClass("needs-validation")
     return flag
 }
+
+const Genres = {
+    ACTION: 'Action',
+    ADVENTURE: 'Adventure',
+    COMEDY: 'Comedy',
+    HORROR: 'Horror',
+    ROMANCE: 'Romance'
+}
+Object.freeze(Genres)
+

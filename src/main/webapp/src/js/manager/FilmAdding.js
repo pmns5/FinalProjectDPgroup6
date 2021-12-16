@@ -78,13 +78,17 @@ class FilmAdding {
      * @param id the id of the row to edit.
      */
     viewEdit(id) {
-        console.log("********************************");
+        let genreSelect = document.getElementById("edit-genre")
+        $('#edit-genre option:not(:first)').remove();
+        $.each(Genres, function(index, obj){
+            genreSelect.add(new Option(obj, obj));
+        })
+
         $.getJSON(this.viewOneEndPoint, {id: id}, function (obj) {
             $('#edit-id').val(obj.film.id);
             $('#edit-title').val(obj.film.title);
             $('#edit-plot').val(obj.film.plot);
             $('#edit-genre').val(obj.film.genre);
-            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!");
             controller.getActors($('#edit-table-actors'));
             controller.markActors(obj.actors);
 
@@ -175,6 +179,12 @@ class FilmAdding {
     }
 
     insertView() {
+        let genreSelect = document.getElementById("add-genre")
+        $('#add-genre option:not(:first)').remove();
+        $.each(Genres, function(index, obj){
+            genreSelect.add(new Option(obj, obj));
+        })
+
         this.getActors($("#insert-table-actors"))
     }
 
@@ -189,7 +199,6 @@ class FilmAdding {
     }
 
     addActors(actorList) {
-        console.log(actorList)
         let str = '';
         str += '<h6 class="filmText" style="color: aquamarine">';
         $.each(actorList, function (index, obj) {
@@ -204,16 +213,13 @@ class FilmAdding {
         console.log("DA AGGIUNGERE: ")
         console.log(actorList)
         $.each(actorList, function(index, obj){
-            console.log(obj.id)
             $(":checkbox").filter(function(x) {
-                console.log(x)
                 return this.value === '11';
             }).prop("checked","true");
         });
     }
 
     constructFilmView(obj) {
-        console.log("CIAO");
         return '<div class="col-sm-4">' +
             '   <div class="our_2">' +
             '       <div class="ih-item square effect5 left_to_right"><a data-toggle="modal" data-target="#edit-modal" onclick="controller.viewEdit(' + obj.film.id + ')">' +
