@@ -88,10 +88,10 @@ class AllFilms {
             cutPlot = obj.film.plot
         }
 
-        return '<div class="col-sm-4">' +
-            '   <div class="our_2">' +
-            '       <div class="ih-item square effect5 left_to_right"><a href="../../html/client/SingleFilm.html?id=' + obj.film.id + '">' +
-            '           <div class="img"><img src=data:image/jpeg;base64,' + obj.film.poster + ' alt="img" >' + ' </div>' +
+        return '<div class="col-sm-4" >' +
+            '   <div class="our_2" >' +
+            '       <div class="ih-item square effect5 left_to_right" ><a href="../../html/client/SingleFilm.html?id=' + obj.film.id + '">' +
+            '           <img src=data:image/jpeg;base64,' + obj.film.poster + ' alt="img" >'  +
             '            <div class="info">' +
             '               <h3>' + obj.film.title + '</h3>' +
             '               <p style="font-size: small">' + cutPlot + '</p>' +

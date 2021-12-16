@@ -14,25 +14,25 @@
     padding-bottom: 15px;
 }
 
-#our .ih-item {
+.our_2 .ih-item {
     position: relative;
     -webkit-transition: all 0.35s ease-in-out;
     -moz-transition: all 0.35s ease-in-out;
     transition: all 0.35s ease-in-out;
 }
 
-#our .ih-item,
-#our .ih-item * {
+.our_2 .ih-item,
+.our_2 .ih-item * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
 
-#our .ih-item a:hover {
+.our_2 .ih-item a:hover {
     text-decoration: none;
 }
 
-#our .ih-item.square .info {
+.our_2 .ih-item.square .info {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -42,8 +42,7 @@
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
 }
-
-#our .ih-item.square.effect5 .img {
+.our_2 .ih-item.square.effect5 .img {
     -webkit-transition: all 0.35s ease-in-out;
     -moz-transition: all 0.35s ease-in-out;
     transition: all 0.35s ease-in-out;
@@ -54,12 +53,12 @@
     transform: scale(1);
 }
 
-#our .ih-item.square.effect5 .info h4.filmText {
+.our_2 .ih-item.square.effect5 .info h4.filmText {
     font-size: 11px;
     padding: 1px 1px 1px;
 }
 
-#our .ih-item.square.effect5 a:hover .info {
+.our_2 .ih-item.square.effect5 a:hover .info {
     visibility: visible;
     opacity: 1;
     -webkit-transform: scale(1) rotate(0deg);
@@ -72,7 +71,7 @@
     transition-delay: 0.3s;
 }
 
-#our .ih-item.square.effect5.left_to_right .info {
+.our_2 .ih-item.square.effect5.left_to_right .info {
     -webkit-transform: scale(0) rotate(-180deg);
     -moz-transform: scale(0) rotate(-180deg);
     -ms-transform: scale(0) rotate(-180deg);
@@ -87,17 +86,17 @@
 
 /********************* our_end ****************/
 @media screen and (max-width: 767px) {
-    #our .ih-item.square {
+    .our_2 .ih-item.square {
         width: 100%;
         height: 100%;
         margin-bottom: 10px;
     }
 
-    #our .ih-item.square.effect5 .info p {
+    .our_2 .ih-item.square.effect5 .info p {
         font-size: 12px;
     }
 
-    #our {
+    .our_2 {
         padding-top: 30px;
         padding-bottom: 30px;
         text-align: center;
@@ -114,23 +113,23 @@
 }
 
 @media (min-width: 768px) and (max-width: 960px) {
-    #our .ih-item.square {
+    .our_2 .ih-item.square {
         width: 100%;
         height: 100%;
     }
 
-    #our .ih-item.square.effect5 .info p {
+    .our_2 .ih-item.square.effect5 .info p {
         font-size: 10px;
     }
 }
 
 @media (min-width: 961px) and (max-width: 1200px) {
-    #our .ih-item.square {
+    .our_2 .ih-item.square {
         width: 100%;
         height: 100%;
     }
 
-    #our .ih-item.square.effect5 .info p {
+    .our_2 .ih-item.square.effect5 .info p {
         font-size: 10px;
     }
 }
