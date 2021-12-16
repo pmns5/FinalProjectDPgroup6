@@ -105,9 +105,9 @@ public class ActorImplementationTest extends TestCase {
         ActorList.add(Actor18);
         ActorList.add(Actor19);
         ActorList.add(Actor20);
-        String expectedActorList = Utils.toJSON(ActorList);
-        String resultActorList = Utils.toJSON(allActorList);
-        assertEquals(expectedActorList, resultActorList);
+        String expected = Utils.toJSON(ActorList);
+        String result = Utils.toJSON(allActorList);
+        assertEquals(expected, result);
     }
 
     @Order(7)

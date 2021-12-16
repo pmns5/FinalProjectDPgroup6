@@ -69,9 +69,9 @@ public class FilmImplementationTest extends TestCase {
         byte[] blobAsBytes = "string".getBytes();
         Film Film1 = new Film(1, "Pro", "Una pro avvincente", EnumGenre.Action, "www.youtube.com/pro", blobAsBytes);
         FilmList.add(Film1);
-        String expectedFilmList = Utils.toJSON(FilmList);
-        String resultFilmList = Utils.toJSON(allFilmList);
-        assertEquals(expectedFilmList, resultFilmList);
+        String expected = Utils.toJSON(FilmList);
+        String result = Utils.toJSON(allFilmList);
+        assertEquals(expected, result);
     }
 
     @Order(6)
