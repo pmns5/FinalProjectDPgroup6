@@ -38,7 +38,6 @@ class FilmAdding {
      * @param data a JSON representation of data
      */
     renderGUI(data) {
-        console.log(data)
         $('#view .our_2').remove();
         var array = [];
         $.each(data, function (index, obj) {
