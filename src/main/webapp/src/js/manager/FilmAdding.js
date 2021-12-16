@@ -42,7 +42,7 @@ class FilmAdding {
         var array = [];
         $.each(data, function (index, obj) {
             if (controller.count === 0) array.push('<div class="col-sm-12 row">');
-            array.push(controller.constructFilmView(obj));
+            array.push(constructFilmView(obj));
             if (controller.count === 2) array.push('</div>')
             controller.count = (controller.count + 1) % 3;
         });
@@ -79,9 +79,10 @@ class FilmAdding {
     viewEdit(id) {
         let genreSelect = document.getElementById("edit-genre")
         $('#edit-genre option:not(:first)').remove();
-        $.each(Genres, function (index, obj) {
+        $.each(Genres, function(index, obj){
             genreSelect.add(new Option(obj, obj));
         })
+
         $.getJSON(this.viewOneEndPoint, {id: id}, function (obj) {
             $('#edit-id').val(obj.film.id);
             $('#edit-title').val(obj.film.title);
@@ -89,6 +90,7 @@ class FilmAdding {
             $('#edit-genre').val(obj.film.genre);
             controller.getActors($('#edit-table-actors'));
             controller.markActors(obj.actors);
+
         }).done(function () {
             $('#edit-modal').modal('show');
         });
@@ -118,6 +120,7 @@ class FilmAdding {
                 controller.renderAlert('Error while editing. Try again.', false);
             }
         });
+
     }
 
     /**
@@ -126,6 +129,7 @@ class FilmAdding {
     delete() {
         let controller = this;
         let id = $('#edit-id').val();
+
         $.get(this.deleteEndPoint, {id: id}, function () {
             // waiting
         }).done(function () {
@@ -162,6 +166,15 @@ class FilmAdding {
             }
         });
     }
+    insertView() {
+        let genreSelect = document.getElementById("add-genre")
+        $('#add-genre option:not(:first)').remove();
+        $.each(Genres, function(index, obj){
+            genreSelect.add(new Option(obj, obj));
+        })
+
+        this.getActors($("#insert-table-actors"))
+    }
 
     getActors(modal) {
         modal.find("tr").remove();
@@ -173,14 +186,6 @@ class FilmAdding {
         });
     }
 
-    insertView() {
-        let genreSelect = document.getElementById("add-genre")
-        $('#add-genre option:not(:first)').remove();
-        $.each(Genres, function (index, obj) {
-            genreSelect.add(new Option(obj, obj));
-        })
-        this.getActors($("#insert-table-actors"))
-    }
 
     addCheckBoxes(data, modal) {
         $.each(data, function (index, obj) {
@@ -192,39 +197,14 @@ class FilmAdding {
         });
     }
 
-    addActors(actorList) {
-        let str = '';
-        str += '<h6 class="filmText" style="color: aquamarine">';
-        $.each(actorList, function (index, obj) {
-            str += ' ' + obj.name + ' ' + obj.surname + ',';
-        });
-        str = str.substring(0, str.length - 1);
-        str += '</h6>';
-        return str;
-    }
-
-    markActors(actorList) {
+    markActors(actorList){
         console.log("DA AGGIUNGERE: ")
         console.log(actorList)
-        $.each(actorList, function (index, obj) {
-            $(":checkbox").filter(function (x) {
+        $.each(actorList, function(index, obj){
+            $(":checkbox").filter(function(x) {
                 return this.value === '11';
-            }).prop("checked", "true");
+            }).prop("checked","true");
         });
     }
 
-    constructFilmView(obj) {
-        return '<div class="col-sm-4">' +
-            '   <div class="our_2">' +
-            '       <div class="ih-item square effect5 left_to_right"><a data-toggle="modal" data-target="#edit-modal" onclick="controller.viewEdit(' + obj.film.id + ')">' +
-            '           <div class="img"><img src=data:image/jpeg;base64,' + obj.film.poster + ' alt="img" >' + ' </div>' +
-            '            <div class="info">' +
-            '               <h3>' + obj.film.title + '</h3>' +
-            '               <p>' + obj.film.plot + '</p>' +
-            controller.addActors(obj.actors) +
-            '            </div>' +
-            '       </a></div>' +
-            '   </div>' +
-            '</div>';
-    }
 }

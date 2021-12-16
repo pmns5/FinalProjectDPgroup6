@@ -39,7 +39,7 @@ class AllFilms {
         var array = [];
         $.each(data, function (index, obj) {
             if (controller.count === 0) array.push('<div class="col-sm-12 row">');
-            array.push(controller.constructFilmView(obj));
+            array.push(constructFilmView(obj));
             if (controller.count === 2) array.push('</div>')
             controller.count = (controller.count + 1) % 3;
         });
@@ -69,57 +69,4 @@ class AllFilms {
             });
     };
 
-    addActors(actorList) {
-        let str = '';
-        str += '<h6 class="filmText" style="color: white">';
-        $.each(actorList, function (index, obj) {
-            str += ' ' + obj.name + ' ' + obj.surname + ',';
-        });
-        str = str.substring(0, str.length - 1);
-        str += '</h6>';
-        return str;
-    }
-
-    constructFilmView(obj) {
-        let cutPlot;
-        if (obj.film.plot.length > this.PLOT_LENGTH) {
-            cutPlot = obj.film.plot.substr(0, this.PLOT_LENGTH) + "..."
-        } else {
-            cutPlot = obj.film.plot
-        }
-
-        return '<div class="col-sm-4" >' +
-            '   <div class="our_2" >' +
-            '       <div class="ih-item square effect5 left_to_right" ><a href="../../html/client/SingleFilm.html?id=' + obj.film.id + '">' +
-            '           <img src=data:image/jpeg;base64,' + obj.film.poster + ' alt="img" >'  +
-            '            <div class="info">' +
-            '               <h3>' + obj.film.title + '</h3>' +
-            '               <p style="font-size: small">' + cutPlot + '</p>' +
-            controller.addActors(obj.actors) +
-            controller.addStars(obj.avgScore)+
-            '            </div>' +
-            '       </a></div>' +
-            '   </div>' +
-            '</div>';
-    }
-
-    addStars(avg) {
-        console.log(avg)
-        return '<div class="rating">' +
-            '       <div class="rating-upper" style="width: '+avg*20+'%">' +
-            '           <span>★</span>' +
-            '           <span>★</span>' +
-            '           <span>★</span>             ' +
-            '           <span>★</span>             ' +
-            '           <span>★</span>             ' +
-            '        </div>                         ' +
-            '        <div class="rating-lower"> ' +
-            '             <span>★</span>             ' +
-            '             <span>★</span>             ' +
-            '             <span>★</span>             ' +
-            '             <span>★</span>             ' +
-            '             <span>★</span>             ' +
-            '         </div>                         ' +
-            '     </div>                             '
-    }
 }
