@@ -20,4 +20,3 @@ const Genres = {
     ROMANCE: 'Romance'
 }
 Object.freeze(Genres)
-

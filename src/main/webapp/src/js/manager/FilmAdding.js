@@ -79,10 +79,9 @@ class FilmAdding {
     viewEdit(id) {
         let genreSelect = document.getElementById("edit-genre")
         $('#edit-genre option:not(:first)').remove();
-        $.each(Genres, function(index, obj){
+        $.each(Genres, function (index, obj) {
             genreSelect.add(new Option(obj, obj));
         })
-
         $.getJSON(this.viewOneEndPoint, {id: id}, function (obj) {
             $('#edit-id').val(obj.film.id);
             $('#edit-title').val(obj.film.title);
@@ -90,7 +89,6 @@ class FilmAdding {
             $('#edit-genre').val(obj.film.genre);
             controller.getActors($('#edit-table-actors'));
             controller.markActors(obj.actors);
-
         }).done(function () {
             $('#edit-modal').modal('show');
         });
@@ -120,7 +118,6 @@ class FilmAdding {
                 controller.renderAlert('Error while editing. Try again.', false);
             }
         });
-
     }
 
     /**
@@ -129,7 +126,6 @@ class FilmAdding {
     delete() {
         let controller = this;
         let id = $('#edit-id').val();
-
         $.get(this.deleteEndPoint, {id: id}, function () {
             // waiting
         }).done(function () {
@@ -180,10 +176,9 @@ class FilmAdding {
     insertView() {
         let genreSelect = document.getElementById("add-genre")
         $('#add-genre option:not(:first)').remove();
-        $.each(Genres, function(index, obj){
+        $.each(Genres, function (index, obj) {
             genreSelect.add(new Option(obj, obj));
         })
-
         this.getActors($("#insert-table-actors"))
     }
 
@@ -208,13 +203,13 @@ class FilmAdding {
         return str;
     }
 
-    markActors(actorList){
+    markActors(actorList) {
         console.log("DA AGGIUNGERE: ")
         console.log(actorList)
-        $.each(actorList, function(index, obj){
-            $(":checkbox").filter(function(x) {
+        $.each(actorList, function (index, obj) {
+            $(":checkbox").filter(function (x) {
                 return this.value === '11';
-            }).prop("checked","true");
+            }).prop("checked", "true");
         });
     }
 

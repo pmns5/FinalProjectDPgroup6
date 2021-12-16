@@ -81,7 +81,7 @@ class AllFilms {
     constructFilmView(obj) {
         return '<div class="col-sm-4">' +
             '   <div class="our_2">' +
-            '       <div class="ih-item square effect5 left_to_right"><a href="../../html/client/SingleFilm.html?id='+obj.film.id+ '">' +
+            '       <div class="ih-item square effect5 left_to_right"><a href="../../html/client/SingleFilm.html?id=' + obj.film.id + '">' +
             '           <div class="img"><img src=data:image/jpeg;base64,' + obj.film.poster + ' alt="img" >' + ' </div>' +
             '            <div class="info">' +
             '               <h3>' + obj.film.title + '</h3>' +

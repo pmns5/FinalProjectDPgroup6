@@ -1,10 +1,8 @@
 class SingleFilm {
-
     constructor(endPoint, id) {
         this.viewEndPoint = endPoint + "/getFilmDetails";
         this.id = id
         this.showFilm()
-
     }
 
     showFilm() {
@@ -16,12 +14,10 @@ class SingleFilm {
             $('#filmPoster').attr("src", "data:image/jpeg;base64," + obj.film.poster);
             $('#trailerFilm').attr("src", "https://www.youtube.com/embed/" + obj.film.trailer);
             $('#cast').text(controller.getCast(obj.actors));
-
             $.each(obj.feedbackList, function (index, obj) {
                 let feedback = controller.constructFeedbackView(obj);
                 $('#feedbackList').append(feedback)
             });
-
             console.log(obj.avgScore * 20)
             $(".rating-upper").css({
                 width: obj.avgScore * 20 + "%"
@@ -40,15 +36,15 @@ class SingleFilm {
     constructFeedbackView(obj) {
         return '<div class="card p-3 mt-2">' +
             '       <div class="d-flex justify-content-between align-items-center">' +
-            '           <div class="user d-flex flex-row align-items-center">'+
+            '           <div class="user d-flex flex-row align-items-center">' +
             '               <img src="../../images/user.jpeg" width="30" class="user-img rounded-circle mr-2" alt="">' +
             '               <span>' +
-            '                   <small class="font-weight-bold text-primary">'+obj.id_user+'</small>' +
-            '                   <small class="font-weight-bold">'+obj.comment+'</small>' +
+            '                   <small class="font-weight-bold text-primary">' + obj.id_user + '</small>' +
+            '                   <small class="font-weight-bold">' + obj.comment + '</small>' +
             '               </span>' +
-            '           </div>'+
-            '       <small>3 days ago</small>'+
-            '       </div>'+
+            '           </div>' +
+            '       <small>3 days ago</small>' +
+            '       </div>' +
             '   </div>'
     }
 }

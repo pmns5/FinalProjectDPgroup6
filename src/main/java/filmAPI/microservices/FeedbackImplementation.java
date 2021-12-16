@@ -34,7 +34,7 @@ public class FeedbackImplementation extends DBConnection implements FeedbackFilm
             stmt.setString(1, feedback.getComment());
             stmt.setFloat(2, feedback.getScore());
             stmt.setInt(3, feedback.getId_film());
-            stmt.setInt(3, feedback.getId_user());
+            stmt.setInt(4, feedback.getId_user());
             stmt.execute();
         } catch (SQLException e) {
             return false;
@@ -47,8 +47,8 @@ public class FeedbackImplementation extends DBConnection implements FeedbackFilm
         try (PreparedStatement stmt = db.getConn().prepareStatement(
                 "DELETE FROM feedback WHERE id_film = ? AND id_user = ?"
         )) {
-            stmt.setInt(0, id_film);
-            stmt.setInt(1, id_user);
+            stmt.setInt(1, id_film);
+            stmt.setInt(2, id_user);
             stmt.execute();
         } catch (SQLException e) {
             return false;

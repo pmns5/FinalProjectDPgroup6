@@ -144,7 +144,7 @@ class ActorsAdding {
         }).done(function () {
             // show alert
             controller.renderAlert('Actor successfully deleted.', true);
-        }).always(function (){
+        }).always(function () {
             controller.fillTable();
         });
     }
