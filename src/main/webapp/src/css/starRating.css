@@ -8,6 +8,7 @@
     margin: 0;
     position: relative;
     padding: 0;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 1);
 }
 
 .rating-upper {
@@ -30,4 +31,5 @@
 .labelStars{
     font-size: 15px;
 }
+
 

@@ -14,13 +14,6 @@
     padding-bottom: 15px;
 }
 
-.our_1 p {
-    font-size: 19px;
-    font-weight: bold;
-    padding-bottom: 38px;
-    color: #2f2f2f;
-}
-
 #our .ih-item {
     position: relative;
     -webkit-transition: all 0.35s ease-in-out;
@@ -35,25 +28,8 @@
     box-sizing: border-box;
 }
 
-#our .ih-item a {
-    color: #333;
-}
-
-#our .ih-item img {
-    width: 100%;
-    height: 100%;
-}
-
 #our .ih-item a:hover {
     text-decoration: none;
-}
-
-#our .ih-item.square {
-    position: relative;
-    width: 346px;
-    height: 348px;
-    border: 8px solid #fff;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 #our .ih-item.square .info {
@@ -67,14 +43,6 @@
     backface-visibility: hidden;
 }
 
-#our .ih-item.square.effect5.colored .info {
-    background: #1a4a72;
-}
-
-#our .ih-item.square.effect5.colored .info h3 {
-    background: rgba(12, 34, 52, 0.6);
-}
-
 #our .ih-item.square.effect5 .img {
     -webkit-transition: all 0.35s ease-in-out;
     -moz-transition: all 0.35s ease-in-out;
@@ -84,33 +52,6 @@
     -ms-transform: scale(1);
     -o-transform: scale(1);
     transform: scale(1);
-}
-
-#our .ih-item.square.effect5 .info {
-    background: #333333;
-    opacity: 0;
-    -webkit-transition: all 0.35s ease-in-out;
-    -moz-transition: all 0.35s ease-in-out;
-    transition: all 0.35s ease-in-out;
-}
-
-#our .ih-item.square.effect5 .info h3 {
-    text-transform: uppercase;
-    color: #fff;
-    text-align: center;
-    font-size: 17px;
-    padding: 10px;
-    background: #111111;
-    margin: 30px 0 0 0;
-}
-
-#our .ih-item.square.effect5 .info p {
-    font-style: italic;
-    font-size: 21px;
-    position: relative;
-    color: #bbb;
-    padding: 20px 20px 20px;
-    text-align: center;
 }
 
 #our .ih-item.square.effect5 .info h4.filmText {
@@ -142,25 +83,6 @@
 .our_3 p {
     text-align: center;
     padding-top: 50px !important;
-}
-
-.our_3 p a {
-    font-size: 18px;
-    color: #fff;
-    background-color: #ed1b24;
-    border: 2px solid #ed1b24;
-    padding: 10px 10px 10px 10px;
-    letter-spacing: 2px;
-    border-radius: 10px;
-}
-
-.our_3 p a:hover {
-    background: #8e0606;
-    border: 2px solid #8e0606;
-}
-
-.filmText h6 {
-    color: aquamarine;
 }
 
 /********************* our_end ****************/
