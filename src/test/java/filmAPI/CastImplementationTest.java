@@ -1,4 +1,4 @@
-package Test;
+package filmAPI;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import filmAPI.microservices.CastImplementation;

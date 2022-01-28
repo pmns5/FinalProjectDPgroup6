@@ -20,6 +20,7 @@ class FilmAdding {
      * @use renderGUI()
      */
     fillTable() {
+        alert("ALMENO FUNZIONA ? ")
         let controller = this;
         /* Call the microservice and evaluate data and result status */
         $.getJSON(this.viewAllEndPoint, function (data) {
@@ -40,9 +41,11 @@ class FilmAdding {
     renderGUI(data) {
         $('#view .our_2').remove();
         var array = [];
+        let controller = this;
+        alert("CIAO");
         $.each(data, function (index, obj) {
             if (controller.count === 0) array.push('<div class="col-sm-12 row">');
-            array.push(constructFilmView(obj));
+            array.push(controller.construct(obj));
             if (controller.count === 2) array.push('</div>')
             controller.count = (controller.count + 1) % 3;
         });
@@ -77,9 +80,10 @@ class FilmAdding {
      * @param id the id of the row to edit.
      */
     viewEdit(id) {
+        $("#edit-modal").modal("show");
         let genreSelect = document.getElementById("edit-genre")
         $('#edit-genre option:not(:first)').remove();
-        $.each(Genres, function(index, obj){
+        $.each(Genres, function (index, obj) {
             genreSelect.add(new Option(obj, obj));
         })
 
@@ -166,10 +170,11 @@ class FilmAdding {
             }
         });
     }
+
     insertView() {
         let genreSelect = document.getElementById("add-genre")
         $('#add-genre option:not(:first)').remove();
-        $.each(Genres, function(index, obj){
+        $.each(Genres, function (index, obj) {
             genreSelect.add(new Option(obj, obj));
         })
 
@@ -197,14 +202,39 @@ class FilmAdding {
         });
     }
 
-    markActors(actorList){
+    markActors(actorList) {
         console.log("DA AGGIUNGERE: ")
         console.log(actorList)
-        $.each(actorList, function(index, obj){
-            $(":checkbox").filter(function(x) {
+        $.each(actorList, function (index, obj) {
+            $(":checkbox").filter(function (x) {
                 return this.value === '11';
-            }).prop("checked","true");
+            }).prop("checked", "true");
         });
+    }
+
+    construct(obj) {
+        console.log("FILM : ");
+        console.log(obj)
+        let cutPlot;
+        if (obj.film.plot.length > PLOT_LENGTH) {
+            cutPlot = obj.film.plot.substr(0, PLOT_LENGTH) + "..."
+        } else {
+            cutPlot = obj.film.plot
+        }
+        return '<div class="col-sm-4">' +
+            '   <div class="our_2">' +
+            '<div class="ih-item square effect5 left_to_right" > ' +
+            '<a onclick="this.viewEdit('+ obj.film.id+')" ' +
+            '           <img src=data:image/jpeg;base64,' + obj.film.poster + ' alt="" >' +
+            '            <div class="info">' +
+            '               <h3>' + obj.film.title + '</h3>' +
+            '               <p style="font-size: small">' + cutPlot + '</p>' +
+            addActors(obj.actors) +
+            addStars(obj.avgScore) +
+            '            </div>' +
+            '       </a></div>' +
+            '   </div>' +
+            '</div>';
     }
 
 }

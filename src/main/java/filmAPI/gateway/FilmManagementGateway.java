@@ -32,7 +32,7 @@ public class FilmManagementGateway extends APIGateway {
         // Recall Microservices for Completion
         if (title != null && plot != null && genre != null && trailer != null && poster != null) {
             Film film = new Film(-1, title, plot, EnumGenre.valueOf(genre), trailer, poster);
-            ;
+
             int id_film = filmInterface.addFilm(film);
             if (id_film != -1 && castFilm.addCast(id_film, actors)) {
                 // add success
