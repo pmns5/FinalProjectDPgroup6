@@ -20,7 +20,6 @@ class FilmAdding {
      * @use renderGUI()
      */
     fillTable() {
-        alert("ALMENO FUNZIONA ? ")
         let controller = this;
         /* Call the microservice and evaluate data and result status */
         $.getJSON(this.viewAllEndPoint, function (data) {
@@ -42,7 +41,6 @@ class FilmAdding {
         $('#view .our_2').remove();
         var array = [];
         let controller = this;
-        alert("CIAO");
         $.each(data, function (index, obj) {
             if (controller.count === 0) array.push('<div class="col-sm-12 row">');
             array.push(controller.construct(obj));
@@ -79,8 +77,7 @@ class FilmAdding {
      * Open Model, download Json data and render
      * @param id the id of the row to edit.
      */
-    viewEdit(id) {
-        $("#edit-modal").modal("show");
+    viewEditFilm(id) {
         let genreSelect = document.getElementById("edit-genre")
         $('#edit-genre option:not(:first)').remove();
         $.each(Genres, function (index, obj) {
@@ -92,10 +89,11 @@ class FilmAdding {
             $('#edit-title').val(obj.film.title);
             $('#edit-plot').val(obj.film.plot);
             $('#edit-genre').val(obj.film.genre);
-            controller.getActors($('#edit-table-actors'));
-            controller.markActors(obj.actors);
+            controller.getActors($('#edit-table-actors'), true, obj.actors);
+            $('#edit-trailer').val(obj.film.trailer);
 
-        }).done(function () {
+        }).done(function (obj) {
+            controller.markActors(obj.actors);
             $('#edit-modal').modal('show');
         });
         // Charging
@@ -178,43 +176,35 @@ class FilmAdding {
             genreSelect.add(new Option(obj, obj));
         })
 
-        this.getActors($("#insert-table-actors"))
+        this.getActors($("#insert-table-actors"), false, null)
     }
 
-    getActors(modal) {
+    getActors(modal, editing, actorList) {
         modal.find("tr").remove();
         let controller = this;
         $.getJSON(this.actorsEndPoint, function (data) {
-            controller.addCheckBoxes(data, modal);
+            controller.addCheckBoxes(data, modal, editing, actorList);
         }).done(function () {
         }).fail(function () {
         });
     }
 
 
-    addCheckBoxes(data, modal) {
+    addCheckBoxes(data, modal, editing, actorList) {
+        let listID;
+        if (editing) listID = actorList.map(a => a.id);
+
         $.each(data, function (index, obj) {
             modal.append('<tr class="list-group-item py-1">' +
                 '<td>' +
-                '<input type="checkbox" class="form-check-input" name="actors" value="' + obj.id + '">  ' + obj.name + '  ' + obj.surname +
+                '<input type="checkbox" class="form-check-input checkbox" name="actors" value="' + obj.id + '" id="Cb'+obj.id+'"' +
+                (editing && listID.includes(obj.id) ? 'checked' : '' ) + '>  ' + obj.name + '  ' + obj.surname +
                 '</td>' +
                 '</tr>');
         });
     }
 
-    markActors(actorList) {
-        console.log("DA AGGIUNGERE: ")
-        console.log(actorList)
-        $.each(actorList, function (index, obj) {
-            $(":checkbox").filter(function (x) {
-                return this.value === '11';
-            }).prop("checked", "true");
-        });
-    }
-
     construct(obj) {
-        console.log("FILM : ");
-        console.log(obj)
         let cutPlot;
         if (obj.film.plot.length > PLOT_LENGTH) {
             cutPlot = obj.film.plot.substr(0, PLOT_LENGTH) + "..."
@@ -224,8 +214,8 @@ class FilmAdding {
         return '<div class="col-sm-4">' +
             '   <div class="our_2">' +
             '<div class="ih-item square effect5 left_to_right" > ' +
-            '<a onclick="this.viewEdit('+ obj.film.id+')" ' +
-            '           <img src=data:image/jpeg;base64,' + obj.film.poster + ' alt="" >' +
+            '<a data-target="#edit-modal" data-toggle="modal" onclick="controller.viewEditFilm('+ obj.film.id+')">' +
+            '           <img src=data:image/jpeg;base64,' + obj.film.poster + ' alt="img" >' +
             '            <div class="info">' +
             '               <h3>' + obj.film.title + '</h3>' +
             '               <p style="font-size: small">' + cutPlot + '</p>' +

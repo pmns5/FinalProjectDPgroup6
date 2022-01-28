@@ -44,5 +44,5 @@ CREATE TABLE cast
     id_actor INT NOT NULL,
     PRIMARY KEY (id_film, id_actor),
     CONSTRAINT FK_film_cast FOREIGN KEY (id_film) REFERENCES film (id_film) on update cascade on delete cascade,
-    CONSTRAINT FK_actor_feedback FOREIGN KEY (id_actor) REFERENCES actor (id_actor) on update cascade on delete restrict
+    CONSTRAINT FK_actor_feedback FOREIGN KEY (id_actor) REFERENCES actor (id_actor) on update cascade on delete cascade
 );
