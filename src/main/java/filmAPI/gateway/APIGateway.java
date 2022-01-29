@@ -1,13 +1,7 @@
 package filmAPI.gateway;
 
-import filmAPI.interfaces.ActorFilm;
-import filmAPI.interfaces.CastFilm;
-import filmAPI.interfaces.FeedbackFilm;
-import filmAPI.interfaces.FilmInterface;
-import filmAPI.microservices.ActorImplementation;
-import filmAPI.microservices.CastImplementation;
-import filmAPI.microservices.FeedbackImplementation;
-import filmAPI.microservices.FilmImplementation;
+import filmAPI.interfaces.*;
+import filmAPI.microservices.*;
 import filmAPI.models.Actor;
 import filmAPI.models.Cast;
 import filmAPI.models.Film;
@@ -26,12 +20,15 @@ public class APIGateway {
     CastFilm castFilm;
     @Resource
     FeedbackFilm feedbackFilm;
+    @Resource
+    UserInterface userInterface;
 
     public APIGateway() {
         this.actorFilm = new ActorImplementation();
         this.filmInterface = new FilmImplementation();
         this.castFilm = new CastImplementation();
         this.feedbackFilm = new FeedbackImplementation();
+        this.userInterface = new UserImplementation();
     }
 
     // Utilities
