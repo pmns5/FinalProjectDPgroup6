@@ -18,7 +18,7 @@ class SingleFilm {
                 let feedback = controller.constructFeedbackView(obj);
                 $('#feedbackList').append(feedback)
             });
-            console.log(obj.avgScore * 20)
+
             $(".rating-upper").css({
                 width: obj.avgScore * 20 + "%"
             });
@@ -46,5 +46,10 @@ class SingleFilm {
             '       <small>3 days ago</small>' +
             '       </div>' +
             '   </div>'
+    }
+
+    insertFeedback(){
+        executeRating(ratingStars);
+        console.log(ratingStars)
     }
 }

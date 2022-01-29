@@ -24,7 +24,7 @@ public class Film {
         this.plot = plot;
         this.genre = genre;
         this.poster = poster;
-        this.trailer = trailer;
+        this.trailer = extractTrailerString(trailer);
     }
 
     public int getId() {
@@ -73,6 +73,11 @@ public class Film {
 
     public void setPoster(byte[] poster) {
         this.poster = poster;
+    }
+
+    private String extractTrailerString(String trailer){
+        String[] splitted = trailer.split("/");
+        return splitted[splitted.length-1];
     }
 
     @Override

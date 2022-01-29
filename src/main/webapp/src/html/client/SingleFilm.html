@@ -27,9 +27,9 @@
             </li>
         </ul>
         <div class="nav-item ml-auto">
-            <form method="post">
-                <input class="btn btn-dark" type="submit" value="Logout">
-            </form>
+            <div class="nav-item ml-auto">
+                <button class="btn btn-dark" onclick="logout()" value="Logout">Logout</button>
+            </div>
         </div>
     </div>
 </nav>
@@ -100,6 +100,55 @@
         <object id="feedbackList"></object>
     </div>
 </section>
+
+<div class="row">
+    <button class="btn btn-outline-primary fixedbutton" data-target="#insert-modal" data-toggle="modal"
+            id="insert-button">
+        Insert
+    </button>
+</div>
+
+<!-- Popup per l'inserimento -->
+<div class="modal fade demo-popup" id="insert-modal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Insert new Review</h5>
+                <button aria-label="Close" class="close" data-dismiss="modal" onclick="close()" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="insert-form">
+                    <!-- Feedback -->
+                    <div class="form-group col-md-12">
+                        <label for="add-feedback">Surname:</label>
+                        <input autocomplete="off" class="form-control" id="add-feedback"
+                               name="surname" placeholder="Insert the actor's surname..." required>
+                    </div>
+
+                    <!-- Rating -->
+                    <div class="rating">
+                        <i class="rating__star far fa-star"></i>
+                        <i class="rating__star far fa-star"></i>
+                        <i class="rating__star far fa-star"></i>
+                        <i class="rating__star far fa-star"></i>
+                        <i class="rating__star far fa-star"></i>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                <button class="btn btn-primary" data-dismiss="modal" onclick="controller.insertFeedback()" type="submit"
+                        value="Submit">Save
+                    Changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- JQuery api -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.js"></script>
@@ -110,10 +159,37 @@
 <!-- Custom js -->
 <script charset="utf-8" src="../../js/FormUtil.js"></script>
 <script charset="utf-8" src="../../js/client/SingleFilm.js"></script>
+<script charset="utf-8" src="../../js/cookieManagement.js"></script>
 <script type="application/javascript">
     $(document).ready(function () {
-        let controller = new SingleFilm("", window.location.href.split("?id=")[1]);
+        checkCookie("client")
+        const controller = new SingleFilm("", window.location.href.split("?id=")[1]);
     });
 </script>
+
+<script>
+    const ratingStars = [...document.getElementsByClassName("rating__star")];
+    function executeRating(stars) {
+        const starClassActive = "rating__star fas fa-star";
+        const starClassInactive = "rating__star far fa-star";
+        const starsLength = stars.length;
+        let i;
+
+        stars.map((star) => {
+            star.onclick = () => {
+                i = stars.indexOf(star);
+
+                if (star.className === starClassInactive) {
+                    for (i; i >= 0; --i) stars[i].className = starClassActive;
+                } else {
+                    for (i; i < starsLength; ++i) stars[i].className = starClassInactive;
+                }
+            };
+        });
+    }
+
+</script>
+
+
 </body>
 </html>

@@ -27,14 +27,14 @@
             </li>
         </ul>
         <div class="nav-item ml-auto">
-            <form method="post">
-                <input class="btn btn-dark" type="submit" value="Logout">
-            </form>
+            <div class="nav-item ml-auto">
+                <button class="btn btn-dark" onclick="logout()" value="Logout">Logout</button>
+            </div>
         </div>
     </div>
 </nav>
 <h1>MANAGER MAIN PAGE</h1>
-</body>
+
 <!-- JQuery api -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.js"></script>
@@ -42,4 +42,13 @@
 <script crossorigin="anonymous"
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
         src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+<script charset="utf-8" src="../../js/cookieManagement.js"></script>
+
+<script type="application/javascript">
+    $(document).ready(function () {
+        checkCookie("manager");
+    });
+</script>
+
+</body>
 </html>

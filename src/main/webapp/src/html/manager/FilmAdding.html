@@ -48,9 +48,9 @@
             </li>
         </ul>
         <div class="nav-item ml-auto">
-            <form method="post">
-                <input class="btn btn-dark" type="submit" value="Logout">
-            </form>
+            <div class="nav-item ml-auto">
+                <button class="btn btn-dark" onclick="logout()" value="Logout">Logout</button>
+            </div>
         </div>
     </div>
 </nav>
@@ -248,11 +248,13 @@
 <script charset="utf-8" src="../../js/FormUtil.js"></script>
 <script charset="utf-8" src="../../js/manager/FilmAdding.js"></script>
 <script charset="utf-8" src="../../js/FilmUtil.js"></script>
+<script charset="utf-8" src="../../js/cookieManagement.js"></script>
 <script type="application/javascript">
     // Instance controller on this page
     const controller = new FilmAdding("");
     // When document is ready, get data and fill table
     $(document).ready(function () {
+        checkCookie("manager");
         controller.fillTable();
     });
 </script>
