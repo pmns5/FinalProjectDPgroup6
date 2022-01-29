@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Login Form Example</title>
+
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" rel="stylesheet">
+    <link href="../css/myStyle.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" rel="stylesheet">
+</head>
+<body>
+
+<!--section>
+    <form method=post action="http://6ba4-79-46-58-44.ngrok.io/add-user" >
+        <label>
+            <input type=text name="username">
+        </label>
+        <label>
+            <input type=text name="password">
+        </label>
+        <label>
+            <input type=text name="email">
+        </label>
+        <input type=submit onclick="controller.redirect()">
+    </form>
+</section-->
+
+
+<section>
+    <form id="insert-form">
+        <!-- Username -->
+        <div class="form-group col-md-12">
+            <label for="add-username">Username</label>
+            <input autocomplete="off" class="form-control" id="add-username" name="username"
+                   placeholder="Insert the username name..." required type="text" value="">
+        </div>
+        <!-- Email -->
+        <div class="form-group col-md-12">
+            <label for="add-email">Email:</label>
+            <input autocomplete="off" class="form-control" id="add-email" type="email"
+                   name="email" placeholder="Insert the email..." required>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group col-md-12">
+            <label for="add-password">Password:</label>
+            <input autocomplete="off" class="form-control" id="add-password" type="password"
+                   name="password" required>
+        </div>
+    </form>
+    <button class="btn btn-primary" data-dismiss="modal" onclick="controller.registration()" type="submit"
+            value="Submit">SIGN UP
+    </button>
+    <button class="btn btn-primary" data-dismiss="modal" onclick="controller.access()" type="submit"
+            value="Submit">SIGN IN
+    </button>
+</section>
+
+
+</body>
+<!-- JQuery api -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.js"></script>
+<!-- Bootstrap api -->
+<script crossorigin="anonymous"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Custom js -->
+<script charset="utf-8" src="../js/loginPage.js"></script>
+<script charset="utf-8" src="../js/cookieManagement.js"></script>
+<script type="application/javascript">
+    const controller = new LoginPage();
+</script>
+</html>
