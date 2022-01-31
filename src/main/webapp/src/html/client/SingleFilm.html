@@ -151,7 +151,7 @@
                     <!-- Rating -->
                     <div id="status"></div>
                     <form id="ratingForm">
-                        <fieldset class="rating">
+                        <fieldset class="rating clickable">
                             <input type="radio" id="star5" name="score" value="5"/><label for="star5" title="Rocks!">5
                             stars</label>
                             <input type="radio" id="star4" name="score" value="4"/><label for="star4"
@@ -215,29 +215,6 @@
     });
 </script>
 
-<script>
-    const ratingStars = [...document.getElementsByClassName("rating__star")];
-
-    function executeRating(stars) {
-        const starClassActive = "rating__star fas fa-star";
-        const starClassInactive = "rating__star far fa-star";
-        const starsLength = stars.length;
-        let i;
-
-        stars.map((star) => {
-            star.onclick = () => {
-                i = stars.indexOf(star);
-
-                if (star.className === starClassInactive) {
-                    for (i; i >= 0; --i) stars[i].className = starClassActive;
-                } else {
-                    for (i; i < starsLength; ++i) stars[i].className = starClassInactive;
-                }
-            };
-        });
-    }
-
-</script>
 
 
 </body>

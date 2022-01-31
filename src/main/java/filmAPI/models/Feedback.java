@@ -6,15 +6,17 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Pattern;
 import java.sql.Date;
 
 public class Feedback {
     private int id_user;
     private int id_film;
+    @Pattern(regexp = "<+.*>+", message = "Errore: Caratteri non permessi")
     private String comment;
     private Float score;
 
-    @Temporal(TemporalType.DATE)
+    //@Temporal(TemporalType.DATE)
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", locale = "it_IT", timezone = "Europe/Rome")
     private Date date=null;
 

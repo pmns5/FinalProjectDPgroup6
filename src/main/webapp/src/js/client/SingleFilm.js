@@ -63,15 +63,34 @@ class SingleFilm {
             '               <img src="../../images/user.jpeg" width="30" class="user-img rounded-circle mr-2" alt="">' +
             '               <span>' +
             '                   <small class="font-weight-bold text-primary">' + obj.user.username + '</small>' +
-            '                   <small class="font-weight-bold">' + obj.feedback.comment + '</small>' +
+            '                   <small class="font-weight-bold">' +String(obj.feedback.comment) + '</small>' +
             '               </span>' +
-            '           </div>' +
-            '       <small>'+obj.feedback.date+'</small>' +
-            '       </div>' +
-            '   </div>'
+
+                    this.addStars(obj.user.id, obj.feedback.score) +
+
+
+        '           </div>' +
+        '       <small>' + obj.feedback.date + '</small>' +
+        '       </div>' +
+        '   </div>'
     }
 
-    insertFeedback(){
+    addStars(id, score){
+
+        let str =
+        '    <fieldset class="rating">'  +
+        '        <input id="id_1_"'+id+' type="checkbox" disabled ' + (score >= 5 ? 'checked' : '') + ' value="5"/><label for="id_1_"'+id+'>5 stars</label>'  +
+        '        <input id="id_2_"'+id+' type="checkbox" disabled ' + (score >= 4 ? 'checked' : '') + ' value="4"/><label for="id_2_"'+id+'>4 stars</label>'  +
+        '        <input id="id_3_"'+id+' type="checkbox" disabled ' + (score >= 3 ? 'checked' : '') + ' value="3"/><label for="id_3_"'+id+'>3 stars</label>'  +
+        '        <input id="id_4_"'+id+' type="checkbox" disabled ' + (score >= 2 ? 'checked' : '') + ' value="2"/><label for="id_4_"'+id+'>2 stars</label>'  +
+        '        <input id="id_5_"'+id+' type="checkbox" disabled ' + (score >= 1 ? 'checked' : '') + ' value="1"/><label for="id_5_"'+id+'>1 stars</label>'  +
+        '    </fieldset>'
+
+        return str
+    }
+
+
+    insertFeedback() {
         let controller = this;
         $('#add-idFilm').val(this.id)
         $('#add-idUser').val(getCookieID())
