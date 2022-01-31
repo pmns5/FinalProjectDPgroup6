@@ -33,8 +33,26 @@
         </div>
     </div>
 </nav>
+<!-- Banner Alert template and its section -->
+<template id="success-alert-template">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <h4>{message}</h4>
+        <button aria-label="Close" class="close" data-dismiss="alert" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</template>
+<template id="fail-alert-template">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <h4>{message}</h4>
+        <button aria-label="Close" class="close" data-dismiss="alert" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</template>
+
 <!-- Film Details -->
-<section id="filmSection" >
+<section id="filmSection">
     <div class="container">
         <div class="row">
             <!-- Poster -->
@@ -58,7 +76,7 @@
                     </div>
                     <div class="col">
                         <div class="row">
-                            <div class="rating">
+                            <div class="ratings">
                                 <div class="rating-upper" style="width: 0">
                                     <span>★</span>
                                     <span>★</span>
@@ -120,22 +138,35 @@
             </div>
             <div class="modal-body">
                 <form id="insert-form">
+                    <!-- ID Film -->
+                    <input class="hidden" type="hidden" name="id_film" id="add-idFilm">
+                    <!-- ID User-->
+                    <input class="hidden" type="hidden" name="id_user" id="add-idUser">
                     <!-- Feedback -->
                     <div class="form-group col-md-12">
-                        <label for="add-feedback">Surname:</label>
+                        <label for="add-feedback">Feedback:</label>
                         <input autocomplete="off" class="form-control" id="add-feedback"
-                               name="surname" placeholder="Insert the actor's surname..." required>
+                               name="comment" placeholder="Insert the feedback text..." required>
                     </div>
-
                     <!-- Rating -->
-                    <div class="rating">
-                        <i class="rating__star far fa-star"></i>
-                        <i class="rating__star far fa-star"></i>
-                        <i class="rating__star far fa-star"></i>
-                        <i class="rating__star far fa-star"></i>
-                        <i class="rating__star far fa-star"></i>
-                    </div>
-
+                    <div id="status"></div>
+                    <form id="ratingForm">
+                        <fieldset class="rating">
+                            <input type="radio" id="star5" name="score" value="5"/><label for="star5" title="Rocks!">5
+                            stars</label>
+                            <input type="radio" id="star4" name="score" value="4"/><label for="star4"
+                                                                                           title="Pretty good">4
+                            stars</label>
+                            <input type="radio" id="star3" name="score" value="3"/><label for="star3" title="Meh">3
+                            stars</label>
+                            <input type="radio" id="star2" name="score" value="2"/><label for="star2"
+                                                                                           title="Kinda bad">2
+                            stars</label>
+                            <input type="radio" id="star1" name="score" value="1"/><label for="star1"
+                                                                                           title="Sucks big time">1
+                            star</label>
+                        </fieldset>
+                    </form>
                 </form>
             </div>
             <div class="modal-footer">
@@ -161,14 +192,32 @@
 <script charset="utf-8" src="../../js/client/SingleFilm.js"></script>
 <script charset="utf-8" src="../../js/cookieManagement.js"></script>
 <script type="application/javascript">
+
+    const controller = new SingleFilm("", window.location.href.split("?id=")[1]);
     $(document).ready(function () {
         checkCookie("client")
-        const controller = new SingleFilm("", window.location.href.split("?id=")[1]);
+        controller.showFilm();
+    });
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("form#insert-form").submit(function (e) {
+            e.preventDefault(); // prevent the default click action from being performed
+            if ($("#insert-form :radio:checked").length === 0) {
+                $('#status').html("nothing checked");
+                return false;
+            } else {
+                $('#status').html('You picked ' + $('input:radio[name=rating]:checked').val());
+            }
+        });
     });
 </script>
 
 <script>
     const ratingStars = [...document.getElementsByClassName("rating__star")];
+
     function executeRating(stars) {
         const starClassActive = "rating__star fas fa-star";
         const starClassInactive = "rating__star far fa-star";

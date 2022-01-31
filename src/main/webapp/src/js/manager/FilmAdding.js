@@ -90,8 +90,7 @@ class FilmAdding {
             $('#edit-plot').val(obj.film.plot);
             $('#edit-genre').val(obj.film.genre);
             controller.getActors($('#edit-table-actors'), true, obj.actors);
-            $('#edit-trailer').val(obj.film.trailer);
-
+            $('#edit-trailer').val("www.youtube.com/"+obj.film.trailer);
         }).done(function (obj) {
             controller.markActors(obj.actors);
             $('#edit-modal').modal('show');

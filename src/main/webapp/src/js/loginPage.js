@@ -9,26 +9,40 @@ class LoginPage{
         this.editUser = LOGIN_SERVER + "/edit-user";
     }
 
+
+    /**
+     * Render an alert banner with the message status.
+     *
+     * @param message: the message to show.
+     * @param success: true if is a success banner, false if is a fail banner.
+     */
+    renderAlert(message, success) {
+        let alert;
+        if (success) {
+            alert = $('#success-alert-template');
+        } else {
+            alert = $('#fail-alert-template');
+        }
+        const html = alert.html().replace(/{message}/ig, message);
+        // Add banner and remove it after 5 seconds.
+        $(html).prependTo('#response-alert-section')
+            .delay(5000)
+            .queue(function () {
+                $(this).remove();
+            });
+    };
+
     registration() {
         let controller = this;
-        let data = $('#insert-form').serialize();
-        console.log(data)
+        let data = $('#registration-form').serialize();
         $.ajax({
             type:'post',
             url : controller.registerEndpoint,
             data:data,
-            // responseType:'application/json',
-            // crossDomain: true,
-            // headers: [
-            //     { "Access-Control-Allow-Origin": '*' },
-            //     { "Access-Control-Allow-Headers": 'Origin, X-Requested-With, Content-Type, Accept '},
-            //     { "Access-Control-Allow-Methods": "POST, GET, PUT, OPTIONS, DELETE" }
-            // ]
         }).done(function (){
-            alert("FATTO");
-           controller.redirect();
+            controller.renderAlert('Sign Up Successful', true);
         }).fail(function (){
-            alert("FAILED");
+            controller.renderAlert('Error: Sign Up Failed', false);
         })
 
     }
@@ -36,21 +50,18 @@ class LoginPage{
     access() {
         let controller = this;
         let data = $('#insert-form').serialize();
-        console.log(data)
         $.ajax({
             type:'post',
             url : controller.accessEndpoint,
             data: data,
             traditional: true,
         }).done(function (data){
-            alert("LOGIN DONE");
             data = JSON.parse(data)
-            console.log(data)
-            setCookie(data.id_user, data.role, 365);
+            setCookie(data, 1);
             controller.redirect();
 
         }).fail(function (){
-            alert("LOGIN FAILED");
+            controller.renderAlert("Error during Login. Incorrect Fields", false);
         })
     }
 

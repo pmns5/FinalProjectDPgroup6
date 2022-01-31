@@ -1,41 +1,36 @@
-function setCookie(id, role, exdays) {
+function setCookie(data, exdays) {
     const d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
     let expires = d.toUTCString();
-    console.log("ID : ", id, "    ROLE: ", role);
-    document.cookie = "role=" + role + ";id_user=" + id + ";expires=" + expires + ";path=/";
+    console.log("ID : ", data.id_user, "    ROLE: ", data.role);
+    document.cookie = "data=" + JSON.stringify(data) + ";expires=" + expires + ";path=/";
+
+}
+
+function getCookie() {
+    if (document.cookie === '') return null
+    return JSON.parse((document.cookie.split(";")[0]).split("=")[1]);
 }
 
 function getCookieID() {
-    let ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-        let split = ca[i].split("=");
-        if (split[0] === "id_user") {
-            return split[1];
-        }
-    }
-    return null;
+    let cookie = getCookie()
+    return cookie === null ? null : cookie.id_user
 }
 
 function getCookieRole() {
-    let ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-        let split = ca[i].split("=");
-        if (split[0].trim() === "role") {
-            return split[1];
-        }
-    }
-    return null;
+    let cookie = getCookie()
+    return cookie === null ? null : cookie.role;
+
 }
 
 function checkCookie(role) {
-    if (getCookieRole()!== role){
+    if (getCookieRole() !== role) {
         alert("NOT ALLOWED");
         logout();
     }
 }
 
-function logout(){
+function logout() {
     $(location).attr("href", "../loginPage.html");
-    document.cookie = "role=" + null + ";id_user=" + null + ";expires=" + 0 + ";path=/";
+    document.cookie = "data=" + null + ";expires=" + 0 + ";path=/";
 }

@@ -10,4 +10,5 @@ public interface UserInterface {
 
     boolean deleteUser(int id_user);
 
+    User getUser(int id_user);
 }

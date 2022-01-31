@@ -12,52 +12,92 @@
 </head>
 <body>
 
-<!--section>
-    <form method=post action="http://6ba4-79-46-58-44.ngrok.io/add-user" >
-        <label>
-            <input type=text name="username">
-        </label>
-        <label>
-            <input type=text name="password">
-        </label>
-        <label>
-            <input type=text name="email">
-        </label>
-        <input type=submit onclick="controller.redirect()">
-    </form>
-</section-->
+<template id="success-alert-template">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <h4>{message}</h4>
+        <button aria-label="Close" class="close" data-dismiss="alert" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</template>
+<template id="fail-alert-template">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <h4>{message}</h4>
+        <button aria-label="Close" class="close" data-dismiss="alert" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</template>
 
 
 <section>
     <form id="insert-form">
-        <!-- Username -->
+        <!-- Username or Email-->
         <div class="form-group col-md-12">
-            <label for="add-username">Username</label>
-            <input autocomplete="off" class="form-control" id="add-username" name="username"
-                   placeholder="Insert the username name..." required type="text" value="">
-        </div>
-        <!-- Email -->
-        <div class="form-group col-md-12">
-            <label for="add-email">Email:</label>
-            <input autocomplete="off" class="form-control" id="add-email" type="email"
-                   name="email" placeholder="Insert the email..." required>
+            <label for="add-user">Username or Email</label>
+            <input autocomplete="off" class="form-control" id="add-user" name="user"
+                   placeholder="Insert the username or the email..." required type="text" value="">
         </div>
 
         <!-- Password -->
         <div class="form-group col-md-12">
-            <label for="add-password">Password:</label>
-            <input autocomplete="off" class="form-control" id="add-password" type="password"
-                   name="password" required>
+            <label for="login-password">Password:</label>
+            <input autocomplete="off" class="form-control" id="login-password" type="password"
+                   name="password" placeholder="Insert the Password..." required>
         </div>
     </form>
-    <button class="btn btn-primary" data-dismiss="modal" onclick="controller.registration()" type="submit"
-            value="Submit">SIGN UP
-    </button>
-    <button class="btn btn-primary" data-dismiss="modal" onclick="controller.access()" type="submit"
+    <button class="btn btn-primary" onclick="controller.access()" type="submit"
             value="Submit">SIGN IN
     </button>
 </section>
 
+<div>
+    <p> Still not registered? </p>
+    <button class="btn btn-secondary"  data-target="#registration-modal" data-toggle="modal">SIGN UP
+    </button>
+</div>
+
+<div class="modal fade demo-popup" id="registration-modal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Sign up</h5>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="registration-form">
+                    <!-- Username -->
+                    <div class="form-group col-md-12">
+                        <label for="add-username">Username</label>
+                        <input autocomplete="off" class="form-control" id="add-username" name="username"
+                               placeholder="Insert the username name..." required type="text" value="">
+                    </div>
+                    <!-- Email -->
+                    <div class="form-group col-md-12">
+                        <label for="add-email">Email:</label>
+                        <input autocomplete="off" class="form-control" id="add-email" type="email"
+                               name="email" placeholder="Insert the email..." required>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group col-md-12">
+                        <label for="add-password">Password:</label>
+                        <input autocomplete="off" class="form-control" id="add-password" type="password"
+                               name="password" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                <button class="btn btn-primary" data-dismiss="modal" onclick="controller.registration()" type="submit"
+                        value="Submit">Sign Up
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 <!-- JQuery api -->

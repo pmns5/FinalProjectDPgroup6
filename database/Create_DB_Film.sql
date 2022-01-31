@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS cast CASCADE;
 
 CREATE TABLE user
 (
-    id_user  INT AUTO_INCREMENT PRIMARY KEY,
+    id_user INT PRIMARY KEY,
     username VARCHAR(1024)
 );
 CREATE TABLE film
@@ -28,6 +28,7 @@ CREATE TABLE feedback
     id_user INT NOT NULL,
     score   FLOAT CHECK (score >= 0 and score <= 5),
     comment VARCHAR(1024),
+    date DATE,
     PRIMARY KEY (id_film, id_user),
     CONSTRAINT FK_film_feedback FOREIGN KEY (id_film) REFERENCES FILM (id_film) on update cascade on delete cascade,
     CONSTRAINT FK_user_feedback FOREIGN KEY (id_user) REFERENCES USER (id_user) on update cascade on delete cascade

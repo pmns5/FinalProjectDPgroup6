@@ -61,4 +61,19 @@ public class UserImplementation extends DBConnection implements UserInterface {
         }
         return true;
     }
+
+    @Override
+    public User getUser(int id_user){
+        try (PreparedStatement stmt = db.getConn().prepareStatement("SELECT (username) FROM user WHERE id_user = ?;")) {
+            stmt.setInt(1, id_user);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (!rs.next()) {
+                    return null;
+                }
+                return new User(id_user, rs.getString("username"));
+            }
+        } catch (SQLException e) {
+            return null;
+        }
+    }
 }

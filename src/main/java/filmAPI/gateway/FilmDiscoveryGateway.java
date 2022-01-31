@@ -4,6 +4,7 @@ import filmAPI.models.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FilmDiscoveryGateway extends APIGateway {
@@ -50,9 +51,13 @@ public class FilmDiscoveryGateway extends APIGateway {
             Film film = filmInterface.getOneFilm(id_film);
             List<Actor> actorList = getActors(castFilm.getByFilm(id_film));
             List<Feedback> feedbacks = feedbackFilm.getByFilm(id_film);
+            List<FeedbackUser> feedbackUsers = new ArrayList<>();
+            for(Feedback f :feedbacks)
+                feedbackUsers.add(new FeedbackUser(f, userInterface.getUser(f.getId_user())));
+
             // Construct Output
             ReviewPageFilm reviewPageFilm = new ReviewPageFilm(film, actorList, feedbackFilm.getAverageScore(id_film)
-                    , feedbacks);
+                    , feedbackUsers);
             // No error, send Json
             res.getWriter().print(Utils.toJSON(reviewPageFilm));
             res.setStatus(HttpServletResponse.SC_OK);

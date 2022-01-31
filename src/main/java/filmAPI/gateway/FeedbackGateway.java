@@ -1,6 +1,8 @@
 package filmAPI.gateway;
 
 import filmAPI.models.Feedback;
+import filmAPI.models.FeedbackUser;
+import filmAPI.models.User;
 import filmAPI.models.Utils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -65,8 +67,9 @@ public class FeedbackGateway extends APIGateway {
             int id_film = Integer.parseInt(id_filmStr);
             int id_user = Integer.parseInt(id_userStr);
             Feedback feedback = feedbackFilm.getOneFeedback(id_film, id_user);
-            if (feedback != null) {
-                res.getWriter().print(Utils.toJSON(feedback));
+            User user = userInterface.getUser(id_user);
+            if (feedback != null && user != null) {
+                res.getWriter().print(Utils.toJSON(new FeedbackUser(feedback, user)));
                 res.setStatus(HttpServletResponse.SC_OK);
             } else {
                 res.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);

@@ -41,15 +41,16 @@ VALUES ('Samuel', 'Jackson');
 INSERT INTO ACTOR (name, surname)
 VALUES ('Henry', 'Ford');
 
-INSERT INTO USER (username)
-VALUES ('giuseppe');
-INSERT INTO USER (username)
-VALUES ('paolo');
-INSERT INTO USER (username)
-VALUES ('vincenzo');
-INSERT INTO USER (username)
-VALUES ('dario');
-INSERT INTO USER (username)
-VALUES ('nicola');
-INSERT INTO USER (username)
-VALUES ('francesco');
+
+INSERT INTO USER (id_user, username)
+VALUES (5, 'nicola');
+INSERT INTO USER (id_user, username)
+VALUES (6, 'saverio');
+INSERT INTO USER (id_user, username)
+VALUES (7, 'francesco');
+INSERT INTO USER (id_user, username)
+VALUES (8, 'raffele');
+INSERT INTO USER (id_user, username)
+VALUES (9, 'michele');
+INSERT INTO USER (id_user, username)
+VALUES (10, 'rita');
