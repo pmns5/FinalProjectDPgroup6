@@ -20,7 +20,11 @@ function getCookieID() {
 function getCookieRole() {
     let cookie = getCookie()
     return cookie === null ? null : cookie.role;
+}
 
+function getCookieUsername() {
+    let cookie = getCookie()
+    return cookie === null ? null : cookie.username;
 }
 
 function checkCookie(role) {

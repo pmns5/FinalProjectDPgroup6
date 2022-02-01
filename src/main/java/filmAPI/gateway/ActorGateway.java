@@ -51,29 +51,32 @@ public class ActorGateway extends APIGateway {
         }
     }
 
-    public void viewActor(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    public void viewOneActor(HttpServletRequest req, HttpServletResponse res) throws IOException {
         String id = req.getParameter("id");
-        if (id != null) {
-            // Return single role by id
-            Actor actor = actorFilm.getOneActor(Integer.parseInt(id));
-            if (actor != null) {
-                res.getWriter().print(Utils.toJSON(actor));
-                res.setStatus(HttpServletResponse.SC_OK);
-            } else {
-                res.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
-            }
+
+        // Return single role by id
+        Actor actor = actorFilm.getOneActor(Integer.parseInt(id));
+        if (actor != null) {
+            res.getWriter().print(Utils.toJSON(actor));
+            res.setStatus(HttpServletResponse.SC_OK);
         } else {
-            // Return all role list
-            List<Actor> actors = actorFilm.getAllActors();
-            if (actors != null) {
-                // No error, send Json
-                res.getWriter().print(Utils.toJSON(actors));
-                res.setStatus(HttpServletResponse.SC_OK);
-            } else {
-                // Request generated an error, send error
-                res.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
-            }
+            res.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
         }
+
+    }
+
+    public void viewActors(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        // Return all role list
+        List<Actor> actors = actorFilm.getAllActors();
+        if (actors != null) {
+            // No error, send Json
+            res.getWriter().print(Utils.toJSON(actors));
+            res.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            // Request generated an error, send error
+            res.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
+        }
+
     }
 
     public void deleteActor(HttpServletRequest req, HttpServletResponse res) {

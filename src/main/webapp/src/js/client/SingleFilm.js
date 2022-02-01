@@ -77,16 +77,13 @@ class SingleFilm {
 
     addStars(id, score){
 
-        let str =
-        '    <fieldset class="rating">'  +
-        '        <input id="id_1_"'+id+' type="checkbox" disabled ' + (score >= 5 ? 'checked' : '') + ' value="5"/><label for="id_1_"'+id+'>5 stars</label>'  +
-        '        <input id="id_2_"'+id+' type="checkbox" disabled ' + (score >= 4 ? 'checked' : '') + ' value="4"/><label for="id_2_"'+id+'>4 stars</label>'  +
-        '        <input id="id_3_"'+id+' type="checkbox" disabled ' + (score >= 3 ? 'checked' : '') + ' value="3"/><label for="id_3_"'+id+'>3 stars</label>'  +
-        '        <input id="id_4_"'+id+' type="checkbox" disabled ' + (score >= 2 ? 'checked' : '') + ' value="2"/><label for="id_4_"'+id+'>2 stars</label>'  +
-        '        <input id="id_5_"'+id+' type="checkbox" disabled ' + (score >= 1 ? 'checked' : '') + ' value="1"/><label for="id_5_"'+id+'>1 stars</label>'  +
-        '    </fieldset>'
-
-        return str
+        return '    <fieldset class="rating">' +
+            '        <input id="id_1_"' + id + ' type="checkbox" disabled ' + (score >= 5 ? 'checked' : '') + ' value="5"/><label for="id_1_"' + id + '>5 stars</label>' +
+            '        <input id="id_2_"' + id + ' type="checkbox" disabled ' + (score >= 4 ? 'checked' : '') + ' value="4"/><label for="id_2_"' + id + '>4 stars</label>' +
+            '        <input id="id_3_"' + id + ' type="checkbox" disabled ' + (score >= 3 ? 'checked' : '') + ' value="3"/><label for="id_3_"' + id + '>3 stars</label>' +
+            '        <input id="id_4_"' + id + ' type="checkbox" disabled ' + (score >= 2 ? 'checked' : '') + ' value="2"/><label for="id_4_"' + id + '>2 stars</label>' +
+            '        <input id="id_5_"' + id + ' type="checkbox" disabled ' + (score >= 1 ? 'checked' : '') + ' value="1"/><label for="id_5_"' + id + '>1 stars</label>' +
+            '    </fieldset>'
     }
 
 
@@ -103,8 +100,11 @@ class SingleFilm {
             // Reset modal form.
             $('#add-feedback').val('');
             // charge new data.
-            window.location.reload();
-        }).fail(function () { // fail response
+           // window.location.reload();
+        }).fail(function (err) { // fail response
+
+            console.log(err)
+            alert("ERRORE!!!!")
             controller.renderAlert('Error while inserting. Try again.', false);
         });
 

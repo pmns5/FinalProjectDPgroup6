@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "ActorServlet", value = {"/actors", "/add-actor", "/delete-actor", "/edit-actor"})
+@WebServlet(name = "ActorServlet", value = {"/get-actor","/get-actors", "/add-actor", "/delete-actor", "/edit-actor"})
 public class ActorServlet extends HttpServlet {
     private ActorGateway gateway;
 
@@ -34,7 +34,8 @@ public class ActorServlet extends HttpServlet {
         response.setContentType("application/json");
         String path = ServletUtil.getRequestPath(request);
         switch (path) {
-            case "/actors" -> gateway.viewActor(request, response);
+            case "/get-actors" -> gateway.viewActors(request, response);
+            case "/get-actor" -> gateway.viewOneActor(request, response);
             case "/delete-actor" -> gateway.deleteActor(request, response);
         }
         response.flushBuffer();

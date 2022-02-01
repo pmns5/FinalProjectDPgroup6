@@ -72,9 +72,10 @@
 <script charset="utf-8" src="../../js/client/AllFilms.js"></script>
 <script charset="utf-8" src="../../js/FilmUtil.js"></script>
 <script charset="utf-8" src="../../js/cookieManagement.js"></script>
+<script charset="utf-8" src="../../js/Util.js"></script>
 <script type="application/javascript">
     // Instance controller on this page
-    const controller = new AllFilms("");
+    const controller = new AllFilms(ENDPOINT);
     // When document is ready, get data and fill table
     $(document).ready(function () {
         checkCookie("client")

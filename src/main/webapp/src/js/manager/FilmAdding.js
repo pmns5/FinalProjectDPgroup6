@@ -10,7 +10,7 @@ class FilmAdding {
         this.createEndPoint = endPoint + "/add-film";
         this.editEndPoint = endPoint + "/edit-film";
         this.deleteEndPoint = endPoint + "/delete-film";
-        this.actorsEndPoint = endPoint + "/actors";
+        this.actorsEndPoint = endPoint + "/get-actors";
         this.count = 0;
     }
 

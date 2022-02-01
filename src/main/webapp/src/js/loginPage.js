@@ -1,12 +1,10 @@
-LOGIN_SERVER = "http://79.46.58.44:8080"
-
 class LoginPage{
 
-    constructor() {
-        this.registerEndpoint = LOGIN_SERVER + "/add-user";
-        this.accessEndpoint = LOGIN_SERVER + "/login-user";
-        this.getUser = LOGIN_SERVER + "/view-user";
-        this.editUser = LOGIN_SERVER + "/edit-user";
+    constructor(endpoint) {
+        this.registerEndpoint = endpoint + "/add-user";
+        this.accessEndpoint = endpoint + "/login-user";
+        this.getUser = endpoint + "/view-user";
+        this.editUser = endpoint + "/edit-user";
     }
 
 

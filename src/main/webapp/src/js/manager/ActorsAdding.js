@@ -5,7 +5,8 @@ class ActorsAdding {
      * @param endPoint
      */
     constructor(endPoint) {
-        this.viewEndPoint = endPoint + "/actors";
+        this.viewOneEndPoint = endPoint + "/get-actor";
+        this.viewAllEndPoint = endPoint + "/get-actors";
         this.createEndPoint = endPoint + "/add-actor";
         this.editEndPoint = endPoint + "/edit-actor";
         this.deleteEndPoint = endPoint + "/delete-actor";
@@ -19,8 +20,7 @@ class ActorsAdding {
     fillTable() {
         let controller = this;
         /* Call the microservice and evaluate data and result status */
-        $.getJSON(this.viewEndPoint, function (data) {
-            console.log(data);
+        $.getJSON(this.viewAllEndPoint, function (data) {
             controller.renderGUI(data);
         }).done(function () {
             //controller.renderAlert('Data charged successfully.', true);
@@ -85,7 +85,7 @@ class ActorsAdding {
      * @param id the id of the row to edit.
      */
     viewEdit(id) {
-        $.get(this.viewEndPoint, {id: id}, function (data) {
+        $.get(this.viewOneEndPoint, {id: id}, function (data) {
             $('#edit-id').val(data.id);
             $('#edit-name').val(data.name);
             $('#edit-surname').val(data.surname);
@@ -100,10 +100,10 @@ class ActorsAdding {
      */
     edit() {
         let controller = this;
-        if (validate('#edit-form') === false) {
-            controller.renderAlert('Error: The input fields cannot be left empty. Edit rejected', false);
-            return;
-        }
+        // if (validate('#edit-form') === false) {
+        //     controller.renderAlert('Error: The input fields cannot be left empty. Edit rejected', false);
+        //     return;
+        // }
         let data = $('#edit-form').serialize();
         $.post(this.editEndPoint, data, function () {
             // waiting
@@ -125,7 +125,7 @@ class ActorsAdding {
      * @param id the id of the row to delete
      */
     deleteView(id) {
-        $.get(this.viewEndPoint, {id: id}, function (data) {
+        $.get(this.viewOneEndPoint, {id: id}, function (data) {
             $('#delete-id').val(data.id);
             $('#delete-name').html(data.name);
         }).done(function () {
