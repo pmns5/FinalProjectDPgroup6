@@ -11,12 +11,12 @@ import java.util.Base64;
 
 @JsonSerialize(using = Film.FilmSerializer.class)
 public class Film {
-    private int id;
-    private String title;
-    private String plot;
-    private EnumGenre genre;
-    private String trailer;
-    private byte[] poster;
+    private final String plot;
+    private final String trailer;
+    private final byte[] poster;
+    private final int id;
+    private final String title;
+    private final EnumGenre genre;
 
     public Film(int id, String title, String plot, EnumGenre genre, String trailer, byte[] poster) {
         this.id = id;
@@ -31,53 +31,29 @@ public class Film {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getTitle() {
         return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getPlot() {
         return plot;
     }
 
-    public void setPlot(String plot) {
-        this.plot = plot;
-    }
-
     public EnumGenre getGenre() {
         return genre;
-    }
-
-    public void setGenre(EnumGenre genre) {
-        this.genre = genre;
     }
 
     public String getTrailer() {
         return trailer;
     }
 
-    public void setTrailer(String trailer) {
-        this.trailer = trailer;
-    }
-
     public byte[] getPoster() {
         return poster;
     }
 
-    public void setPoster(byte[] poster) {
-        this.poster = poster;
-    }
-
-    private String extractTrailerString(String trailer){
+    private String extractTrailerString(String trailer) {
         String[] splitted = trailer.split("/");
-        return splitted[splitted.length-1];
+        return splitted[splitted.length - 1];
     }
 
     @Override
@@ -88,10 +64,6 @@ public class Film {
     static class FilmSerializer extends StdSerializer<Film> {
         protected FilmSerializer(Class<Film> t) {
             super(t);
-        }
-
-        protected FilmSerializer() {
-            this(null);
         }
 
         @Override

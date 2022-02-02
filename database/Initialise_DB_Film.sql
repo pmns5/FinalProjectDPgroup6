@@ -40,17 +40,3 @@ INSERT INTO ACTOR (name, surname)
 VALUES ('Samuel', 'Jackson');
 INSERT INTO ACTOR (name, surname)
 VALUES ('Henry', 'Ford');
-
-
-INSERT INTO USER (id_user, username)
-VALUES (5, 'nicola');
-INSERT INTO USER (id_user, username)
-VALUES (6, 'saverio');
-INSERT INTO USER (id_user, username)
-VALUES (7, 'francesco');
-INSERT INTO USER (id_user, username)
-VALUES (8, 'raffele');
-INSERT INTO USER (id_user, username)
-VALUES (9, 'michele');
-INSERT INTO USER (id_user, username)
-VALUES (10, 'rita');

@@ -1,7 +1,13 @@
 package filmAPI.gateway;
 
-import filmAPI.interfaces.*;
-import filmAPI.microservices.*;
+import filmAPI.interfaces.ActorFilm;
+import filmAPI.interfaces.CastFilm;
+import filmAPI.interfaces.FeedbackFilm;
+import filmAPI.interfaces.FilmInterface;
+import filmAPI.microservices.ActorImplementation;
+import filmAPI.microservices.CastImplementation;
+import filmAPI.microservices.FeedbackImplementation;
+import filmAPI.microservices.FilmImplementation;
 import filmAPI.models.Actor;
 import filmAPI.models.Cast;
 import filmAPI.models.Film;
@@ -20,42 +26,56 @@ public class APIGateway {
     CastFilm castFilm;
     @Resource
     FeedbackFilm feedbackFilm;
-    @Resource
-    UserInterface userInterface;
 
+    /**
+     * Initialization gateway
+     */
     public APIGateway() {
         this.actorFilm = new ActorImplementation();
         this.filmInterface = new FilmImplementation();
         this.castFilm = new CastImplementation();
         this.feedbackFilm = new FeedbackImplementation();
-        this.userInterface = new UserImplementation();
     }
 
-    // Utilities
-    // Private Utility for Requesting to the microservices the data associated to the current film
-    public HomePageFilm extractData(Film film) {
+    /**
+     * Method to extract data from a Film object
+     *
+     * @param film: Film object for extracting data
+     * @return HomePageFilm object
+     */
+    public HomePageFilm extractDataFrom(Film film) {
         int id_film = film.getId();
         List<Cast> cast = castFilm.getByFilm(id_film);
         List<Actor> actorsCast = new ArrayList<>();
         for (Cast c : cast) {
-            actorsCast.add(actorFilm.getOneActor(c.getId_actor()));
+            actorsCast.add(actorFilm.getActor(c.getId_actor()));
         }
         return new HomePageFilm(film, actorsCast, feedbackFilm.getAverageScore(id_film));
     }
 
-    // Private Utility for Requesting to the microservices the data associated to the current film list
-    public List<HomePageFilm> extractAllData(List<Film> films) {
+    /**
+     * Method to extract data from a list of Film objects
+     *
+     * @param films: list of Film objects for extracting all data
+     * @return list of HomePageFilm objects
+     */
+    public List<HomePageFilm> extractDataFromAll(List<Film> films) {
         List<HomePageFilm> homePageFilms = new ArrayList<>();
         for (Film film : films) {
-            homePageFilms.add(extractData(film));
+            homePageFilms.add(extractDataFrom(film));
         }
         return homePageFilms;
     }
 
-    // Utility that transforms a List of Cast in a list of Actors
+    /**
+     * Method to extract a list of actors from a cast
+     *
+     * @param castList list of Cast objects for extracting all actors
+     * @return list of Actor objects
+     */
     public List<Actor> getActors(List<Cast> castList) {
         List<Actor> actorList = new ArrayList<>();
-        for (Cast c : castList) actorList.add(actorFilm.getOneActor(c.getId_actor()));
+        for (Cast c : castList) actorList.add(actorFilm.getActor(c.getId_actor()));
         return actorList;
     }
 }

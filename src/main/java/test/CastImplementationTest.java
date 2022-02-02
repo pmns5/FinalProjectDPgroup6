@@ -1,4 +1,4 @@
-package filmAPI;
+package test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import filmAPI.microservices.CastImplementation;
@@ -16,13 +16,8 @@ import java.util.List;
 public class CastImplementationTest extends TestCase {
     private CastImplementation service;
 
-    public void main(String[] args) {
-        junit.swingui.TestRunner.run(CastImplementationTest.class);
-    }
-
     @Order(1)
     protected void setUp() {
-        //Service initialization
         service = new CastImplementation();
     }
 
@@ -49,13 +44,11 @@ public class CastImplementationTest extends TestCase {
         int id_actor2 = 5;
         Cast cast = new Cast(id_film, id_actor1);
         Cast cast2 = new Cast(id_film, id_actor2);
-        List<Cast> castList = new ArrayList<>();
-        castList.add(cast);
-        castList.add(cast2);
-        String expected = Utils.toJSON(castList);
-        List<Cast> castListResult = service.getByFilm(id_film);
-        String result = Utils.toJSON(castListResult);
-        assertEquals(expected, result);
+        List<Cast> expected = new ArrayList<>();
+        expected.add(cast);
+        expected.add(cast2);
+        List<Cast> result = service.getByFilm(id_film);
+        assertEquals(Utils.toJSON(expected), Utils.toJSON(result));
     }
 
     @Order(5)

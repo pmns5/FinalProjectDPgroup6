@@ -4,7 +4,6 @@ function setCookie(data, exdays) {
     let expires = d.toUTCString();
     console.log("ID : ", data.id_user, "    ROLE: ", data.role);
     document.cookie = "data=" + JSON.stringify(data) + ";expires=" + expires + ";path=/";
-
 }
 
 function getCookie() {

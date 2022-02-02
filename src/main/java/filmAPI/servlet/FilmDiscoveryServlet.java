@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "FilmDiscoveryServlet", value = {"/getAll", "/getPerGenre", "/getFilmDetails"})
+@WebServlet(name = "FilmDiscoveryServlet", value = {"/get-films", "/get-films-per-genre", "/get-film-details"})
 public class FilmDiscoveryServlet extends HttpServlet {
     private FilmDiscoveryGateway gateway;
 
@@ -23,9 +23,9 @@ public class FilmDiscoveryServlet extends HttpServlet {
         String path = ServletUtil.getRequestPath(request);
         response.setContentType("application/json");
         switch (path) {
-            case "/getAll" -> gateway.getAll(response);
-            case "/getPerGenre" -> gateway.getPerGenre(request, response);
-            case "/getFilmDetails" -> gateway.getFilmDataAndFeedbacks(request, response);
+            case "/get-films" -> gateway.getFilms(response);
+            case "/get-films-per-genre" -> gateway.getFilmsPerGenre(request, response);
+            case "/get-film-details" -> gateway.getFilmDetails(request, response);
         }
         response.flushBuffer();
     }

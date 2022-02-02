@@ -1,4 +1,4 @@
-package filmAPI;
+package test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import filmAPI.microservices.FeedbackImplementation;
@@ -16,13 +16,8 @@ import java.util.List;
 public class FeedbackImplementationTest extends TestCase {
     private FeedbackImplementation service;
 
-    public void main(String[] args) {
-        junit.swingui.TestRunner.run(FeedbackImplementationTest.class);
-    }
-
     @Order(1)
     protected void setUp() {
-        //Service initialization
         service = new FeedbackImplementation();
     }
 
@@ -55,12 +50,11 @@ public class FeedbackImplementationTest extends TestCase {
         String comment = "Bellissimo film";
         double score = 5.0;
         Feedback feedback = new Feedback(id_user, id_film, comment, (float) score);
-        List<Feedback> feedbackListExpected = new ArrayList<>();
-        feedbackListExpected.add(feedback);
-        String expected = Utils.toJSON(feedbackListExpected);
-        List<Feedback> feedbackListResult = service.getByFilm(id_film);
-        String result = Utils.toJSON(feedbackListResult);
-        assertEquals(expected, result);
+        List<Feedback> expected = new ArrayList<>();
+        expected.add(feedback);
+        List<Feedback> result = service.getByFilm(id_film);
+        result.get(0).setDate(null);
+        assertEquals(Utils.toJSON(expected), Utils.toJSON(result));
     }
 
     @Order(6)
@@ -70,12 +64,11 @@ public class FeedbackImplementationTest extends TestCase {
         String comment = "Bellissimo film";
         double score = 5.0;
         Feedback feedback = new Feedback(id_user, id_film, comment, (float) score);
-        List<Feedback> feedbackListExpected = new ArrayList<>();
-        feedbackListExpected.add(feedback);
-        String expected = Utils.toJSON(feedbackListExpected);
-        List<Feedback> feedbackListResult = service.getByUser(id_user);
-        String result = Utils.toJSON(feedbackListResult);
-        assertEquals(expected, result);
+        List<Feedback> expected = new ArrayList<>();
+        expected.add(feedback);
+        List<Feedback> result = service.getByUser(id_user);
+        result.get(0).setDate(null);
+        assertEquals(Utils.toJSON(expected), Utils.toJSON(result));
     }
 
     @Order(7)
@@ -91,11 +84,10 @@ public class FeedbackImplementationTest extends TestCase {
         int id_film = 1;
         String comment = "Bellissimo film";
         double score = 5.0;
-        Feedback feedbackExpected = new Feedback(id_user, id_film, comment, (float) score);
-        String expected = Utils.toJSON(feedbackExpected);
-        Feedback feedbackResult = service.getOneFeedback(id_film, id_user);
-        String result = Utils.toJSON(feedbackResult);
-        assertEquals(expected, result);
+        Feedback expected = new Feedback(id_user, id_film, comment, (float) score);
+        Feedback result = service.getFeedback(id_film, id_user);
+        result.setDate(null);
+        assertEquals(Utils.toJSON(expected), Utils.toJSON(result));
     }
 
     @Order(4)

@@ -4,7 +4,6 @@ import filmAPI.interfaces.DBConnection;
 import filmAPI.interfaces.FeedbackFilm;
 import filmAPI.models.Feedback;
 
-
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,9 +12,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class FeedbackImplementation extends DBConnection implements FeedbackFilm {
+    public FeedbackImplementation() {
+        super();
+        db.connect();
+    }
+
     @Override
     public boolean addFeedback(Feedback feedback) {
-        try (PreparedStatement stmt = db.getConn().prepareStatement(
+        try (PreparedStatement stmt = db.getConnection().prepareStatement(
                 "INSERT INTO feedback (id_film, id_user, score, comment, date) VALUES (?, ?, ?, ?, ?)"
         )) {
             stmt.setInt(1, feedback.getId_film());
@@ -23,7 +27,6 @@ public class FeedbackImplementation extends DBConnection implements FeedbackFilm
             stmt.setFloat(3, feedback.getScore());
             stmt.setString(4, feedback.getComment());
             stmt.setDate(5, Date.valueOf(LocalDate.now()));
-
             stmt.execute();
         } catch (SQLException e) {
             return false;
@@ -33,7 +36,7 @@ public class FeedbackImplementation extends DBConnection implements FeedbackFilm
 
     @Override
     public boolean editFeedback(Feedback feedback) {
-        try (PreparedStatement stmt = db.getConn().prepareStatement(
+        try (PreparedStatement stmt = db.getConnection().prepareStatement(
                 "UPDATE feedback SET comment = ?, score = ?, date = ? WHERE id_film = ? and id_user = ?"
         )) {
             stmt.setString(1, feedback.getComment());
@@ -50,7 +53,7 @@ public class FeedbackImplementation extends DBConnection implements FeedbackFilm
 
     @Override
     public boolean deleteFeedback(int id_film, int id_user) {
-        try (PreparedStatement stmt = db.getConn().prepareStatement(
+        try (PreparedStatement stmt = db.getConnection().prepareStatement(
                 "DELETE FROM feedback WHERE id_film = ? AND id_user = ?"
         )) {
             stmt.setInt(1, id_film);
@@ -63,9 +66,28 @@ public class FeedbackImplementation extends DBConnection implements FeedbackFilm
     }
 
     @Override
+    public Feedback getFeedback(int id_film, int id_user) {
+        try (PreparedStatement stmt = db.getConnection().prepareStatement("SELECT score, comment, date FROM feedback" +
+                " WHERE id_film = ? AND id_user=?")) {
+            stmt.setInt(1, id_film);
+            stmt.setInt(2, id_user);
+            ResultSet rs = stmt.executeQuery();
+            if (rs != null) {
+                rs.next();
+                float score = rs.getFloat(1);
+                String comment = rs.getString(2);
+                Date date = rs.getDate(3);
+                return new Feedback(id_user, id_film, comment, score, date);
+            }
+        } catch (SQLException ignored) {
+        }
+        return null;
+    }
+
+    @Override
     public ArrayList<Feedback> getByFilm(int id_film) {
         ArrayList<Feedback> result = new ArrayList<>();
-        try (PreparedStatement stmt = db.getConn().prepareStatement("SELECT * FROM feedback WHERE id_film = ?")) {
+        try (PreparedStatement stmt = db.getConnection().prepareStatement("SELECT * FROM feedback WHERE id_film = ?")) {
             stmt.setInt(1, id_film);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -85,7 +107,7 @@ public class FeedbackImplementation extends DBConnection implements FeedbackFilm
     @Override
     public ArrayList<Feedback> getByUser(int id_user) {
         ArrayList<Feedback> result = new ArrayList<>();
-        try (PreparedStatement stmt = db.getConn().prepareStatement("SELECT * FROM feedback WHERE id_user = ?")) {
+        try (PreparedStatement stmt = db.getConnection().prepareStatement("SELECT * FROM feedback WHERE id_user = ?")) {
             stmt.setInt(1, id_user);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -104,7 +126,7 @@ public class FeedbackImplementation extends DBConnection implements FeedbackFilm
 
     @Override
     public Float getAverageScore(int id_film) {
-        try (PreparedStatement stmt = db.getConn().prepareStatement("SELECT AVG(score) FROM feedback WHERE id_film = ?")) {
+        try (PreparedStatement stmt = db.getConnection().prepareStatement("SELECT AVG(score) FROM feedback WHERE id_film = ?")) {
             stmt.setInt(1, id_film);
             ResultSet rs = stmt.executeQuery();
             if (rs != null) {
@@ -114,31 +136,5 @@ public class FeedbackImplementation extends DBConnection implements FeedbackFilm
         } catch (SQLException ignored) {
         }
         return (float) 0;
-    }
-
-    @Override
-    public Feedback getOneFeedback(int id_film, int id_user) {
-        try (PreparedStatement stmt = db.getConn().prepareStatement("SELECT score, comment, date FROM feedback" +
-                " WHERE id_film = ? AND id_user=?")) {
-            stmt.setInt(1, id_film);
-            stmt.setInt(2, id_user);
-            ResultSet rs = stmt.executeQuery();
-            if (rs != null) {
-                rs.next();
-                float score = rs.getFloat(1);
-                String comment = rs.getString(2);
-                Date date = rs.getDate(3);
-                return new Feedback(id_user, id_film, comment, score, date);
-            }
-        } catch (SQLException ignored) {
-        }
-        return null;
-    }
-
-    public static void main(String[] args) {
-        FeedbackImplementation aa = new FeedbackImplementation();
-
-        Feedback f = aa.getOneFeedback(1, 10);
-        System.out.println(f.getDate());
     }
 }

@@ -1,46 +1,27 @@
 class ActorsAdding {
-    /**
-     * Constructor
-     *
-     * @param endPoint
-     */
+
     constructor(endPoint) {
-        this.viewOneEndPoint = endPoint + "/get-actor";
-        this.viewAllEndPoint = endPoint + "/get-actors";
-        this.createEndPoint = endPoint + "/add-actor";
-        this.editEndPoint = endPoint + "/edit-actor";
-        this.deleteEndPoint = endPoint + "/delete-actor";
+        this.addActorEndPoint = endPoint + "/add-actor";
+        this.editActorEndPoint = endPoint + "/edit-actor";
+        this.deleteActorEndPoint = endPoint + "/delete-actor";
+        this.getActorEndPoint = endPoint + "/get-actor";
+        this.getActorsEndPoint = endPoint + "/get-actors";
     }
 
-    /**
-     * Fetch JSON data from the service, then call a function for rendering the View
-     *
-     * @use renderGUI()
-     */
     fillTable() {
         let controller = this;
-        /* Call the microservice and evaluate data and result status */
-        $.getJSON(this.viewAllEndPoint, function (data) {
+        $.getJSON(this.getActorsEndPoint, function (data) {
             controller.renderGUI(data);
         }).done(function () {
-            //controller.renderAlert('Data charged successfully.', true);
             $('#insert-button').prop('disabled', false);
         }).fail(function () {
             controller.renderAlert('Error while charging data. Retry in a few second.', false);
         });
     }
 
-    /**
-     * Render the given JSON data into GUI static design
-     *
-     * @param data a JSON representation of data
-     */
     renderGUI(data) {
-        // If table not empty
         $('#table td').remove();
-        // Get the html template for table rows
         let staticHtml = $("#table-template").html();
-        /* Bind obj data to the template, then append to table body */
         $.each(data, function (index, obj) {
             let row = staticHtml;
             row = row.replace(/{ID}/ig, obj.id);
@@ -48,7 +29,6 @@ class ActorsAdding {
             row = row.replace(/{Surname}/ig, obj.surname);
             $('#table-rows').append(row);
         });
-        /* When empty address-book */
         if (data.length === 0) {
             $("tfoot").html('<tr><th colspan="3">No records</th></tr>');
         } else {
@@ -58,12 +38,6 @@ class ActorsAdding {
         }
     }
 
-    /**
-     * Render an alert banner with the message status.
-     *
-     * @param message: the message to show.
-     * @param success: true if is a success banner, false if is a fail banner.
-     */
     renderAlert(message, success) {
         let alert;
         if (success) {
@@ -72,7 +46,6 @@ class ActorsAdding {
             alert = $('#fail-alert-template');
         }
         const html = alert.html().replace(/{message}/ig, message);
-        // Add banner and remove it after 5 seconds.
         $(html).prependTo('#response-alert-section')
             .delay(5000)
             .queue(function () {
@@ -80,37 +53,23 @@ class ActorsAdding {
             });
     };
 
-    /**
-     * Open Model, download Json data and render
-     * @param id the id of the row to edit.
-     */
     viewEdit(id) {
-        $.get(this.viewOneEndPoint, {id: id}, function (data) {
+        $.get(this.getActorEndPoint, {id: id}, function (data) {
             $('#edit-id').val(data.id);
             $('#edit-name').val(data.name);
             $('#edit-surname').val(data.surname);
         }).done(function () {
             $('#edit-modal').modal('show');
         });
-        // Charging
     }
 
-    /**
-     * Send edit request and show result alert.
-     */
     edit() {
         let controller = this;
-        // if (validate('#edit-form') === false) {
-        //     controller.renderAlert('Error: The input fields cannot be left empty. Edit rejected', false);
-        //     return;
-        // }
+        // 
         let data = $('#edit-form').serialize();
-        $.post(this.editEndPoint, data, function () {
-            // waiting
+        $.post(this.editActorEndPoint, data, function () {
         }).done(function () {
-            // show alert
             controller.renderAlert('Actor edited entered.', true);
-            // success
             $('#edit-id').val('');
             $('#edit-name').val('');
             $('#edit-surname').val('');
@@ -120,12 +79,8 @@ class ActorsAdding {
         });
     }
 
-    /**
-     * Open Model, download Json data and render.
-     * @param id the id of the row to delete
-     */
     deleteView(id) {
-        $.get(this.viewOneEndPoint, {id: id}, function (data) {
+        $.get(this.getActorEndPoint, {id: id}, function (data) {
             $('#delete-id').val(data.id);
             $('#delete-name').html(data.name);
         }).done(function () {
@@ -133,25 +88,17 @@ class ActorsAdding {
         });
     }
 
-    /**
-     * Call delete service and get requested data with get method. Show an alert showing the response.
-     */
     delete() {
         let controller = this;
         let data = $('#delete-form').serialize();
-        $.get(this.deleteEndPoint, data, function () {
-            // waiting
+        $.get(this.deleteActorEndPoint, data, function () {
         }).done(function () {
-            // show alert
             controller.renderAlert('Actor successfully deleted.', true);
         }).always(function () {
             controller.fillTable();
         });
     }
 
-    /**
-     * Call insert service and get requested data with post method. Show an alert showing the response.
-     */
     insert() {
         let controller = this;
         if (validate('#insert-form') === false) {
@@ -160,16 +107,13 @@ class ActorsAdding {
         }
         let data = $('#insert-form').serialize();
         console.log(data)
-        $.post(this.createEndPoint, data, function () { // waiting for response-
-        }).done(function () { // success response-
-            // Set success alert.
+        $.post(this.addActorEndPoint, data, function () {
+        }).done(function () {
             controller.renderAlert('Actor successfully entered.', true);
-            // Reset modal form.
             $('#add-name').val('');
             $('#add-surname').val('');
-            // charge new data.
             controller.fillTable();
-        }).fail(function () { // fail response
+        }).fail(function () {
             controller.renderAlert('Error while inserting. Try again.', false);
         });
     }

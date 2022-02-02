@@ -1,8 +1,11 @@
 package filmAPI.interfaces;
 
 public abstract class DBConnection {
-    public DbInterface db;
+    public final DbInterface db;
 
+    /**
+     * Initialization and connection to the DataBase
+     */
     public DBConnection() {
         this.db = new MySQLDb();
         db.connect();

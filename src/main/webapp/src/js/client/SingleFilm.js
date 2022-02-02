@@ -1,13 +1,13 @@
 class SingleFilm {
     constructor(endPoint, id) {
-        this.viewEndPoint = endPoint + "/getFilmDetails";
-        this.feedbackAdd = endPoint + "/add-feedback";
+        this.addFeedbackEndPoint = endPoint + "/add-feedback";
+        this.getFilmDetailsEndPoint = endPoint + "/get-film-details";
         this.id = id
     }
 
     showFilm() {
         let controller = this
-        $.getJSON(this.viewEndPoint, {id: this.id}, function (obj) {
+        $.getJSON(this.getFilmDetailsEndPoint, {id: this.id}, function (obj) {
             $('#title').text(obj.film.title);
             $('#genre').text(obj.film.genre);
             $('#plot').text(obj.film.plot);
@@ -18,19 +18,12 @@ class SingleFilm {
                 let feedback = controller.constructFeedbackView(obj);
                 $('#feedbackList').append(feedback)
             });
-
             $(".rating-upper").css({
                 width: obj.avgScore * 20 + "%"
             });
         });
     }
 
-    /**
-     * Render an alert banner with the message status.
-     *
-     * @param message: the message to show.
-     * @param success: true if is a success banner, false if is a fail banner.
-     */
     renderAlert(message, success) {
         let alert;
         if (success) {
@@ -39,7 +32,6 @@ class SingleFilm {
             alert = $('#fail-alert-template');
         }
         const html = alert.html().replace(/{message}/ig, message);
-        // Add banner and remove it after 5 seconds.
         $(html).prependTo('#response-alert-section')
             .delay(5000)
             .queue(function () {
@@ -63,29 +55,25 @@ class SingleFilm {
             '               <img src="../../images/user.jpeg" width="30" class="user-img rounded-circle mr-2" alt="">' +
             '               <span>' +
             '                   <small class="font-weight-bold text-primary">' + obj.user.username + '</small>' +
-            '                   <small class="font-weight-bold">' +String(obj.feedback.comment) + '</small>' +
+            '                   <small class="font-weight-bold">' + String(obj.feedback.comment) + '</small>' +
             '               </span>' +
-
-                    this.addStars(obj.user.id, obj.feedback.score) +
-
-
-        '           </div>' +
-        '       <small>' + obj.feedback.date + '</small>' +
-        '       </div>' +
-        '   </div>'
+            this.addStars(obj.user.id, obj.feedback.score) +
+            '           </div>' +
+            '       <small>' + obj.feedback.date + '</small>' +
+            '       </div>' +
+            '   </div>'
     }
 
-    addStars(id, score){
+    addStars(id, score) {
 
-        return '    <fieldset class="rating">' +
-            '        <input id="id_1_"' + id + ' type="checkbox" disabled ' + (score >= 5 ? 'checked' : '') + ' value="5"/><label for="id_1_"' + id + '>5 stars</label>' +
-            '        <input id="id_2_"' + id + ' type="checkbox" disabled ' + (score >= 4 ? 'checked' : '') + ' value="4"/><label for="id_2_"' + id + '>4 stars</label>' +
-            '        <input id="id_3_"' + id + ' type="checkbox" disabled ' + (score >= 3 ? 'checked' : '') + ' value="3"/><label for="id_3_"' + id + '>3 stars</label>' +
-            '        <input id="id_4_"' + id + ' type="checkbox" disabled ' + (score >= 2 ? 'checked' : '') + ' value="2"/><label for="id_4_"' + id + '>2 stars</label>' +
-            '        <input id="id_5_"' + id + ' type="checkbox" disabled ' + (score >= 1 ? 'checked' : '') + ' value="1"/><label for="id_5_"' + id + '>1 stars</label>' +
-            '    </fieldset>'
+        return '<fieldset class="rating">' +
+            '       <input id="id_1_"' + id + ' type="checkbox" disabled ' + (score >= 5 ? 'checked' : '') + ' value="5"/><label for="id_1_"' + id + '>5 stars</label>' +
+            '       <input id="id_2_"' + id + ' type="checkbox" disabled ' + (score >= 4 ? 'checked' : '') + ' value="4"/><label for="id_2_"' + id + '>4 stars</label>' +
+            '       <input id="id_3_"' + id + ' type="checkbox" disabled ' + (score >= 3 ? 'checked' : '') + ' value="3"/><label for="id_3_"' + id + '>3 stars</label>' +
+            '       <input id="id_4_"' + id + ' type="checkbox" disabled ' + (score >= 2 ? 'checked' : '') + ' value="2"/><label for="id_4_"' + id + '>2 stars</label>' +
+            '       <input id="id_5_"' + id + ' type="checkbox" disabled ' + (score >= 1 ? 'checked' : '') + ' value="1"/><label for="id_5_"' + id + '>1 stars</label>' +
+            '   </fieldset>'
     }
-
 
     insertFeedback() {
         let controller = this;
@@ -93,18 +81,12 @@ class SingleFilm {
         $('#add-idUser').val(getCookieID())
         let data = $('#insert-form').serialize();
         console.log(data)
-        $.post(this.feedbackAdd, data, function () { // waiting for response-
-        }).done(function () { // success response-
-            // Set success alert.
+        $.post(this.addFeedbackEndPoint, data, function () {
+        }).done(function () {
             controller.renderAlert('Feedback successfully entered.', true);
-            // Reset modal form.
             $('#add-feedback').val('');
-            // charge new data.
-           // window.location.reload();
-        }).fail(function (err) { // fail response
-
-            console.log(err)
-            alert("ERRORE!!!!")
+            window.location.reload();
+        }).fail(function () {
             controller.renderAlert('Error while inserting. Try again.', false);
         });
 

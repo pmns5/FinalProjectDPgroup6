@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "FilmManagementServlet", value = {"/view-film", "/add-film", "/delete-film", "/edit-film"})
+@WebServlet(name = "FilmManagementServlet", value = {"/add-film", "/edit-film", "/delete-film", "/get-film"})
 @MultipartConfig(maxFileSize = 16177215)
 public class FilmManagementServlet extends HttpServlet {
     private FilmManagementGateway gateway;
@@ -36,7 +36,7 @@ public class FilmManagementServlet extends HttpServlet {
         String path = ServletUtil.getRequestPath(request);
         switch (path) {
             case "/delete-film" -> gateway.deleteFilm(request, response);
-            case "/view-film" -> gateway.getFilm(request, response);
+            case "/get-film" -> gateway.getFilm(request, response);
         }
         response.flushBuffer();
     }

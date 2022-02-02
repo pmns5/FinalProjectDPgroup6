@@ -3,7 +3,6 @@ package filmAPI.gateway;
 import filmAPI.models.Actor;
 import filmAPI.models.Utils;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -15,84 +14,86 @@ public class ActorGateway extends APIGateway {
     }
 
     public void addActor(HttpServletRequest req, HttpServletResponse res) {
+        // Init variables
+        Actor actor_to_add;
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");
+
+        // Start Queries
         if (name != null && surname != null) {
-            Actor actor = new Actor(-1, name, surname);
-            if (actorFilm.addActor(actor)) {
-                // add success
+            actor_to_add = new Actor(-1, name, surname);
+            if (actorFilm.addActor(actor_to_add)) {
                 res.setStatus(HttpServletResponse.SC_OK);
             } else {
-                // Request generated an error, send error
                 res.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
             }
         } else {
-            // Error on parameters
             res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
 
     public void editActor(HttpServletRequest req, HttpServletResponse res) {
-        String id = req.getParameter("id");
+        // Init variables
+        Actor new_actor;
+        int id = Integer.parseInt(req.getParameter("id"));
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");
-        if (id != null && name != null && surname != null) {
-            Actor actor = new Actor(Integer.parseInt(id), name, surname);
-            if (actorFilm.editActor(actor)) {
-                // add success
+
+        // Start Queries
+        if (id > 0 && name != null && surname != null) {
+            new_actor = new Actor(id, name, surname);
+            if (actorFilm.editActor(new_actor)) {
                 res.setStatus(HttpServletResponse.SC_OK);
             } else {
-                // Request generated an error, send error
                 res.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
             }
         } else {
-            // Error on parameters
             res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
-    }
-
-    public void viewOneActor(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        String id = req.getParameter("id");
-
-        // Return single role by id
-        Actor actor = actorFilm.getOneActor(Integer.parseInt(id));
-        if (actor != null) {
-            res.getWriter().print(Utils.toJSON(actor));
-            res.setStatus(HttpServletResponse.SC_OK);
-        } else {
-            res.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
-        }
-
-    }
-
-    public void viewActors(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        // Return all role list
-        List<Actor> actors = actorFilm.getAllActors();
-        if (actors != null) {
-            // No error, send Json
-            res.getWriter().print(Utils.toJSON(actors));
-            res.setStatus(HttpServletResponse.SC_OK);
-        } else {
-            // Request generated an error, send error
-            res.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
-        }
-
     }
 
     public void deleteActor(HttpServletRequest req, HttpServletResponse res) {
-        String id = req.getParameter("id");
-        if (id != null) {
-            // Do delete
-            if (actorFilm.deleteActor(Integer.parseInt(id))) {
-                // Send success
+        // Init variables
+        int id = Integer.parseInt(req.getParameter("id"));
+
+        // Start Queries
+        if (id > 0) {
+            if (actorFilm.deleteActor(id)) {
                 res.setStatus(HttpServletResponse.SC_OK);
             } else {
-                // Request generated an error, send error
                 res.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
             }
         } else {
-            // No id passed as parameter
             res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+    }
+
+    public void getActor(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        // Init variables
+        Actor actor_to_send;
+        int id = Integer.parseInt(req.getParameter("id"));
+
+        // Start Queries
+        if (id > 0) {
+            actor_to_send = actorFilm.getActor(id);
+            res.getWriter().print(Utils.toJSON(actor_to_send));
+            res.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            res.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
+        }
+    }
+
+    public void getActors(HttpServletResponse res) {
+        // Init variables
+        List<Actor> actors;
+
+        // Start Queries
+        try {
+            actors = actorFilm.getActors();
+            res.getWriter().print(Utils.toJSON(actors));
+            res.setStatus(HttpServletResponse.SC_OK);
+        } catch (Exception e) {
+            res.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 }

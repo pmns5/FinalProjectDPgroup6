@@ -34,8 +34,8 @@ public class CastImplementation extends DBConnection implements CastFilm {
 
     @Override
     public boolean deleteCast(int id_film) {
-        try (PreparedStatement stmt = db.getConn().prepareStatement(
-                "DELETE FROM cast WHERE  id_film = " + id_film
+        try (PreparedStatement stmt = db.getConnection().prepareStatement(
+                "DELETE FROM cast WHERE id_film = " + id_film
         )) {
             stmt.execute();
         } catch (SQLException e) {
@@ -48,8 +48,7 @@ public class CastImplementation extends DBConnection implements CastFilm {
     @Override
     public List<Cast> getByFilm(int id_film) {
         ArrayList<Cast> cast = new ArrayList<>();
-        try (PreparedStatement stmt = db.getConn().prepareStatement("SELECT * FROM cast WHERE  id_film = "
-                + id_film)) {
+        try (PreparedStatement stmt = db.getConnection().prepareStatement("SELECT * FROM cast WHERE  id_film = " + id_film)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 cast.add(new Cast(rs.getInt(1), rs.getInt(2)));
@@ -63,7 +62,7 @@ public class CastImplementation extends DBConnection implements CastFilm {
 
     // Private Utilities
     private boolean addCast(Cast cast) {
-        try (PreparedStatement stmt = db.getConn().prepareStatement(
+        try (PreparedStatement stmt = db.getConnection().prepareStatement(
                 "INSERT INTO cast (id_film, id_actor) VALUES (?, ?);"
         )) {
             stmt.setInt(1, cast.getId_film());

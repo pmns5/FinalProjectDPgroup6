@@ -2,5 +2,6 @@ package filmAPI.models;
 
 import java.util.List;
 
-public record ReviewPageFilm(Film film, List<Actor> actors, Float avgScore, List<FeedbackUser> feedbackList) {
+@SuppressWarnings("unused")
+public record ReviewPageFilm(Film film, List<Actor> actors, Float avgScore, List<Feedback> feedback) {
 }

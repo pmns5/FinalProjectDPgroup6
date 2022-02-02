@@ -10,9 +10,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-/**
- * Microservice for Actor Management
- */
 public class ActorImplementation extends DBConnection implements ActorFilm {
     public ActorImplementation() {
         super();
@@ -21,7 +18,7 @@ public class ActorImplementation extends DBConnection implements ActorFilm {
 
     @Override
     public boolean addActor(Actor actor) {
-        try (PreparedStatement stmt = db.getConn().prepareStatement(
+        try (PreparedStatement stmt = db.getConnection().prepareStatement(
                 "INSERT INTO actor (name, surname) VALUES (?, ?);"
         )) {
             stmt.setString(1, actor.getName());
@@ -35,7 +32,7 @@ public class ActorImplementation extends DBConnection implements ActorFilm {
 
     @Override
     public boolean editActor(Actor actor) {
-        try (PreparedStatement stmt = db.getConn().prepareStatement(
+        try (PreparedStatement stmt = db.getConnection().prepareStatement(
                 "UPDATE actor SET name = ?, surname = ? WHERE id_actor = ?"
         )) {
             stmt.setString(1, actor.getName());
@@ -50,7 +47,7 @@ public class ActorImplementation extends DBConnection implements ActorFilm {
 
     @Override
     public boolean deleteActor(int id_actor) {
-        try (PreparedStatement stmt = db.getConn().prepareStatement(
+        try (PreparedStatement stmt = db.getConnection().prepareStatement(
                 "DELETE FROM actor WHERE id_actor = ?;"
         )) {
             stmt.setInt(1, id_actor);
@@ -62,8 +59,8 @@ public class ActorImplementation extends DBConnection implements ActorFilm {
     }
 
     @Override
-    public Actor getOneActor(int id_actor) {
-        try (PreparedStatement stmt = db.getConn().prepareStatement("SELECT * FROM actor WHERE id_actor = ?;")) {
+    public Actor getActor(int id_actor) {
+        try (PreparedStatement stmt = db.getConnection().prepareStatement("SELECT * FROM actor WHERE id_actor = ?;")) {
             stmt.setInt(1, id_actor);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (!rs.next()) {
@@ -78,9 +75,9 @@ public class ActorImplementation extends DBConnection implements ActorFilm {
     }
 
     @Override
-    public ArrayList<Actor> getAllActors() {
+    public ArrayList<Actor> getActors() {
         ArrayList<Actor> result = new ArrayList<>();
-        try (Statement stmt = db.getConn().createStatement();
+        try (Statement stmt = db.getConnection().createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM actor ORDER BY id_actor;")) {
             while (rs.next()) {
                 int id_actor = rs.getInt("id_actor");

@@ -14,9 +14,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Microservice for management of Data associated of a film
- */
 public class FilmImplementation extends DBConnection implements FilmInterface {
     public FilmImplementation() {
         super();
@@ -25,7 +22,7 @@ public class FilmImplementation extends DBConnection implements FilmInterface {
 
     @Override
     public int addFilm(Film film) {
-        try (PreparedStatement stmt = db.getConn().prepareStatement(
+        try (PreparedStatement stmt = db.getConnection().prepareStatement(
                 "INSERT INTO film (title, genre, plot, trailer, poster) VALUES (?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS
         )) {
             stmt.setString(1, film.getTitle());
@@ -43,8 +40,8 @@ public class FilmImplementation extends DBConnection implements FilmInterface {
     }
 
     @Override
-    public int editFilm(Film film) {
-        try (PreparedStatement stmt = db.getConn().prepareStatement(
+    public boolean editFilm(Film film) {
+        try (PreparedStatement stmt = db.getConnection().prepareStatement(
                 "UPDATE film SET title = ?, genre = ?, plot = ?, trailer = ?," +
                         " poster = ? WHERE id_film = ?"
         )) {
@@ -56,14 +53,14 @@ public class FilmImplementation extends DBConnection implements FilmInterface {
             stmt.setInt(6, film.getId());
             stmt.execute();
         } catch (SQLException e) {
-            return -1;
+            return false;
         }
-        return film.getId();
+        return true;
     }
 
     @Override
     public boolean deleteFilm(int idFilm) {
-        try (PreparedStatement stmt = db.getConn().prepareStatement(
+        try (PreparedStatement stmt = db.getConnection().prepareStatement(
                 "DELETE FROM film WHERE id_film = ?;"
         )) {
             stmt.setInt(1, idFilm);
@@ -75,8 +72,8 @@ public class FilmImplementation extends DBConnection implements FilmInterface {
     }
 
     @Override
-    public Film getOneFilm(int idFilm) {
-        try (PreparedStatement stmt = db.getConn().prepareStatement("SELECT id_film, title, genre, plot, trailer, poster FROM film WHERE id_film = ?")) {
+    public Film getFilm(int idFilm) {
+        try (PreparedStatement stmt = db.getConnection().prepareStatement("SELECT id_film, title, genre, plot, trailer, poster FROM film WHERE id_film = ?")) {
             stmt.setInt(1, idFilm);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (!rs.next()) {
@@ -99,9 +96,9 @@ public class FilmImplementation extends DBConnection implements FilmInterface {
     }
 
     @Override
-    public List<Film> getAllFilms() {
+    public List<Film> getFilms() {
         ArrayList<Film> listFilms = new ArrayList<>();
-        try (Statement stmt = db.getConn().createStatement(); ResultSet rs = stmt.executeQuery("SELECT id_film, title, genre, plot, trailer, poster FROM film ORDER BY id_film")) {
+        try (Statement stmt = db.getConnection().createStatement(); ResultSet rs = stmt.executeQuery("SELECT id_film, title, genre, plot, trailer, poster FROM film ORDER BY id_film")) {
             while (rs.next()) {
                 int id_film = rs.getInt(1);
                 String title = rs.getString(2);
@@ -121,10 +118,10 @@ public class FilmImplementation extends DBConnection implements FilmInterface {
     }
 
     @Override
-    public List<Film> getByGenre(EnumGenre genre) {
+    public List<Film> getFilmsPerGenre(EnumGenre genre) {
         ArrayList<Film> listFilms = new ArrayList<>();
-        try (Statement stmt = db.getConn().createStatement(); ResultSet rs = stmt.executeQuery("SELECT id_film," +
-                " title, plot, trailer, poster FROM film WHERE genre=" + genre.toString() + "  ORDER BY id_film")) {
+        try (Statement stmt = db.getConnection().createStatement(); ResultSet rs = stmt.executeQuery("SELECT id_film," +
+                "title, plot, trailer, poster FROM film WHERE genre=" + genre.toString() + " ORDER BY id_film")) {
             while (rs.next()) {
                 int id_film = rs.getInt(1);
                 String title = rs.getString(2);

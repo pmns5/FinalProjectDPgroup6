@@ -2,8 +2,8 @@ package filmAPI.models;
 
 public class Actor {
     private final int id;
-    private String name;
-    private String surname;
+    private final String name;
+    private final String surname;
 
     public Actor(int id, String name, String surname) {
         this.id = id;
@@ -19,15 +19,8 @@ public class Actor {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getSurname() {
         return surname;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
 }

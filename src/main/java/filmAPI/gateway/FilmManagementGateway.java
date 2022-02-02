@@ -2,11 +2,9 @@ package filmAPI.gateway;
 
 import filmAPI.models.*;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +14,8 @@ public class FilmManagementGateway extends APIGateway {
     }
 
     public void addFilm(HttpServletRequest req, HttpServletResponse res) {
-        // Extract Data From Request
+        // Init variables
+        int id_film;
         String title = req.getParameter("title");
         String plot = req.getParameter("plot");
         String genre = req.getParameter("genre");
@@ -26,30 +25,28 @@ public class FilmManagementGateway extends APIGateway {
         try {
             Part part = req.getPart("poster");
             poster = part.getInputStream().readAllBytes();
-        } catch (IOException | ServletException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            res.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
-        // Recall Microservices for Completion
+
+        // Start Queries
         if (title != null && plot != null && genre != null && trailer != null && poster != null) {
             Film film = new Film(-1, title, plot, EnumGenre.valueOf(genre), trailer, poster);
-
-            int id_film = filmInterface.addFilm(film);
-            if (id_film != -1 && castFilm.addCast(id_film, actors)) {
-                // add success
+            id_film = filmInterface.addFilm(film);
+            if (id_film > 0 && castFilm.addCast(id_film, actors)) {
                 res.setStatus(HttpServletResponse.SC_OK);
             } else {
-                // Request generated an error, send error
                 res.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
             }
         } else {
-            // Error on parameters
             res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
 
     public void editFilm(HttpServletRequest req, HttpServletResponse res) {
-        // Extract Data from Request
-        int id = Integer.parseInt(req.getParameter("id"));
+        // Init variables
+        Film newFilm;
+        int id_film = Integer.parseInt(req.getParameter("id"));
         String title = req.getParameter("title");
         String plot = req.getParameter("plot");
         String genre = req.getParameter("genre");
@@ -59,59 +56,70 @@ public class FilmManagementGateway extends APIGateway {
         try {
             Part part = req.getPart("poster");
             poster = part.getInputStream().readAllBytes();
-        } catch (IOException | ServletException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            res.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
-        // Recall Microservices for Completion
-        if (title != null && plot != null && genre != null && trailer != null && poster != null) {
-            Film film = new Film(id, title, plot, EnumGenre.valueOf(genre), trailer, poster);
-            int id_film = filmInterface.editFilm(film);
-            if (id_film != -1 && castFilm.editCast(id_film, actors)) {
-                // add success
-                res.setStatus(HttpServletResponse.SC_OK);
+
+        // Start Queries
+        try {
+            if (id_film > 0 && title != null && plot != null && genre != null && trailer != null && poster != null) {
+                newFilm = new Film(id_film, title, plot, EnumGenre.valueOf(genre), trailer, poster);
+                if (filmInterface.editFilm(newFilm) && castFilm.editCast(id_film, actors)) {
+                    res.setStatus(HttpServletResponse.SC_OK);
+                } else {
+                    res.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
+                }
             } else {
-                // Request generated an error, send error
                 res.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
             }
-        } else {
-            // Error on parameters
+        } catch (Exception e) {
             res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
 
     public void deleteFilm(HttpServletRequest req, HttpServletResponse res) {
-        String id = req.getParameter("id");
-        if (id != null) {
-            int id_film = Integer.parseInt(id);
-            // Do delete
-            if (filmInterface.deleteFilm(id_film) && castFilm.deleteCast(id_film)) {
-                // Send success
-                res.setStatus(HttpServletResponse.SC_OK);
+        // Init variables
+        int id_film = Integer.parseInt(req.getParameter("id"));
+
+        // Start Queries
+        try {
+            if (id_film > 0) {
+                if (filmInterface.deleteFilm(id_film) && castFilm.deleteCast(id_film)) {
+                    res.setStatus(HttpServletResponse.SC_OK);
+                } else {
+                    res.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
+                }
             } else {
-                // Request generated an error, send error
                 res.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
             }
-        } else {
-            // No id passed as parameter
+        } catch (Exception e) {
             res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
 
     public void getFilm(HttpServletRequest req, HttpServletResponse res) {
-        String idFilmStr = req.getParameter("id");
+        // Init variables
+        Film film;
+        List<Cast> castList;
+        List<Actor> actorList = new ArrayList<>();
+        HomePageFilm homePageFilm;
+        int idFilm = Integer.parseInt(req.getParameter("id"));
+
+        // Start Queries
         try {
-            if (idFilmStr != null) {
-                int idFilm = Integer.parseInt(idFilmStr);
-                Film film = filmInterface.getOneFilm(idFilm);
-                List<Cast> castList = castFilm.getByFilm(idFilm);
-                List<Actor> actorList = new ArrayList<>();
-                for (Cast c : castList) actorList.add(actorFilm.getOneActor(c.getId_actor()));
-                HomePageFilm homePageFilm = new HomePageFilm(film, actorList, feedbackFilm.getAverageScore(idFilm));
+            if (idFilm > 0) {
+                film = filmInterface.getFilm(idFilm);
+                castList = castFilm.getByFilm(idFilm);
+                for (Cast c : castList)
+                    actorList.add(actorFilm.getActor(c.getId_actor()));
+                homePageFilm = new HomePageFilm(film, actorList, feedbackFilm.getAverageScore(idFilm));
                 res.getWriter().print(Utils.toJSON(homePageFilm));
                 res.setStatus(HttpServletResponse.SC_OK);
+            } else {
+                res.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
             }
         } catch (Exception e) {
-            res.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
+            res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
 }
