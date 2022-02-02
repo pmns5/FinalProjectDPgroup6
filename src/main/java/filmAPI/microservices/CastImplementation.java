@@ -60,7 +60,6 @@ public class CastImplementation extends DBConnection implements CastFilm {
         }
     }
 
-    // Private Utilities
     private boolean addCast(Cast cast) {
         try (PreparedStatement stmt = db.getConnection().prepareStatement(
                 "INSERT INTO cast (id_film, id_actor) VALUES (?, ?);"
