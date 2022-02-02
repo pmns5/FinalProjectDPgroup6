@@ -25,7 +25,7 @@ class LoginPage {
 
     registration() {
         let controller = this;
-        let data = $('#registration-form').serialize();
+        let data = $('#register-form').serialize();
         $.ajax({
             type: 'post',
             url: controller.addUserEndpoint,
@@ -40,7 +40,7 @@ class LoginPage {
 
     access() {
         let controller = this;
-        let data = $('#insert-form').serialize();
+        let data = $('#login-form').serialize();
         $.ajax({
             type: 'post',
             url: controller.loginUserEndpoint,
