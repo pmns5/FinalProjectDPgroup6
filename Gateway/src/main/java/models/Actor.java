@@ -25,6 +25,10 @@ public class Actor {
         this.surname = Util.validate(req.getParameter("surname"));
     }
 
+    public Actor(String id) {
+        this.id = Integer.parseInt(id);
+    }
+
     public int getId() {
         return id;
     }

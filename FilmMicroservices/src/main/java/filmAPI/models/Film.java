@@ -12,33 +12,43 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Base64;
-import java.util.List;
 
-@JsonSerialize(using = Film.FilmSerializer.class)
-@JsonDeserialize(using = Film.FilmDeserializer.class)
+@XmlRootElement(name = "Film")
+@XmlAccessorType(XmlAccessType.NONE)
+//@JsonSerialize(using = Film.FilmSerializer.class)
+//@JsonDeserialize(using = Film.FilmDeserializer.class)
 public class Film {
+    @XmlAttribute
     private int id;
+    @XmlAttribute
     private String title;
+    @XmlAttribute
     private String plot;
-    private EnumGenre genre;
+    @XmlAttribute
+    private String genre;
+    @XmlAttribute
     private String trailer;
-    private byte[] poster;
-    private String[] actors;
 
-    public Film(int id, String title, String plot, EnumGenre genre, String trailer, byte[] poster, String[] actors) {
+    @XmlAttribute
+    private String poster;
+
+    public Film(int id, String title, String plot, EnumGenre genre, String trailer, byte[] poster){//, String[] actors) {
         this.id = id;
         this.title = title;
         this.plot = plot;
-        this.genre = genre;
-        this.poster = poster;
+        this.genre = genre.name();
+        this.poster = new String(Base64.getEncoder().encode(poster));
         this.trailer = extractTrailerString(trailer);
-        this.actors = actors;
+
     }
 
-    public Film (){
+    public Film() {
 
     }
 
@@ -67,11 +77,11 @@ public class Film {
     }
 
     public EnumGenre getGenre() {
-        return genre;
+        return EnumGenre.valueOf(genre);
     }
 
     public void setGenre(EnumGenre genre) {
-        this.genre = genre;
+        this.genre = genre.name();
     }
 
     public String getTrailer() {
@@ -83,19 +93,11 @@ public class Film {
     }
 
     public byte[] getPoster() {
-        return poster;
+        return Base64.getDecoder().decode(poster);
     }
 
     public void setPoster(byte[] poster) {
-        this.poster = poster;
-    }
-
-    public String[] getActors() {
-        return actors;
-    }
-
-    public void setActors(String[] actors) {
-        this.actors = actors;
+        this.poster = new String(Base64.getEncoder().encode(poster));
     }
 
     private String extractTrailerString(String trailer) {
@@ -125,8 +127,8 @@ public class Film {
             jsonGenerator.writeStringField("plot", film.plot);
             jsonGenerator.writeStringField("genre", film.genre.toString());
             jsonGenerator.writeStringField("trailer", film.trailer);
-            jsonGenerator.writeStringField("poster", new String(Base64.getEncoder().encode(film.poster)));
-            jsonGenerator.writeStringField("actors", Arrays.toString(film.actors));
+//            jsonGenerator.writeStringField("poster", new String(Base64.getEncoder().encode(film.poster)));
+            jsonGenerator.writeStringField("poster", "CIAO");
             jsonGenerator.writeEndObject();
         }
     }
@@ -148,13 +150,51 @@ public class Film {
             String plot = tn.get("plot").toString();
             EnumGenre genre = EnumGenre.valueOf(tn.get("genre").toString());
             String trailer = tn.get("trailer").toString();
-            String posterStr = tn.get("poster").toString();
-            byte[] poster = Base64.getDecoder().decode(posterStr);
-            String actors = tn.get("actors").toString();
-            return new Film(id, title, plot, genre, trailer, poster, null);
+            String poster = tn.get("poster").toString();
+            //byte[] poster = Base64.getDecoder().decode(posterStr);
+
+            return new Film(id, title, plot, genre, trailer, poster.getBytes());
 
         }
 
 
     }
+
+
+//    static class PosterDeserializer extends StdDeserializer<byte[]> {
+//
+//        public PosterDeserializer() {
+//            this(null);
+//        }
+//
+//        public PosterDeserializer(Class<byte[]> t) {
+//            super(t);
+//        }
+//
+//        @Override
+//        public byte[] deserialize(JsonParser jsonParser, DeserializationContext context)
+//                throws IOException, JsonProcessingException {
+//            TreeNode tn = jsonParser.readValueAsTree();
+//            String posterStr = tn.get("poster").toString();
+//            return Base64.getDecoder().decode(posterStr);
+//
+//        }
+//    }
+//    static class PosterSerializer extends StdSerializer<byte[]> {
+//
+//        public PosterSerializer() {
+//            this(null);
+//        }
+//
+//        public PosterSerializer(Class<byte[]> t) {
+//            super(t);
+//        }
+//
+//        @Override
+//        public void serialize(byte[] bytes, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+//            jsonGenerator.writeString(new String(Base64.getEncoder().encode(bytes)));
+//        }
+//
+//    }
+
 }

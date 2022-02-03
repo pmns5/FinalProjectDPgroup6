@@ -10,7 +10,7 @@ function constructFilmView(obj) {
     return '<div class="col-sm-4">' +
         '   <div class="our_2">' +
         '<div class="ih-item square effect5 left_to_right" > ' +
-        '<a href="../../html/client/SingleFilm.html?id=' + obj.film.id +'">'+
+        '<a href="../../html/client/SingleFilm.html?id=' + obj.film.id + '">' +
         '           <img src=data:image/jpeg;base64,' + obj.film.poster + ' alt="img" >' +
         '            <div class="info">' +
         '               <h3>' + obj.film.title + '</h3>' +
@@ -54,6 +54,5 @@ function addActors(actorList) {
         }
     });
     actors = actors.substring(0, actors.length - 1);
-
     return '<h6 class="filmText" style="color: white">' + actors + '</h6>';
 }

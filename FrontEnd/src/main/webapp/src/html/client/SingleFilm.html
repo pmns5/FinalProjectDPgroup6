@@ -139,9 +139,9 @@
             <div class="modal-body">
                 <form id="insert-form">
                     <!-- ID Film -->
-                    <input class="hidden" type="hidden" name="id_film" id="add-idFilm">
+                    <input class="hidden" id="add-idFilm" name="id_film" type="hidden">
                     <!-- ID User-->
-                    <input class="hidden" type="hidden" name="id_user" id="add-idUser">
+                    <input class="hidden" id="add-idUser" name="id_user" type="hidden">
                     <!-- Feedback -->
                     <div class="form-group col-md-12">
                         <label for="add-feedback">Feedback:</label>
@@ -152,18 +152,18 @@
                     <div id="status"></div>
                     <form id="ratingForm">
                         <fieldset class="rating clickable">
-                            <input type="radio" id="star5" name="score" value="5"/><label for="star5" title="Rocks!">5
+                            <input id="star5" name="score" type="radio" value="5"/><label for="star5" title="Rocks!">5
                             stars</label>
-                            <input type="radio" id="star4" name="score" value="4"/><label for="star4"
-                                                                                           title="Pretty good">4
+                            <input id="star4" name="score" type="radio" value="4"/><label for="star4"
+                                                                                          title="Pretty good">4
                             stars</label>
-                            <input type="radio" id="star3" name="score" value="3"/><label for="star3" title="Meh">3
+                            <input id="star3" name="score" type="radio" value="3"/><label for="star3" title="Meh">3
                             stars</label>
-                            <input type="radio" id="star2" name="score" value="2"/><label for="star2"
-                                                                                           title="Kinda bad">2
+                            <input id="star2" name="score" type="radio" value="2"/><label for="star2"
+                                                                                          title="Kinda bad">2
                             stars</label>
-                            <input type="radio" id="star1" name="score" value="1"/><label for="star1"
-                                                                                           title="Sucks big time">1
+                            <input id="star1" name="score" type="radio" value="1"/><label for="star1"
+                                                                                          title="Sucks big time">1
                             star</label>
                         </fieldset>
                     </form>
@@ -215,7 +215,6 @@
         });
     });
 </script>
-
 
 
 </body>

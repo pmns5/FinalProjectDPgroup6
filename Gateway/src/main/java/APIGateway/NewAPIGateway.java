@@ -7,6 +7,7 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,13 +27,14 @@ import static APIGateway.Util.*;
         "/add-user", "/edit-user", "/login-user", "/ban-user", "/remove-ban-user",
         "/delete-user", "/get-user", "/get-users", "/get-banned-users", "/get-no-banned-users"
 })
+@MultipartConfig(maxFileSize = 16177215)
 public class NewAPIGateway extends HttpServlet {
-    private final String actorMicroservice = "http://79.12.1.116:8081/api/actors";
-    private final String filmDiscovery = "http://79.12.1.116:8081";
-    private final String filmMicroservice = "http://79.12.1.116:8081/api/films";
-    private final String feedbackMicroservice = "http://79.12.1.116:8081/api/feedbacks";
+    private final String actorMicroservice = "http://87.1.89.130:8081/api/actors";
+    private final String filmDiscovery = "http://87.1.89.130:8081/api/query";
+    private final String filmMicroservice = "http://87.1.89.130:8081/api/films";
+    private final String feedbackMicroservice = "http://87.1.89.130:8081/api/feedbacks";
 
-    private final String loginMicroservice = "http://79.12.1.116:8082/apiLogin/login";
+    private final String loginMicroservice = "http://87.1.89.130:8082/apiLogin/login";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -50,8 +52,8 @@ public class NewAPIGateway extends HttpServlet {
                 case "/edit-feedback" -> response.setStatus(post(feedbackMicroservice + path, new Feedback(request)));
 
                 // Film
-                case "/add-film" -> response.setStatus(post(filmMicroservice + path, new Film(request)));
-                case "/edit-film" -> response.setStatus(post(filmMicroservice + path, new Film(request)));
+                case "/add-film" -> response.setStatus(post(filmMicroservice + path, new FilmManagement(request, true)));
+                case "/edit-film" -> response.setStatus(post(filmMicroservice + path, new FilmManagement(request, false)));
 
                 // Login
                 case "/add-user" -> response.setStatus(post(loginMicroservice + path, new User(request, true)));
@@ -90,7 +92,7 @@ public class NewAPIGateway extends HttpServlet {
 
             // Film
             case "/delete-film"-> resp.setStatus(delete(filmMicroservice + path + "/" + req.getParameter("id")));
-            case "/get-film" -> pw.write(toJSON(get(filmMicroservice + path + "/" + req.getParameter("id"), Film.class)));
+            case "/get-film" -> pw.write(toJSON(get(filmMicroservice + path + "/" + req.getParameter("id"), FilmManagement.class)));
             case "/get-films" -> pw.write(toJSON(get(filmMicroservice + path, null)));
 
 
@@ -100,10 +102,10 @@ public class NewAPIGateway extends HttpServlet {
             //case "/get-users", "/get-banned-users", "/get-no-banned-users" -> get(resp, loginMicroservice + path);
 
 
-            // Film Discovery
-//            case "/getAll" -> get(resp, filmDiscovery + path);
-//            case "/getPerGenre" -> get(resp, filmDiscovery + path, req, new String[]{"genre"});
-//            case "/getFilmDetails" -> get(resp, filmDiscovery + path, req, new String[]{"id"});
+            // Film Query
+            case "/getAll" -> pw.write(toJSON(get(filmDiscovery + path, null)));
+            case "/getFilmDetails" -> pw.write(toJSON(get(filmDiscovery + path+ "/"+req.getParameter("id"), ReviewPageFilm.class)));
+            //case "/getPerGenre" -> get(resp, filmDiscovery + path, req, new String[]{"genre"});
         }
         pw.flush();
     }
