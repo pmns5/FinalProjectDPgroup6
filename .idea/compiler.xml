@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="DPnew" />
+        <module name="LoginMicroservice" />
+        <module name="FilmMicroservices" />
+        <module name="FrontEnd" />
+        <module name="Gateway" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="DPnew" target="1.8" />
+      <module name="FilmMicroservices" target="16" />
+      <module name="FrontEnd" target="1.8" />
+      <module name="Gateway" target="16" />
+      <module name="LoginMicroservice" target="16" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
