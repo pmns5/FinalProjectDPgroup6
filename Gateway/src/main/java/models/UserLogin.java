@@ -2,18 +2,17 @@ package models;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class UserLogin{
+public class UserLogin {
     private String user;
     private String password;
 
-    public UserLogin(){
-
-    }
-
-    public UserLogin(HttpServletRequest req){
-
+    public UserLogin(HttpServletRequest req) {
         user = req.getParameter("user");
         password = req.getParameter("password");
+    }
+
+    public UserLogin() {
+
     }
 
     public String getUser() {

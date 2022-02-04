@@ -20,154 +20,121 @@ public class FilmQuery extends DBConnection {
     }
 
     @GET
-    @Path("/getFilmDetails/{id}")
+    @Path("/get-films-home-page")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public ReviewPageFilm getFilmDetails(@PathParam("id") int id) {
+    public List<HomePageFilm> getFilmsHomePage() throws SQLException {
+        //Init params
         db.connect();
-        Connection conn = db.getConn();
-        Savepoint save1;
-        try {
-            db.getConn().setAutoCommit(false);
-            save1 = conn.setSavepoint();
-
-            PreparedStatement stmt = conn.prepareStatement("SELECT title, genre, plot, trailer, poster FROM film where film.id_film=?;");
-            stmt.setInt(1, id);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (!rs.next()) {
-                    return null;
-                }
-
-                String title = rs.getString("title");
-                String genre = rs.getString("genre");
-                String plot = rs.getString("plot");
-                String trailer = rs.getString("trailer");
-                com.mysql.cj.jdbc.Blob poster = (Blob) rs.getBlob("poster");
-                int blobLength = (int) poster.length();
-                byte[] blobAsBytes = poster.getBytes(1, blobLength);
-                poster.free();
-
-                PreparedStatement stmt4 = conn.prepareStatement("SELECT * FROM feedback where id_film=?;");
-                stmt4.setInt(1, id);
-                try (ResultSet rs4 = stmt4.executeQuery()) {
-                    List<Feedback> feedbacks = new ArrayList<>();
-                    while (rs4.next()) {
-                        feedbacks.add(new Feedback(rs4.getInt("id_user"), id, rs4.getString("comment"),
-                                rs4.getFloat("score"), rs4.getDate("date")));
-                    }
-
-                    PreparedStatement stmt2 = conn.prepareStatement("SELECT a.id_actor, a.name, a.surname FROM cast c join actor a on a.id_actor = c.id_actor where c.id_film=?;");
-                    stmt2.setInt(1, id);
-                    try (ResultSet rs2 = stmt2.executeQuery()) {
-                        List<Actor> actors = new ArrayList<>();
-                        while (rs2.next()) {
-                            actors.add(new Actor(rs2.getInt("id_actor"), rs2.getString("name"), rs2.getString("surname")));
-                        }
-
-                        PreparedStatement stmt3 = conn.prepareStatement("SELECT AVG(score) FROM feedback WHERE id_film = ?");
-                        stmt3.setInt(1, id);
-                        try (ResultSet rs3 = stmt3.executeQuery()) {
-                            float average = 0;
-                            if (rs3.next()) {
-                                average = rs3.getFloat(1);
-                            }
-
-                            return new ReviewPageFilm(new Film(id, title, plot, EnumGenre.valueOf(genre), trailer, blobAsBytes), actors, average, feedbacks);
-                        }
-                    }
-                }
-            } catch (SQLException e) {
-                conn.rollback(save1);
-            } finally {
-                conn.commit();
-            }
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } finally {
-            db.disconnect();
-        }
-        return null;
-    }
-
-    @GET
-    @Path("/getAll")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public List<HomePageFilm> getAll() throws SQLException {
-        db.connect();
-        Connection conn = db.getConn();
-        Savepoint save1 = null;
+        Connection connection = db.getConnection();
+        Savepoint savepoint = null;
+        PreparedStatement statement;
+        ResultSet rs_first, rs_second, rs_third, rs_fourth;
+        Film film_to_get;
+        List<Actor> actorList;
+        float average;
         List<HomePageFilm> listFilms = new ArrayList<>();
+
+
+        //Execute queries
         try {
-            db.getConn().setAutoCommit(false);
-            save1 = conn.setSavepoint();
+            connection.setAutoCommit(false);
+            savepoint = connection.setSavepoint();
 
-            Statement stmt = db.getConn().createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT id_film, title, genre, plot, trailer, poster FROM film ORDER BY id_film");
-            while (rs.next()) {
-                int id_film = rs.getInt(1);
-                String title = rs.getString(2);
-                String genre = rs.getString(3);
-                String plot = rs.getString(4);
-                String trailer = rs.getString(5);
-                Blob poster = (Blob) rs.getBlob(6);
-                int blobLength = (int) poster.length();
-                byte[] blobAsBytes = poster.getBytes(1, blobLength);
+            statement = connection.prepareStatement("SELECT id_film, title, genre, plot, trailer, poster FROM film ORDER BY id_film");
+            rs_first = statement.executeQuery();
+            while (rs_first.next()) {
+                int id_film = rs_first.getInt(1);
+                Blob poster = (Blob) rs_first.getBlob(6);
+                film_to_get = new Film(id_film, rs_first.getString("title"), EnumGenre.valueOf(rs_first.getString("genre")), rs_first.getString("plot"), rs_first.getString("trailer"), poster.getBytes(1, (int) poster.length()));
                 poster.free();
-                Film film = new Film(id_film, title, plot, EnumGenre.valueOf(genre), trailer, blobAsBytes);
-
-
-                Statement stmt2 = db.getConn().createStatement();
-                ResultSet rs2 = stmt2.executeQuery("SELECT a.id_actor, a.name, a.surname FROM film join cast c on film.id_film = c.id_film join actor a on a.id_actor = c.id_actor AND film.id_film = " + id_film);
-                List<Actor> actorList = new ArrayList<>();
-                while (rs2.next()) {
-                    actorList.add(new Actor(rs2.getInt("id_actor"), rs2.getString("name"), rs2.getString("surname")));
+                actorList = new ArrayList<>();
+                statement = connection.prepareStatement("SELECT a.id_actor, a.name, a.surname FROM film join cast c on film.id_film = c.id_film join actor a on a.id_actor = c.id_actor AND film.id_film = " + id_film);
+                rs_second = statement.executeQuery();
+                while (rs_second.next()) {
+                    actorList.add(new Actor(rs_second.getInt("id_actor"), rs_second.getString("name"), rs_second.getString("surname")));
                 }
 
-                Statement stmt3 = db.getConn().createStatement();
-                ResultSet rs3 = stmt3.executeQuery("SELECT AVG(score) from feedback WHERE id_film = " + id_film);
-                float average = 0;
-                if (rs3.next()) {
-                   average = rs3.getFloat(1);
+                statement = connection.prepareStatement("SELECT AVG(score) from feedback WHERE id_film = " + id_film);
+                rs_third = statement.executeQuery();
+                average = 0;
+                if (rs_third.next()) {
+                    average = rs_third.getFloat(1);
                 }
-
-                listFilms.add(new HomePageFilm(film, actorList, average));
-                conn.commit();
+                listFilms.add(new HomePageFilm(film_to_get, actorList, average));
             }
+
         } catch (SQLException e) {
-            conn.rollback(save1);
+            connection.rollback(savepoint);
             return null;
         } finally {
-
+            connection.commit();
             db.disconnect();
         }
         return listFilms;
-
     }
 
+    @GET
+    @Path("/get-film-review-page/{id}")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ReviewPageFilm getFilmReviewPage(@PathParam("id") int id_film) throws SQLException {
+        //Init params
+        db.connect();
+        Connection connection = db.getConnection();
+        Savepoint savepoint = null;
+        PreparedStatement statement;
+        ResultSet rs_first, rs_second, rs_third, rs_fourth;
+        Film film_to_get;
+        List<Feedback> feedbackList;
+        List<Actor> actorList;
+        float average;
 
-//    @GET
-//    @Path("/getPerGenre/{genre}")
-//    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-//    public Object getPerGenre(@PathParam("genre") String genre) {
-//        db.connect();
-//        try (PreparedStatement stmt = db.getConn().prepareStatement("")) {
-//            // stmt.setInt(1, id);
-//            try (ResultSet rs = stmt.executeQuery()) {
-//                if (!rs.next()) {
-//                    return null;
-//                }
-//                Actor a = new Actor(rs.getInt("id_actor"), rs.getString("name"), rs.getString("surname"));
-//                System.out.println(a);
-//                return a;
-//            }
-//        } catch (SQLException e) {
-//            return null;
-//        } finally {
-//            db.disconnect();
-//        }
-//
-//    }
+        //Execute queries
+        try {
+            connection.setAutoCommit(false);
+            savepoint = connection.setSavepoint();
 
+            statement = connection.prepareStatement("SELECT title, plot, genre, trailer, poster FROM film WHERE film.id_film = ?");
+            statement.setInt(1, id_film);
+            rs_first = statement.executeQuery();
+            if (rs_first.next()) {
+                Blob poster = (Blob) rs_first.getBlob("poster");
+                film_to_get = new Film(id_film, rs_first.getString("title"), EnumGenre.valueOf(rs_first.getString("genre")), rs_first.getString("plot"), rs_first.getString("trailer"), poster.getBytes(1, (int) poster.length()));
+                poster.free();
 
+                statement = connection.prepareStatement("SELECT * FROM feedback where id_film = ?");
+                statement.setInt(1, id_film);
+                rs_second = statement.executeQuery();
+                feedbackList = new ArrayList<>();
+                while (rs_second.next()) {
+                    feedbackList.add(new Feedback(rs_second.getInt("id_user"), id_film, rs_second.getString("comment"), rs_second.getFloat("score"), rs_second.getDate("date")));
+                }
+
+                statement = connection.prepareStatement("SELECT a.id_actor, a.name, a.surname FROM cast c join actor a on a.id_actor = c.id_actor where c.id_film=?;");
+                statement.setInt(1, id_film);
+                rs_third = statement.executeQuery();
+                actorList = new ArrayList<>();
+                while (rs_third.next()) {
+                    actorList.add(new Actor(rs_third.getInt("id_actor"), rs_third.getString("name"), rs_third.getString("surname")));
+                }
+
+                statement = connection.prepareStatement("SELECT AVG(score) FROM feedback WHERE id_film = ?");
+                statement.setInt(1, id_film);
+                rs_fourth = statement.executeQuery();
+                average = 0;
+                if (rs_fourth.next()) {
+                    average = rs_fourth.getFloat(1);
+                }
+                return new ReviewPageFilm(film_to_get, actorList, average, feedbackList);
+            } else {
+                return null;
+            }
+
+        } catch (SQLException e) {
+            connection.rollback(savepoint);
+            return null;
+        } finally {
+            connection.commit();
+            db.disconnect();
+        }
+    }
 }

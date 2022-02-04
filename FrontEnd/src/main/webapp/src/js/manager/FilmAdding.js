@@ -5,14 +5,14 @@ class FilmAdding {
         this.editFilmEndPoint = endPoint + "/edit-film";
         this.deleteFilmEndPoint = endPoint + "/delete-film";
         this.getFilmEndPoint = endPoint + "/get-film";
-        this.getFilmsEndPoint = endPoint + "/getAll";
+        this.getFilmsHomePageEndPoint = endPoint + "/get-films-home-page"
         this.getActorsEndPoint = endPoint + "/get-actors";
         this.count = 0;
     }
 
     fillTable() {
         let controller = this;
-        $.getJSON(this.getFilmsEndPoint, function (data) {
+        $.getJSON(this.getFilmsHomePageEndPoint, function (data) {
             controller.renderGUI(data);
         }).done(function () {
             $('#insert-button').prop('disabled', false);

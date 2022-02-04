@@ -4,7 +4,6 @@ import APIGateway.Util;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.Pattern;
 import java.sql.Date;
 
 public class Feedback {
@@ -12,14 +11,8 @@ public class Feedback {
     private int id_film;
     private String comment;
     private Float score;
-
-    //@Temporal(TemporalType.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", locale = "it_IT", timezone = "Europe/Rome")
     private Date date = null;
-
-    public Feedback() {
-
-    }
 
     public Feedback(HttpServletRequest req) throws Exception {
         this.id_user = Integer.parseInt(req.getParameter("id_user"));
@@ -28,22 +21,9 @@ public class Feedback {
         this.score = Float.parseFloat(req.getParameter("score"));
     }
 
+    public Feedback() {
 
-    public Feedback(int id_user, int id_film, String comment, Float score) {
-        this.id_user = id_user;
-        this.id_film = id_film;
-        this.comment = comment;
-        this.score = score;
     }
-
-    public Feedback(int id_user, int id_film, String comment, Float score, Date date) {
-        this.id_user = id_user;
-        this.id_film = id_film;
-        this.comment = comment;
-        this.score = score;
-        this.date = date;
-    }
-
 
     public int getId_user() {
         return id_user;
@@ -84,5 +64,4 @@ public class Feedback {
     public void setDate(Date date) {
         this.date = date;
     }
-
 }

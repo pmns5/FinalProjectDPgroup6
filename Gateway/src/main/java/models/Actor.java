@@ -9,18 +9,8 @@ public class Actor {
     private String name;
     private String surname;
 
-    public Actor(int id, String name, String surname) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-    }
-
-    public Actor (){
-
-    }
-
-    public Actor(HttpServletRequest req, boolean add) throws Exception{
-        if(!add) this.id = Integer.parseInt(req.getParameter("id"));
+    public Actor(HttpServletRequest req, boolean add) throws Exception {
+        if (!add) this.id = Integer.parseInt(req.getParameter("id"));
         this.name = Util.validate(req.getParameter("name"));
         this.surname = Util.validate(req.getParameter("surname"));
     }
@@ -29,8 +19,16 @@ public class Actor {
         this.id = Integer.parseInt(id);
     }
 
+    public Actor() {
+
+    }
+
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

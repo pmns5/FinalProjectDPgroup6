@@ -8,18 +8,19 @@ import java.util.List;
 
 @XmlRootElement(name = "FilmManagement")
 @XmlAccessorType(XmlAccessType.NONE)
-public class FilmManagement{
+public class FilmManagement {
     @XmlAttribute
     private Film film;
     @XmlAttribute
     private List<Actor> actorList;
 
-    public FilmManagement(){
-
-    }
     public FilmManagement(Film film, List<Actor> actorList) {
         this.film = film;
         this.actorList = actorList;
+    }
+
+    public FilmManagement() {
+
     }
 
     public Film getFilm() {

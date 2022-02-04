@@ -2,19 +2,19 @@
  *  Ajax general settings
  */
 
-$.ajaxSetup({ cache: false });
+$.ajaxSetup({cache: false});
 
-$(document).ajaxStart(function() {
+$(document).ajaxStart(function () {
     $("#ajaxLoader").removeClass("hide");
     $("#ajaxLoader").addClass("show");
 });
 
-$(document).ajaxComplete(function() {
+$(document).ajaxComplete(function () {
     $("#ajaxLoader").removeClass("show");
     $("#ajaxLoader").addClass("hide");
 });
 
-$(document).ajaxError(function(request, response) {
+$(document).ajaxError(function (request, response) {
     $("#ajaxLoader").removeClass("show");
     $("#ajaxLoader").addClass("hide");
 
@@ -29,46 +29,46 @@ $(document).ajaxError(function(request, response) {
 
 });
 
-$(document).ajaxStop(function() {
+$(document).ajaxStop(function () {
     $("#ajaxLoader").removeClass("show");
     $("#ajaxLoader").addClass("hide");
 })
 
-$('a').not(".no-ajax").click(function(e) {
+$('a').not(".no-ajax").click(function (e) {
     $("#ajaxLoader").removeClass("hide");
     $("#ajaxLoader").addClass("show");
-    setTimeout(function() {
+    setTimeout(function () {
         $("#ajaxLoader").removeClass('show');
     }, 3000);
     return true;
 });
 
-$('.btn').not(".no-ajax").click(function(e) {
+$('.btn').not(".no-ajax").click(function (e) {
     $("#ajaxLoader").removeClass("hide");
     $("#ajaxLoader").addClass("show");
-    setTimeout(function() {
+    setTimeout(function () {
         $("#ajaxLoader").removeClass('show');
     }, 3000);
     return true;
 });
 
-$('table tbody tr td a, table tfoot tr td a').not(".no-ajax").click(function(e) {
+$('table tbody tr td a, table tfoot tr td a').not(".no-ajax").click(function (e) {
     $("#ajaxLoader").removeClass("hide");
     $("#ajaxLoader").addClass("show");
-    setTimeout(function() {
+    setTimeout(function () {
         $("#ajaxLoader").removeClass("hide");
         $("#ajaxLoader").addClass("show");
     }, 3000);
     return true;
 });
 
-$('.loading').click(function(e) {
+$('.loading').click(function (e) {
     $("#ajaxLoader").removeClass("hide");
     $("#ajaxLoader").addClass("show");
     return true;
 });
 
-$('form').submit(function(e) {
+$('form').submit(function (e) {
     $("#ajaxLoader").removeClass("hide");
     $("#ajaxLoader").addClass("show");
     return true;

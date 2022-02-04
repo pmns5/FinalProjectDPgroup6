@@ -2,7 +2,10 @@ package filmAPI.microservices;
 
 import com.mysql.cj.jdbc.Blob;
 import filmAPI.interfaces.DBConnection;
-import filmAPI.models.*;
+import filmAPI.models.Actor;
+import filmAPI.models.EnumGenre;
+import filmAPI.models.Film;
+import filmAPI.models.FilmManagement;
 
 import javax.sql.rowset.serial.SerialBlob;
 import javax.ws.rs.*;
@@ -11,12 +14,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Microservice for management of Data associated of a film
- */
 @Path("/films")
 public class FilmImplementation extends DBConnection {
-
     public FilmImplementation() {
         super();
     }
@@ -26,40 +25,47 @@ public class FilmImplementation extends DBConnection {
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public boolean addFilm(FilmManagement filmManagement) throws SQLException {
+        //Init params
         db.connect();
-        Connection conn = db.getConn();
-        Savepoint save1 = null;
+        Connection connection = db.getConnection();
+        Savepoint savepoint = null;
+        PreparedStatement statement;
+        ResultSet keys;
+        Film film_to_add = filmManagement.getFilm();
+        int id_film;
+
+        //Execute queries
         try {
-            db.getConn().setAutoCommit(false);
-            save1 = conn.setSavepoint();
+            connection.setAutoCommit(false);
+            savepoint = connection.setSavepoint();
 
-            Film film = filmManagement.getFilm();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO film (title, genre, plot, trailer, poster) VALUES (?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, film.getTitle());
-            stmt.setString(2, film.getGenre().toString());
-            stmt.setString(3, film.getPlot());
-            stmt.setString(4, film.getTrailer());
-            stmt.setBlob(5, new SerialBlob(film.getPoster()));
-            stmt.execute();
+            statement = connection.prepareStatement("INSERT INTO film (title, genre, plot, trailer, poster) VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, film_to_add.getTitle());
+            statement.setString(2, film_to_add.getGenre().toString());
+            statement.setString(3, film_to_add.getPlot());
+            statement.setString(4, film_to_add.getTrailer());
+            statement.setBlob(5, new SerialBlob(film_to_add.getPoster()));
+            statement.execute();
 
-            ResultSet keys = stmt.getGeneratedKeys();
+            keys = statement.getGeneratedKeys();
             keys.next();
-            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO cast (id_film, id_actor) VALUES (?, ?)");
-            stmt2.setInt(1, keys.getInt(1));
-            for (Actor actor: filmManagement.getActorList()) {
-                stmt2.setInt(2, actor.getId());
-                stmt2.execute();
-            }
-            conn.commit();
-        } catch (SQLException e) {
-            conn.rollback(save1);
-            return true;
-        } finally {
+            id_film = keys.getInt(1);
 
+            statement = connection.prepareStatement("INSERT INTO cast (id_film, id_actor) VALUES (?, ?)");
+            statement.setInt(1, id_film);
+            for (Actor actor : filmManagement.getActorList()) {
+                statement.setInt(2, actor.getId());
+                statement.execute();
+            }
+
+        } catch (SQLException e) {
+            connection.rollback(savepoint);
+            return false;
+        } finally {
+            connection.commit();
             db.disconnect();
         }
-
-        return false;
+        return true;
     }
 
     @POST
@@ -67,61 +73,73 @@ public class FilmImplementation extends DBConnection {
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public boolean editFilm(FilmManagement filmManagement) throws SQLException {
+        //Init params
         db.connect();
-        Connection conn = db.getConn();
-        Savepoint save1 = null;
+        Connection connection = db.getConnection();
+        Savepoint savepoint = null;
+        PreparedStatement statement;
+        Film film_to_edit = filmManagement.getFilm();
+
+        //Execute queries
         try {
-            db.getConn().setAutoCommit(false);
-            save1 = conn.setSavepoint();
+            connection.setAutoCommit(false);
+            savepoint = connection.setSavepoint();
 
-            Film film = filmManagement.getFilm();
+            statement = connection.prepareStatement("UPDATE film SET title = ?, genre = ?, plot = ?, trailer = ?, poster = ? WHERE id_film = ?");
+            statement.setString(1, film_to_edit.getTitle());
+            statement.setString(2, film_to_edit.getGenre().toString());
+            statement.setString(3, film_to_edit.getPlot());
+            statement.setString(4, film_to_edit.getTrailer());
+            statement.setBlob(5, new SerialBlob(film_to_edit.getPoster()));
+            statement.setInt(6, film_to_edit.getId());
+            statement.execute();
 
-            PreparedStatement stmt = conn.prepareStatement(
-                    "UPDATE film SET title = ?, genre = ?, plot = ?, trailer = ?," +
-                            " poster = ? WHERE id_film = ?");
-            stmt.setString(1, film.getTitle());
-            stmt.setString(2, film.getGenre().toString());
-            stmt.setString(3, film.getPlot());
-            stmt.setString(4, film.getTrailer());
-            stmt.setBlob(5, new SerialBlob(film.getPoster()));
-            stmt.setInt(6, film.getId());
-            stmt.execute();
+            statement = connection.prepareStatement("DELETE FROM cast WHERE id_film = ?");
+            statement.setInt(1, film_to_edit.getId());
+            statement.execute();
 
-            PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM cast WHERE id_film = (?);");
-            stmt2.setInt(1, film.getId());
-            stmt2.execute();
-
-            PreparedStatement stmt3 = conn.prepareStatement("insert into cast (id_film, id_actor) values (?, ?);");
-            stmt3.setInt(1, film.getId());
+            statement = connection.prepareStatement("INSERT INTO cast (id_film, id_actor) VALUES (?, ?)");
+            statement.setInt(1, film_to_edit.getId());
             for (Actor actor : filmManagement.getActorList()) {
-                stmt3.setInt(2, actor.getId());
-                stmt3.execute();
+                statement.setInt(2, actor.getId());
+                statement.execute();
             }
-            conn.commit();
-        } catch (SQLException e) {
-            conn.rollback(save1);
-            return true;
-        } finally {
 
+        } catch (SQLException e) {
+            connection.rollback(savepoint);
+            return false;
+        } finally {
+            connection.commit();
             db.disconnect();
         }
-
-        return false;
+        return true;
     }
 
     @GET
     @Path("/delete-film/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public boolean deleteFilm(@PathParam("id") int idFilm) {
+    public boolean deleteFilm(@PathParam("id") int id_film) throws SQLException {
+        //Init params
         db.connect();
-        try (PreparedStatement stmt = db.getConn().prepareStatement(
-                "DELETE FROM film WHERE id_film = ?;"
-        )) {
-            stmt.setInt(1, idFilm);
-            stmt.execute();
+        Connection connection = db.getConnection();
+        Savepoint savepoint = null;
+        PreparedStatement statement;
+
+
+        //Execute queries
+        try {
+            connection.setAutoCommit(false);
+            savepoint = connection.setSavepoint();
+
+            statement = connection.prepareStatement("DELETE FROM film WHERE id_film = ?");
+            statement.setInt(1, id_film);
+            statement.execute();
+
         } catch (SQLException e) {
+            connection.rollback(savepoint);
             return false;
         } finally {
+            connection.commit();
             db.disconnect();
         }
         return true;
@@ -130,131 +148,94 @@ public class FilmImplementation extends DBConnection {
     @GET
     @Path("/get-film/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public FilmManagement getOneFilm(@PathParam("id") int idFilm) {
+    public FilmManagement getFilm(@PathParam("id") int idFilm) throws SQLException {
+        //Init params
         db.connect();
-        Connection conn = db.getConn();
-        Savepoint save1;
+        Connection connection = db.getConnection();
+        Savepoint savepoint = null;
+        PreparedStatement statement;
+        ResultSet rs;
+        Film film_to_get;
+        List<Actor> actorList;
+
+        //Execute queries
         try {
-            db.getConn().setAutoCommit(false);
-            save1 = conn.setSavepoint();
+            connection.setAutoCommit(false);
+            savepoint = connection.setSavepoint();
 
-            PreparedStatement stmt = conn.prepareStatement("SELECT title, genre, plot, trailer, poster FROM film where film.id_film=?;");
-            stmt.setInt(1, idFilm);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (!rs.next()) {
-                    return null;
-                }
-
-                String title = rs.getString("title");
-                String genre = rs.getString("genre");
-                String plot = rs.getString("plot");
-                String trailer = rs.getString("trailer");
-                com.mysql.cj.jdbc.Blob poster = (Blob) rs.getBlob("poster");
-                int blobLength = (int) poster.length();
-                byte[] blobAsBytes = poster.getBytes(1, blobLength);
+            statement = connection.prepareStatement("SELECT title, genre, plot, trailer, poster FROM film where film.id_film = ?");
+            statement.setInt(1, idFilm);
+            rs = statement.executeQuery();
+            if (rs.next()) {
+                Blob poster = (Blob) rs.getBlob("poster");
+                film_to_get = new Film(idFilm, rs.getString("title"), EnumGenre.valueOf(rs.getString("genre")), rs.getString("plot"), rs.getString("trailer"), poster.getBytes(1, (int) poster.length()));
                 poster.free();
 
-
-                PreparedStatement stmt2 = conn.prepareStatement("SELECT a.id_actor, a.name, a.surname " +
-                        "FROM cast c join actor a on a.id_actor = c.id_actor where c.id_film=?;");
-                stmt2.setInt(1, idFilm);
-                try (ResultSet rs2 = stmt2.executeQuery()) {
-                    List<Actor> actors = new ArrayList<>();
-                    while (rs2.next()) {
-                        actors.add(new Actor(rs2.getInt("id_actor"), rs2.getString("name"), rs2.getString("surname")));
-                    }
-                    return new FilmManagement(new Film(idFilm, title, plot, EnumGenre.valueOf(genre), trailer, blobAsBytes), actors);
-
+                statement = connection.prepareStatement("SELECT a.id_actor, a.name, a.surname " + "FROM cast c join actor a on a.id_actor = c.id_actor where c.id_film = ?");
+                statement.setInt(1, idFilm);
+                rs = statement.executeQuery();
+                actorList = new ArrayList<>();
+                while (rs.next()) {
+                    actorList.add(new Actor(rs.getInt("id_actor"), rs.getString("name"), rs.getString("surname")));
                 }
-            } catch (SQLException e) {
-                conn.rollback(save1);
-            } finally {
-                conn.commit();
+                return new FilmManagement(film_to_get, actorList);
+            } else {
+                return null;
             }
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            connection.rollback(savepoint);
+            return null;
         } finally {
+            connection.commit();
             db.disconnect();
         }
-        return null;
-
     }
 
     @GET
     @Path("/get-films")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public List<FilmManagement> getAllFilms() throws SQLException {
+    public List<FilmManagement> getFilms() throws SQLException {
+        //Init params
         db.connect();
-        Connection conn = db.getConn();
-        Savepoint save1 = null;
-        List<FilmManagement> listFilms = new ArrayList<>();
+        Connection connection = db.getConnection();
+        Savepoint savepoint = null;
+        PreparedStatement statement;
+        ResultSet rs_first, rs_second;
+        int id_film;
+        Film film_to_get;
+        List<Actor> actorList;
+        List<FilmManagement> filmManagementList = new ArrayList<>();
+
+        //Execute queries
         try {
-            db.getConn().setAutoCommit(false);
-            save1 = conn.setSavepoint();
+            connection.setAutoCommit(false);
+            savepoint = connection.setSavepoint();
 
-            Statement stmt = db.getConn().createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT id_film, title, genre, plot, trailer, poster FROM film ORDER BY id_film");
-            while (rs.next()) {
-                int id_film = rs.getInt(1);
-                String title = rs.getString(2);
-                String genre = rs.getString(3);
-                String plot = rs.getString(4);
-                String trailer = rs.getString(5);
-                Blob poster = (Blob) rs.getBlob(6);
-                int blobLength = (int) poster.length();
-                byte[] blobAsBytes = poster.getBytes(1, blobLength);
+            statement = connection.prepareStatement("SELECT id_film, title, genre, plot, trailer, poster FROM film ORDER BY id_film");
+            rs_first = statement.executeQuery();
+            while (rs_first.next()) {
+                id_film = rs_first.getInt("id_film");
+                Blob poster = (Blob) rs_first.getBlob("poster");
+                film_to_get = new Film(id_film, rs_first.getString("title"), EnumGenre.valueOf(rs_first.getString("genre")), rs_first.getString("plot"), rs_first.getString("trailer"), poster.getBytes(1, (int) poster.length()));
                 poster.free();
-                Film film = new Film(id_film, title, plot, EnumGenre.valueOf(genre), trailer, blobAsBytes);
 
-
-                Statement stmt2 = db.getConn().createStatement();
-                ResultSet rs2 = stmt2.executeQuery("SELECT a.id_actor, a.name, a.surname FROM film join cast c on film.id_film = c.id_film join actor a on a.id_actor = c.id_actor AND film.id_film = " + id_film);
-                List<Actor> actorList = new ArrayList<>();
-                while (rs2.next()) {
-                    actorList.add(new Actor(rs2.getInt("id_actor"), rs2.getString("name"), rs2.getString("surname")));
+                statement = connection.prepareStatement("SELECT a.id_actor, a.name, a.surname FROM film JOIN cast c ON film.id_film = c.id_film JOIN actor a ON a.id_actor = c.id_actor AND film.id_film = " + id_film);
+                rs_second = statement.executeQuery();
+                actorList = new ArrayList<>();
+                while (rs_second.next()) {
+                    actorList.add(new Actor(rs_second.getInt("id_actor"), rs_second.getString("name"), rs_second.getString("surname")));
                 }
-                listFilms.add(new FilmManagement(film, actorList));
+                filmManagementList.add(new FilmManagement(film_to_get, actorList));
             }
-            conn.commit();
+
         } catch (SQLException e) {
-            conn.rollback(save1);
+            connection.rollback(savepoint);
             return null;
         } finally {
-
+            connection.commit();
             db.disconnect();
         }
-        return listFilms;
+        return filmManagementList;
     }
-
-    /*
-    @GET
-    @Path("/get-by-genre/{genre}")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public List<Film> getByGenre(@PathParam("genre") String genreStr) {
-        db.connect();
-        EnumGenre genre = EnumGenre.valueOf(genreStr);
-        ArrayList<Film> listFilms = new ArrayList<>();
-        try (Statement stmt = db.getConn().createStatement(); ResultSet rs = stmt.executeQuery("SELECT id_film," +
-                " title, plot, trailer, poster FROM film WHERE genre=" + genre + "  ORDER BY id_film")) {
-            while (rs.next()) {
-                int id_film = rs.getInt(1);
-                String title = rs.getString(2);
-                String plot = rs.getString(3);
-                String trailer = rs.getString(4);
-                Blob poster = (Blob) rs.getBlob(5);
-                int blobLength = (int) poster.length();
-                byte[] blobAsBytes = poster.getBytes(1, blobLength);
-                poster.free();
-                listFilms.add(new Film(id_film, title, plot, genre, trailer, blobAsBytes));
-            }
-        } catch (SQLException e) {
-            return null;
-        } finally {
-            db.disconnect();
-        }
-        return listFilms;
-    }
-     */
 }

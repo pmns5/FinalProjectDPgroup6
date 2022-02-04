@@ -1,16 +1,11 @@
 package filmAPI.models;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.client.*;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="Actor")
+@XmlRootElement(name = "Actor")
 @XmlAccessorType(XmlAccessType.NONE)
 public class Actor {
     @XmlAttribute
@@ -26,7 +21,7 @@ public class Actor {
         this.surname = surname;
     }
 
-    public Actor (){
+    public Actor() {
 
     }
 

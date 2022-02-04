@@ -16,13 +16,6 @@ public class UserCookie {
     private String role;
 
     public UserCookie() {
-
-    }
-
-    public UserCookie(int id_user, String username, String role) {
-        this.id_user = id_user;
-        this.username = username;
-        this.role = role;
     }
 
     public int getId_user() {

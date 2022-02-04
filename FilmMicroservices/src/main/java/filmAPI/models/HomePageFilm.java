@@ -17,14 +17,13 @@ public class HomePageFilm {
     @XmlAttribute
     private float avgScore;
 
-    public HomePageFilm() {
-
-    }
-
     public HomePageFilm(Film film, List<Actor> actors, float avgScore) {
         this.film = film;
         this.actors = actors;
         this.avgScore = avgScore;
+    }
+
+    public HomePageFilm() {
 
     }
 

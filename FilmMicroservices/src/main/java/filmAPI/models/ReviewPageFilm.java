@@ -18,15 +18,15 @@ public class ReviewPageFilm {
     @XmlAttribute
     private List<Feedback> feedbackList;
 
-    public ReviewPageFilm(){
-
-    }
-
     public ReviewPageFilm(Film film, List<Actor> actors, float avgScore, List<Feedback> feedbackList) {
         this.film = film;
         this.actors = actors;
         this.avgScore = avgScore;
         this.feedbackList = feedbackList;
+    }
+
+    public ReviewPageFilm() {
+
     }
 
     public Film getFilm() {

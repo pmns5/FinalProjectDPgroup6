@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.Date;
 
-@XmlRootElement(name="Feedback")
+@XmlRootElement(name = "Feedback")
 @XmlAccessorType(XmlAccessType.NONE)
 public class Feedback {
     @XmlAttribute
@@ -20,18 +20,8 @@ public class Feedback {
     @XmlAttribute
     private Float score;
 
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", locale = "it_IT", timezone = "Europe/Rome")
-    private Date date=null;
-
-    public Feedback() {
-    }
-
-    public Feedback(int id_user, int id_film, String comment, Float score) {
-        this.id_user = id_user;
-        this.id_film = id_film;
-        this.comment = comment;
-        this.score = score;
-    }
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", locale = "it_IT", timezone = "Europe/Rome")
+    private Date date = null;
 
     public Feedback(int id_user, int id_film, String comment, Float score, Date date) {
         this.id_user = id_user;
@@ -41,6 +31,9 @@ public class Feedback {
         this.date = date;
     }
 
+    public Feedback() {
+
+    }
 
     public int getId_user() {
         return id_user;

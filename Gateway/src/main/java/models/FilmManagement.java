@@ -18,22 +18,18 @@ public class FilmManagement {
     @XmlAttribute
     private List<Actor> actorList;
 
-    public FilmManagement(){
-
-    }
-    public FilmManagement(Film film, List<Actor> actorList) {
-        this.film = film;
-        this.actorList = actorList;
-    }
-
     public FilmManagement(HttpServletRequest req, boolean add) throws ServletException, IOException {
         film = new Film(req, add);
         List<Actor> list = new ArrayList<>();
         String[] ids = req.getParameterValues("actors");
-        for (String id : ids){
+        for (String id : ids) {
             list.add(new Actor(id));
         }
         actorList = list;
+    }
+
+    public FilmManagement() {
+
     }
 
     public Film getFilm() {

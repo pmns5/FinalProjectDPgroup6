@@ -5,9 +5,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="UserCookie")
+@XmlRootElement(name = "UserCookie")
 @XmlAccessorType(XmlAccessType.NONE)
-public class UserCookie{
+public class UserCookie {
     @XmlAttribute
     private int id_user;
     @XmlAttribute
@@ -15,14 +15,14 @@ public class UserCookie{
     @XmlAttribute
     private String role;
 
-    public UserCookie(){
-
-    }
-
     public UserCookie(int id_user, String username, String role) {
         this.id_user = id_user;
         this.username = username;
         this.role = role;
+    }
+
+    public UserCookie() {
+
     }
 
     public int getId_user() {

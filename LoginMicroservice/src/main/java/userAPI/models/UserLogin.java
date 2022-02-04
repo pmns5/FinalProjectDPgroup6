@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="User")
+@XmlRootElement(name = "User")
 @XmlAccessorType(XmlAccessType.NONE)
 public class UserLogin {
     @XmlAttribute
@@ -13,13 +13,8 @@ public class UserLogin {
     @XmlAttribute
     private String password;
 
-    public UserLogin(){
+    public UserLogin() {
 
-    }
-
-    public UserLogin(String user, String password) {
-        this.user = user;
-        this.password = password;
     }
 
     public String getUser() {

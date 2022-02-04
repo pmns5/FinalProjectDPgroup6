@@ -1,4 +1,5 @@
 USE User_Db;
+
 INSERT INTO user(username, email, password, role, ban)
 VALUES ('giuseppe', 'giuseppe@gmail.com', 'giuseppe', 'manager', 0);
 INSERT INTO user(username, email, password, role, ban)
