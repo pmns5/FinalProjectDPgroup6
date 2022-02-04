@@ -41,8 +41,7 @@ public class FilmImplementationTest {
 
     @Test
     public final void testDeleteFilm() throws SQLException {
-        int id_film = 1;
-        Assertions.assertTrue(service.deleteFilm(id_film));
+        Assertions.assertTrue(service.deleteFilm(1));
     }
 
     @AfterEach

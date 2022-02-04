@@ -1,14 +1,16 @@
 package userAPI.testUserAPI;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import userAPI.Util;
 import userAPI.microservices.UserManagement.User;
 import userAPI.microservices.UserManagement.UserImplementation;
 
 import java.sql.SQLException;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class UserImplementationTest {
     private UserImplementation service;
 
