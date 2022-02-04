@@ -30,14 +30,6 @@ public class User {
         this.ban = ban;
     }
 
-    public User(int id_user, String username, String email, String role, int ban) {
-        this.id_user = id_user;
-        this.username = username;
-        this.email = email;
-        this.role = role;
-        this.ban = ban;
-    }
-
     public User() {
 
     }
