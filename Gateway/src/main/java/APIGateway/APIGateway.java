@@ -31,7 +31,7 @@ import static APIGateway.Util.*;
         "/add-film", "/edit-film", "/delete-film", "/get-film",
         "/add-user", "/edit-user", "/login-user", "/delete-user", "/get-user",
         "/ban-user", "/remove-ban-user", "/get-banned-users", "/get-no-banned-users",
-        "/get-films-home-page", "/get-films-by-genre", "/get-film-review-page"
+        "/get-films-home-page", "/get-films-home-page-per-genre", "/get-film-review-page"
 })
 @MultipartConfig(maxFileSize = 16177215)
 public class APIGateway extends HttpServlet {
