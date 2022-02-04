@@ -120,20 +120,17 @@ public class APIGateway extends HttpServlet {
             case "/get-feedback-by-user" -> pw.write(toJSON(get(feedbackMicroservice + path + "/" + req.getParameter("id_user"), null)));
             // Film Query
             case "/get-films-home-page" -> pw.write(toJSON(get(filmDiscovery + path, null)));
+            case "/get-films-home-page-per-genre" -> pw.write(toJSON(get(filmDiscovery + path + "/" + req.getParameter("genre"), null)));
             case "/get-film-review-page" -> {
                 ReviewPageFilm film = (ReviewPageFilm) get(filmDiscovery + path + "/" + req.getParameter("id"), ReviewPageFilm.class);
                 @SuppressWarnings("unchecked")
                 List<LinkedHashMap<String, String>> users = (List<LinkedHashMap<String, String>>) get(loginMicroservice + "/get-clients", null);
-
                 List<FeedbackUsername> feedbackUsernameList = new ArrayList<>();
                 for (Feedback feedback : film.getFeedbackList()) {
                     feedbackUsernameList.add(new FeedbackUsername(feedback, users));
                 }
                 pw.write(toJSON(new FilmDetailsRecord(film, feedbackUsernameList)));
-
             }
-            //case "/get-films-by-genre"
-
             // User
             case "/delete-user" -> resp.setStatus(delete(loginMicroservice + path + "/" + req.getParameter("id_user")));
             case "/get-user" -> pw.write(toJSON(get(loginMicroservice + path + "/" + req.getParameter("id_user"), User.class)));

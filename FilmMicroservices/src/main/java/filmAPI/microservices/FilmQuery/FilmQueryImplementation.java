@@ -6,7 +6,6 @@ import filmAPI.interfaces.DBConnection;
 import filmAPI.microservices.ActorManagement.Actor;
 import filmAPI.microservices.FeedbackManagement.Feedback;
 
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -31,12 +30,10 @@ public class FilmQueryImplementation extends DBConnection {
         Connection connection = db.getConnection();
         Savepoint savepoint = null;
         PreparedStatement statement;
-        ResultSet rs_first, rs_second, rs_third, rs_fourth;
-        BaseFilm film_to_get;
+        ResultSet rs_first, rs_second, rs_third;
         List<Actor> actorList;
         float average;
         List<HomePageFilm> listFilms = new ArrayList<>();
-
 
         //Execute queries
         try {
@@ -44,6 +41,61 @@ public class FilmQueryImplementation extends DBConnection {
             savepoint = connection.setSavepoint();
 
             statement = connection.prepareStatement("SELECT id_film, title, genre, plot, trailer, poster FROM film ORDER BY id_film");
+            rs_first = statement.executeQuery();
+            while (rs_first.next()) {
+                int id_film = rs_first.getInt(1);
+                Blob poster = (Blob) rs_first.getBlob(6);
+                byte[] posterBytes = poster.getBytes(1, (int) poster.length());
+                poster.free();
+                actorList = new ArrayList<>();
+                statement = connection.prepareStatement("SELECT a.id_actor, a.name, a.surname FROM film join cast c on film.id_film = c.id_film join actor a on a.id_actor = c.id_actor AND film.id_film = " + id_film);
+                rs_second = statement.executeQuery();
+                while (rs_second.next()) {
+                    actorList.add(new Actor(rs_second.getInt("id_actor"), rs_second.getString("name"), rs_second.getString("surname")));
+                }
+
+                statement = connection.prepareStatement("SELECT AVG(score) from feedback WHERE id_film = " + id_film);
+                rs_third = statement.executeQuery();
+                average = 0;
+                if (rs_third.next()) {
+                    average = rs_third.getFloat(1);
+                }
+                listFilms.add(new HomePageFilm(id_film, rs_first.getString("title"),
+                        EnumGenre.valueOf(rs_first.getString("genre")), rs_first.getString("plot"),
+                        rs_first.getString("trailer"), posterBytes, actorList, average));
+            }
+
+        } catch (SQLException e) {
+            connection.rollback(savepoint);
+            return null;
+        } finally {
+            connection.commit();
+            db.disconnect();
+        }
+        return listFilms;
+    }
+
+    @GET
+    @Path("/get-films-home-page-per-genre")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public List<HomePageFilm> getFilmsHomePagePerGenre(String genre) throws SQLException {
+        //Init params
+        db.connect();
+        Connection connection = db.getConnection();
+        Savepoint savepoint = null;
+        PreparedStatement statement;
+        ResultSet rs_first, rs_second, rs_third;
+        List<Actor> actorList;
+        float average;
+        List<HomePageFilm> listFilms = new ArrayList<>();
+
+        //Execute queries
+        try {
+            connection.setAutoCommit(false);
+            savepoint = connection.setSavepoint();
+
+            statement = connection.prepareStatement("SELECT id_film, title, genre, plot, trailer, poster FROM film WHERE genre = ? ORDER BY id_film");
+            statement.setString(1, genre);
             rs_first = statement.executeQuery();
             while (rs_first.next()) {
                 int id_film = rs_first.getInt(1);
