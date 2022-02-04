@@ -1,19 +1,13 @@
-class LoginPage{
+class LoginPage {
 
     constructor(endpoint) {
-        this.registerEndpoint = endpoint + "/add-user";
-        this.accessEndpoint = endpoint + "/login-user";
-        this.getUser = endpoint + "/view-user";
-        this.editUser = endpoint + "/edit-user";
+        this.addUserEndpoint = endpoint + "/add-user";
+        this.editUserEndPoint = endpoint + "/edit-user";
+        this.loginUserEndpoint = endpoint + "/login-user";
+        this.getUserEndPoint = endpoint + "/get-user";
+
     }
 
-
-    /**
-     * Render an alert banner with the message status.
-     *
-     * @param message: the message to show.
-     * @param success: true if is a success banner, false if is a fail banner.
-     */
     renderAlert(message, success) {
         let alert;
         if (success) {
@@ -22,7 +16,6 @@ class LoginPage{
             alert = $('#fail-alert-template');
         }
         const html = alert.html().replace(/{message}/ig, message);
-        // Add banner and remove it after 5 seconds.
         $(html).prependTo('#response-alert-section')
             .delay(5000)
             .queue(function () {
@@ -32,14 +25,14 @@ class LoginPage{
 
     registration() {
         let controller = this;
-        let data = $('#registration-form').serialize();
+        let data = $('#register-form').serialize();
         $.ajax({
-            type:'post',
-            url : controller.registerEndpoint,
-            data:data,
-        }).done(function (){
+            type: 'post',
+            url: controller.addUserEndpoint,
+            data: data,
+        }).done(function () {
             controller.renderAlert('Sign Up Successful', true);
-        }).fail(function (){
+        }).fail(function () {
             controller.renderAlert('Error: Sign Up Failed', false);
         })
 
@@ -47,28 +40,27 @@ class LoginPage{
 
     access() {
         let controller = this;
-        let data = $('#insert-form').serialize();
+        let data = $('#login-form').serialize();
         $.ajax({
-            type:'post',
-            url : controller.accessEndpoint,
+            type: 'post',
+            url: controller.loginUserEndpoint,
             data: data,
             traditional: true,
-        }).done(function (data){
-            console.log(data)
+        }).done(function (data) {
             data = JSON.parse(data)
             setCookie(data, 1);
             controller.redirect();
 
-        }).fail(function (){
+        }).fail(function () {
             controller.renderAlert("Error during Login. Incorrect Fields", false);
         })
     }
 
-    redirect(){
+    redirect() {
         let role = getCookieRole();
-        if (role === "manager"){
+        if (role === "manager") {
             $(location).attr("href", "manager/mainpageManager.html");
-        }else {
+        } else {
             $(location).attr("href", "client/mainpageClient.html");
         }
     }

@@ -9,7 +9,7 @@ public class MySQLDb implements DbInterface {
     private static final String extra = "/user_db?useTimezone=true&serverTimezone=UTC";
     private static final String userDb = "root";
     private static final String password = "root";
-    private Connection conn;
+    private Connection connection;
     private boolean connected;
 
 
@@ -32,7 +32,7 @@ public class MySQLDb implements DbInterface {
     public void connect() {
         if (!connected) {
             try {
-                conn = DriverManager.getConnection(url + extra, userDb, password);
+                connection = DriverManager.getConnection(url + extra, userDb, password);
             } catch (SQLException e) {
                 System.exit(99);
                 return;
@@ -48,7 +48,7 @@ public class MySQLDb implements DbInterface {
     public void disconnect() {
         if (connected) {
             try {
-                conn.close();
+                connection.close();
             } catch (SQLException e) {
                 return;
             }
@@ -73,6 +73,6 @@ public class MySQLDb implements DbInterface {
      */
     @Override
     public Connection getConnection() {
-        return conn;
+        return connection;
     }
 }

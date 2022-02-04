@@ -1,13 +1,13 @@
 class SingleFilm {
     constructor(endPoint, id) {
         this.addFeedbackEndPoint = endPoint + "/add-feedback";
-        this.getFilmDetailsEndPoint = endPoint + "/getFilmDetails";
+        this.getFilmReviewPageEndPoint = endPoint + "/get-film-review-page";
         this.id = id
     }
 
     showFilm() {
         let controller = this
-        $.getJSON(this.getFilmDetailsEndPoint, {id: this.id}, function (obj) {
+        $.getJSON(this.getFilmReviewPageEndPoint, {id: this.id}, function (obj) {
             $('#title').text(obj.film.title);
             $('#genre').text(obj.film.genre);
             $('#plot').text(obj.film.plot);

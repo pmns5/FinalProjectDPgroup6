@@ -1,24 +1,23 @@
-
 function openRecord(id) {
 
     // For demo purpose we define many service endpoints providing data
     let microServiceEndpoints = ENDPOINT + "/get-user";
 
-    $.get(microServiceEndpoints, {id_user:id}, function(data) {
-            console.log(data);
-            let html = $("#form-html").html();
-            $.each(data, function() {
-                html = html.replace(/{Username}/ig, data.username);
-                html = html.replace(/{Email}/ig, data.email);
-                html = html.replace(/{Password}/ig, data.password);
-                html = html.replace(/{id}/ig, data.id_user);
-                html = html.replace(/{role}/ig, data.role);
-            });
-            $("#form-html").html(html);
-            $("#form-html").removeClass("invisible");
-            if (id == 0)
-                $(".btn-action-delete").hide();
+    $.get(microServiceEndpoints, {id_user: id}, function (data) {
+        console.log(data);
+        let html = $("#form-html").html();
+        $.each(data, function () {
+            html = html.replace(/{Username}/ig, data.username);
+            html = html.replace(/{Email}/ig, data.email);
+            html = html.replace(/{Password}/ig, data.password);
+            html = html.replace(/{id}/ig, data.id_user);
+            html = html.replace(/{role}/ig, data.role);
         });
+        $("#form-html").html(html);
+        $("#form-html").removeClass("invisible");
+        if (id == 0)
+            $(".btn-action-delete").hide();
+    });
 
 }
 
@@ -26,7 +25,7 @@ function openRecord(id) {
  * Action when submitting form for update
  * the record or adding a new one
  */
-$("body").on("click", ".btn-action-submit", function() {
+$("body").on("click", ".btn-action-submit", function () {
     var currentValidity = $("form")[0].checkValidity();
     if (currentValidity) {
         let formData = $("form").serialize();
@@ -42,7 +41,7 @@ $("body").on("click", ".btn-action-submit", function() {
  * Action when submitting form for deleting a record
  *
  */
-$("body").on("click", ".btn-action-delete", function() {
+$("body").on("click", ".btn-action-delete", function () {
     let okDelete = confirm("Confirm deletion?");
     if (okDelete) {
         $("#operation").val("delete");
@@ -68,7 +67,7 @@ function resetModal() {
  * Actions when closing the modal #modal-ajax-response
  *
  */
-$('body').on('#modals #modal-ajax-response hidden.bs.modal', function() {
+$('body').on('#modals #modal-ajax-response hidden.bs.modal', function () {
     if ($("#redirect-to-home").val() == 1)
         redirectToHome();
     $(window).scrollTop(0);
@@ -80,9 +79,9 @@ $('body').on('#modals #modal-ajax-response hidden.bs.modal', function() {
  */
 function redirectToHome() {
     let role = getCookieRole();
-    if (role === "manager"){
+    if (role === "manager") {
         $(location).attr("href", "manager/mainpageManager.html");
-    }else {
+    } else {
         $(location).attr("href", "client/mainpageClient.html");
     }
 }
@@ -102,13 +101,13 @@ function postData(formData) {
         url: selectedMicroServiceEndpoint,
         data: formData,
         dataType: "html",
-        success: function() {
+        success: function () {
             $(".modal-header").addClass("bg-success");
             $(".modal-title").html("Success");
             $("#redirect-to-home").val(1);
             $("#modal-ajax-response").modal();
         },
-        error: function() {
+        error: function () {
             $(".modal-header").addClass("bg-danger");
             $(".modal-title").html("Error");
             $("#redirect-to-home").val(0);
@@ -125,7 +124,7 @@ function postData(formData) {
  */
 
 let debug = false;
-$(document).ready(function() {
+$(document).ready(function () {
 
     if (!debug)
         openRecord(getCookieID());

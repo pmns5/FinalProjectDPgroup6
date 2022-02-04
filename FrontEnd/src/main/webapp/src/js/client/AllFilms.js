@@ -1,13 +1,13 @@
 class AllFilms {
     constructor(endPoint) {
-        this.getFilmsEndPoint = endPoint + "/getAll"
+        this.getFilmsHomePageEndPoint = endPoint + "/get-films-home-page"
         this.getFilmsPerGenreEndPoint = endPoint + "/get-films-per-genre"
         this.count = 0;
     }
 
     fillTable() {
         let controller = this;
-        $.getJSON(this.getFilmsEndPoint, function (data) {
+        $.getJSON(this.getFilmsHomePageEndPoint, function (data) {
             controller.renderGUI(data);
         }).done(function () {
         }).fail(function () {

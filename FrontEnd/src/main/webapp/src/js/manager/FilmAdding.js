@@ -5,14 +5,14 @@ class FilmAdding {
         this.editFilmEndPoint = endPoint + "/edit-film";
         this.deleteFilmEndPoint = endPoint + "/delete-film";
         this.getFilmEndPoint = endPoint + "/get-film";
-        this.getFilmsEndPoint = endPoint + "/getAll";
+        this.getFilmsHomePageEndPoint = endPoint + "/get-films-home-page"
         this.getActorsEndPoint = endPoint + "/get-actors";
         this.count = 0;
     }
 
     fillTable() {
         let controller = this;
-        $.getJSON(this.getFilmsEndPoint, function (data) {
+        $.getJSON(this.getFilmsHomePageEndPoint, function (data) {
             controller.renderGUI(data);
         }).done(function () {
             $('#insert-button').prop('disabled', false);
@@ -57,14 +57,13 @@ class FilmAdding {
             genreSelect.add(new Option(obj, obj));
         })
         $.getJSON(this.getFilmEndPoint, {id: id}, function (obj) {
-            $('#edit-id').val(obj.film.id);
-            $('#edit-title').val(obj.film.title);
-            $('#edit-plot').val(obj.film.plot);
-            $('#edit-genre').val(obj.film.genre);
+            $('#edit-id').val(obj.id);
+            $('#edit-title').val(obj.title);
+            $('#edit-plot').val(obj.plot);
+            $('#edit-genre').val(obj.genre);
             controller.getActors($('#edit-table-actors'), true, obj.actorList);
-            $('#edit-trailer').val("www.youtube.com/" + obj.film.trailer);
+            $('#edit-trailer').val("www.youtube.com/" + obj.trailer);
         }).done(function (obj) {
-            controller.markActors(obj.actors);
             $('#edit-modal').modal('show');
         });
     }

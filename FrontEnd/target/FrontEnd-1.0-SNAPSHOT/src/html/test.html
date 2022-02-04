@@ -17,30 +17,29 @@
 
 <form id="ratingForm">
     <fieldset class="rating">
-        <input type="radio" id="star5" name="rating" value="5"/><label for="star5" title="Rocks!">5
+        <input id="star5" name="rating" type="radio" value="5"/><label for="star5" title="Rocks!">5
         stars</label>
-        <input type="radio" id="star4" name="rating" value="4"/><label for="star4" title="Pretty good">4
+        <input id="star4" name="rating" type="radio" value="4"/><label for="star4" title="Pretty good">4
         stars</label>
-        <input type="radio" id="star3" name="rating" value="3"/><label for="star3" title="Meh">3
+        <input id="star3" name="rating" type="radio" value="3"/><label for="star3" title="Meh">3
         stars</label>
-        <input type="radio" id="star2" name="rating" value="2"/><label for="star2" title="Kinda bad">2
+        <input id="star2" name="rating" type="radio" value="2"/><label for="star2" title="Kinda bad">2
         stars</label>
-        <input type="radio" id="star1" name="rating" value="1"/><label for="star1"
+        <input id="star1" name="rating" type="radio" value="1"/><label for="star1"
                                                                        title="Sucks big time">1
         star</label>
     </fieldset>
 </form>
 
 <script>
-    $(document).ready(function() {
-        $("form#ratingForm").submit(function(e)
-        {
+    $(document).ready(function () {
+        $("form#ratingForm").submit(function (e) {
             e.preventDefault(); // prevent the default click action from being performed
             if ($("#ratingForm :radio:checked").length == 0) {
                 $('#status').html("nothing checked");
                 return false;
             } else {
-                $('#status').html( 'You picked ' + $('input:radio[name=rating]:checked').val() );
+                $('#status').html('You picked ' + $('input:radio[name=rating]:checked').val());
             }
         });
     });

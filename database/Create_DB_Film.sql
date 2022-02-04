@@ -19,11 +19,11 @@ CREATE TABLE film
 
 CREATE TABLE feedback
 (
-    id_film INT UNIQUE NOT NULL,
-    id_user INT UNIQUE NOT NULL,
+    id_film INT NOT NULL,
+    id_user INT NOT NULL,
     score   FLOAT CHECK (score >= 0 and score <= 5),
     comment VARCHAR(1024),
-    date DATE,
+    date    DATE,
     PRIMARY KEY (id_film, id_user),
     CONSTRAINT FK_film_feedback FOREIGN KEY (id_film) REFERENCES FILM (id_film) on update cascade on delete cascade
 );

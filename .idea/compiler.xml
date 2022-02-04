@@ -17,7 +17,7 @@
       <module name="DPnew" target="1.8" />
       <module name="FilmMicroservices" target="16" />
       <module name="FrontEnd" target="1.8" />
-      <module name="Gateway" target="16" />
+      <module name="Gateway" target="14" />
       <module name="LoginMicroservice" target="16" />
     </bytecodeTargetLevel>
   </component>

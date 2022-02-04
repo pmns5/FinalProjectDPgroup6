@@ -25,5 +25,5 @@ public interface DbInterface {
      *
      * @return the SQLConnection object representing the connection to the database.
      */
-    Connection getConn();
+    Connection getConnection();
 }
