@@ -25,7 +25,6 @@ public class BaseFilm {
         this.trailer = Util.extractTrailerString(trailer);
     }
 
-
     public BaseFilm() {
 
     }

@@ -27,7 +27,6 @@ public class Film {
         genre = Util.validate(req.getParameter("genre"));
         trailer = Util.validate(req.getParameter("trailer"));
         poster = new String(Base64.getEncoder().encode(req.getPart("poster").getInputStream().readAllBytes()));
-
         List<Actor> list = new ArrayList<>();
         String[] ids = req.getParameterValues("actors");
         for (String id : ids) {
