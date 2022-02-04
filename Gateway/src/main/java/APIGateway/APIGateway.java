@@ -132,8 +132,8 @@ public class APIGateway extends HttpServlet {
                 pw.write(toJSON(new FilmDetailsRecord(film, feedbackUsernameList)));
             }
             // User
-            case "/delete-user" -> resp.setStatus(delete(loginMicroservice + path + "/" + req.getParameter("id_user")));
-            case "/get-user" -> pw.write(toJSON(get(loginMicroservice + path + "/" + req.getParameter("id_user"), User.class)));
+            case "/delete-user" -> resp.setStatus(delete(userMicroservice + path + "/" + req.getParameter("id_user")));
+            case "/get-user" -> pw.write(toJSON(get(userMicroservice + path + "/" + req.getParameter("id_user"), User.class)));
         }
         pw.flush();
     }

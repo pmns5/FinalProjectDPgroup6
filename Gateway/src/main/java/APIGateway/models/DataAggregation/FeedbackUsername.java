@@ -1,12 +1,14 @@
 package APIGateway.models.DataAggregation;
 
 import APIGateway.models.FilmApplication.Feedback;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.*;
 
 public class FeedbackUsername {
     private final String comment;
     private final float score;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", locale = "it_IT", timezone = "Europe/Rome")
     private final Date date;
     private final String username;
 

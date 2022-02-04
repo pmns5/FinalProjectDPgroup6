@@ -2,7 +2,6 @@ function setCookie(data, exdays) {
     const d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
     let expires = d.toUTCString();
-    console.log("ID : ", data.id_user, "    ROLE: ", data.role);
     document.cookie = "data=" + JSON.stringify(data) + ";expires=" + expires + ";path=/";
 }
 
@@ -24,6 +23,14 @@ function getCookieRole() {
 function getCookieUsername() {
     let cookie = getCookie()
     return cookie === null ? null : cookie.username;
+}
+
+function updateCookieUsername(newUsername){
+    let cookie = getCookie()
+    cookie.username =newUsername;
+    setCookie(cookie)
+
+
 }
 
 function checkCookie(role) {
