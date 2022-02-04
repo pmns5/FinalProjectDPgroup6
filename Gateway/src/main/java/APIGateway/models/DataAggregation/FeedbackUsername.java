@@ -3,7 +3,10 @@ package APIGateway.models.DataAggregation;
 import APIGateway.models.FilmApplication.Feedback;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import java.util.*;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class FeedbackUsername {
     private final String comment;
@@ -12,18 +15,18 @@ public class FeedbackUsername {
     private final Date date;
     private final String username;
 
-    public FeedbackUsername(Feedback f, List<LinkedHashMap<String, String>> users) {
-        comment = f.getComment();
-        score = f.getScore();
-        date = f.getDate();
+    public FeedbackUsername(Feedback feedback, List<LinkedHashMap<String, String>> users) {
+        comment = feedback.getComment();
+        score = feedback.getScore();
+        date = feedback.getDate();
 
-        for (Map u : users){
-            if ((int) u.get("id_user") == f.getId_user()){
-                username = (String) u.get("username");
+        for (Map user : users) {
+            if ((int) user.get("id_user") == feedback.getId_user()) {
+                username = (String) user.get("username");
                 return;
             }
         }
-        throw new RuntimeException();
+        username = "Unregistered user";
     }
 
     public String getComment() {

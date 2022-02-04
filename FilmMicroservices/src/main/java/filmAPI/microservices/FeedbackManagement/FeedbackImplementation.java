@@ -1,7 +1,6 @@
 package filmAPI.microservices.FeedbackManagement;
 
 import filmAPI.interfaces.DBConnection;
-import filmAPI.microservices.FeedbackManagement.Feedback;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

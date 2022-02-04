@@ -25,7 +25,7 @@ CREATE TABLE feedback
     comment VARCHAR(1024),
     date    DATE,
     PRIMARY KEY (id_film, id_user),
-    CONSTRAINT FK_film_feedback FOREIGN KEY (id_film) REFERENCES FILM (id_film) on update cascade on delete cascade
+    CONSTRAINT FK_film_feedback FOREIGN KEY (id_film) REFERENCES FILM (id_film) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE actor
@@ -34,11 +34,12 @@ CREATE TABLE actor
     name     VARCHAR(1024),
     surname  VARCHAR(1024)
 );
+
 CREATE TABLE cast
 (
     id_film  INT NOT NULL,
     id_actor INT NOT NULL,
     PRIMARY KEY (id_film, id_actor),
-    CONSTRAINT FK_film_cast FOREIGN KEY (id_film) REFERENCES film (id_film) on update cascade on delete cascade,
-    CONSTRAINT FK_actor_feedback FOREIGN KEY (id_actor) REFERENCES actor (id_actor) on update cascade on delete cascade
+    CONSTRAINT FK_film_cast FOREIGN KEY (id_film) REFERENCES film (id_film) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT FK_actor_feedback FOREIGN KEY (id_actor) REFERENCES actor (id_actor) ON UPDATE CASCADE ON DELETE CASCADE
 );

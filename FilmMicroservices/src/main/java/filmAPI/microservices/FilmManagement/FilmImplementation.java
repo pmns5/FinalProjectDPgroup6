@@ -1,9 +1,9 @@
 package filmAPI.microservices.FilmManagement;
 
 import com.mysql.cj.jdbc.Blob;
+import filmAPI.EnumGenre;
 import filmAPI.interfaces.DBConnection;
 import filmAPI.microservices.ActorManagement.Actor;
-import filmAPI.EnumGenre;
 
 import javax.sql.rowset.serial.SerialBlob;
 import javax.ws.rs.*;

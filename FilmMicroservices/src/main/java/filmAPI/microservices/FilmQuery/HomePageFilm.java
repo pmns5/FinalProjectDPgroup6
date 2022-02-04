@@ -31,7 +31,6 @@ public class HomePageFilm extends BaseFilm {
     }
 
 
-
     public List<Actor> getActors() {
         return actors;
     }

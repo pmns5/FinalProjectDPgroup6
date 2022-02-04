@@ -48,13 +48,13 @@ public class APIGateway extends HttpServlet {
         String FILM_APPLICATION_ENDPOINT = null;
 
         try {
-        InputStream input = new FileInputStream("./settings.properties");
+            InputStream input = new FileInputStream("./settings.properties");
 
-        Properties prop = new Properties();
-        prop.load(input);
+            Properties prop = new Properties();
+            prop.load(input);
 
-        LOGIN_APPLICATION_ENDPOINT  = prop.getProperty("login_endpoint") + "/api-login";
-        FILM_APPLICATION_ENDPOINT = prop.getProperty("film_endpoint") + "/api";
+            LOGIN_APPLICATION_ENDPOINT = prop.getProperty("login_endpoint") + "/api-login";
+            FILM_APPLICATION_ENDPOINT = prop.getProperty("film_endpoint") + "/api";
 
         } catch (IOException ex) {
             ex.printStackTrace();

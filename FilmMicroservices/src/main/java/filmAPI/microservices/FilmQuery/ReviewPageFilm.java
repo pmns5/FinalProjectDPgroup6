@@ -12,7 +12,7 @@ import java.util.List;
 
 @XmlRootElement(name = "ReviewPageFilm")
 @XmlAccessorType(XmlAccessType.NONE)
-public class ReviewPageFilm extends HomePageFilm{
+public class ReviewPageFilm extends HomePageFilm {
 
     @XmlAttribute
     private List<Feedback> feedbackList;

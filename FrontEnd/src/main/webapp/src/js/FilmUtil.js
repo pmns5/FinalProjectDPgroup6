@@ -2,7 +2,6 @@ PLOT_LENGTH = 50
 
 function constructFilmView(obj) {
     let cutPlot;
-    console.log(obj)
     if (obj.plot.length > PLOT_LENGTH) {
         cutPlot = obj.plot.substr(0, PLOT_LENGTH) + "..."
     } else {
@@ -11,7 +10,7 @@ function constructFilmView(obj) {
     return '<div class="col-sm-4">' +
         '   <div class="our_2">' +
         '<div class="ih-item square effect5 left_to_right" > ' +
-        '<a href="../../html/client/SingleFilm.html?id=' + obj.id + '">' +
+        '<a href="../../html/client/FeedbackFilm.html?id=' + obj.id + '">' +
         '           <img src=data:image/jpeg;base64,' + obj.poster + ' alt="img" >' +
         '            <div class="info">' +
         '               <h3>' + obj.title + '</h3>' +

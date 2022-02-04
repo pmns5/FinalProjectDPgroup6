@@ -76,9 +76,9 @@ public class FilmQueryImplementation extends DBConnection {
     }
 
     @GET
-    @Path("/get-films-home-page-per-genre")
+    @Path("/get-films-home-page-per-genre/{genre}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public List<HomePageFilm> getFilmsHomePagePerGenre(String genre) throws SQLException {
+    public List<HomePageFilm> getFilmsHomePagePerGenre(@PathParam("genre") String genre) throws SQLException {
         //Init params
         db.connect();
         Connection connection = db.getConnection();

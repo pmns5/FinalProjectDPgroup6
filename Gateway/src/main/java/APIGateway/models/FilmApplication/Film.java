@@ -3,9 +3,7 @@ package APIGateway.models.FilmApplication;
 import APIGateway.EnumGenre;
 import APIGateway.Util;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -42,6 +40,7 @@ public class Film {
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -49,6 +48,7 @@ public class Film {
     public String getTitle() {
         return title;
     }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -56,6 +56,7 @@ public class Film {
     public String getPlot() {
         return plot;
     }
+
     public void setPlot(String plot) {
         this.plot = plot;
     }
@@ -63,6 +64,7 @@ public class Film {
     public String getTrailer() {
         return trailer;
     }
+
     public void setTrailer(String trailer) {
         this.trailer = trailer;
     }
@@ -70,6 +72,7 @@ public class Film {
     public EnumGenre getGenre() {
         return EnumGenre.valueOf(genre);
     }
+
     public void setGenre(EnumGenre genre) {
         this.genre = genre.name();
     }
@@ -77,6 +80,7 @@ public class Film {
     public byte[] getPoster() {
         return Base64.getDecoder().decode(poster);
     }
+
     public void setPoster(byte[] poster) {
         this.poster = new String(Base64.getEncoder().encode(poster));
     }
@@ -85,6 +89,7 @@ public class Film {
     public List<Actor> getActorList() {
         return actorList;
     }
+
     public void setActorList(List<Actor> actorList) {
         this.actorList = actorList;
     }

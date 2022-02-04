@@ -1,11 +1,8 @@
 package APIGateway.models.FilmApplication;
 
-import APIGateway.Util;
 import APIGateway.EnumGenre;
+import APIGateway.Util;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.Base64;
 
 public class BaseFilm {

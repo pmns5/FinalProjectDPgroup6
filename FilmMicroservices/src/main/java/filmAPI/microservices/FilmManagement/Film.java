@@ -1,8 +1,8 @@
 package filmAPI.microservices.FilmManagement;
 
+import filmAPI.EnumGenre;
 import filmAPI.Util;
 import filmAPI.microservices.ActorManagement.Actor;
-import filmAPI.EnumGenre;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
