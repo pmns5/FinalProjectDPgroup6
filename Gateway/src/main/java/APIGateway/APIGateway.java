@@ -134,8 +134,6 @@ public class APIGateway extends HttpServlet {
             // User
             case "/delete-user" -> resp.setStatus(delete(loginMicroservice + path + "/" + req.getParameter("id_user")));
             case "/get-user" -> pw.write(toJSON(get(loginMicroservice + path + "/" + req.getParameter("id_user"), User.class)));
-
-
         }
         pw.flush();
     }

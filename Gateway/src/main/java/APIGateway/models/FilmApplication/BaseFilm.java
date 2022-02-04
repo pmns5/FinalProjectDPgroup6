@@ -16,15 +16,6 @@ public class BaseFilm {
     private String trailer;
     private String poster;
 
-    public BaseFilm(HttpServletRequest req, boolean add) throws ServletException, IOException {
-        if (!add) id = Integer.parseInt(req.getParameter("id"));
-        title = req.getParameter("title");
-        plot = req.getParameter("plot");
-        genre = req.getParameter("genre");
-        trailer = req.getParameter("trailer");
-        poster = new String(Base64.getEncoder().encode(req.getPart("poster").getInputStream().readAllBytes()));
-    }
-
     public BaseFilm(int id, String title, EnumGenre genre, String plot, String trailer, byte[] poster) {
         this.id = id;
         this.title = title;

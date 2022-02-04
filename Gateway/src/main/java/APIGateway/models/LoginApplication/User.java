@@ -1,5 +1,7 @@
 package APIGateway.models.LoginApplication;
 
+import APIGateway.Util;
+
 import javax.servlet.http.HttpServletRequest;
 
 public class User {
@@ -10,16 +12,16 @@ public class User {
     private String role;
     private int ban;
 
-    public User(HttpServletRequest req, boolean add) {
+    public User(HttpServletRequest req, boolean add) throws Exception {
         if (!add) {
             id_user = Integer.parseInt(req.getParameter("id_user"));
-            role = req.getParameter("role");
+            role = Util.validate((req.getParameter("role")));
         } else {
             role = "client";
         }
-        username = req.getParameter("username");
-        email = req.getParameter("email");
-        password = req.getParameter("password");
+        username = Util.validate(req.getParameter("username"));
+        email = Util.validate(req.getParameter("email"));
+        password = Util.validate(req.getParameter("password"));
     }
 
     public User() {

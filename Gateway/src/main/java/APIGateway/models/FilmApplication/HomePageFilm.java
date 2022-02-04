@@ -10,16 +10,15 @@ public class HomePageFilm extends BaseFilm{
     private List<Actor> actors;
     private float avgScore;
 
-    public HomePageFilm() {
-
-    }
-
     public HomePageFilm(int id, String title, EnumGenre genre, String plot, String trailer, byte[] poster, List<Actor> actors, float avgScore) {
             super(id, title, genre, plot, trailer, poster);
             this.actors = actors;
             this.avgScore = avgScore;
-        }
+    }
 
+    public HomePageFilm() {
+
+    }
 
     public List<Actor> getActors() {
         return actors;

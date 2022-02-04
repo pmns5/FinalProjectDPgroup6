@@ -1,14 +1,16 @@
 package APIGateway.models.LoginApplication;
 
+import APIGateway.Util;
+
 import javax.servlet.http.HttpServletRequest;
 
 public class UserLogin {
     private String user;
     private String password;
 
-    public UserLogin(HttpServletRequest req) {
-        user = req.getParameter("user");
-        password = req.getParameter("password");
+    public UserLogin(HttpServletRequest req) throws Exception {
+        user = Util.validate(req.getParameter("user"));
+        password = Util.validate(req.getParameter("password"));
     }
 
     public UserLogin() {

@@ -1,6 +1,7 @@
 package APIGateway.models.FilmApplication;
 
 import APIGateway.EnumGenre;
+import APIGateway.Util;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,12 +20,12 @@ public class Film {
     private String poster;
     private List<Actor> actorList;
 
-    public Film(HttpServletRequest req, boolean add) throws ServletException, IOException {
+    public Film(HttpServletRequest req, boolean add) throws Exception {
         if (!add) id = Integer.parseInt(req.getParameter("id"));
-        title = req.getParameter("title");
-        plot = req.getParameter("plot");
-        genre = req.getParameter("genre");
-        trailer = req.getParameter("trailer");
+        title = Util.validate(req.getParameter("title"));
+        plot = Util.validate(req.getParameter("plot"));
+        genre = Util.validate(req.getParameter("genre"));
+        trailer = Util.validate(req.getParameter("trailer"));
         poster = new String(Base64.getEncoder().encode(req.getPart("poster").getInputStream().readAllBytes()));
 
         List<Actor> list = new ArrayList<>();
