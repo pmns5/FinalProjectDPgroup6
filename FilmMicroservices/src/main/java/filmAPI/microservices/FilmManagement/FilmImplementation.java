@@ -145,7 +145,7 @@ public class FilmImplementation extends DBConnection {
     @GET
     @Path("/get-film/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Film getFilm(@PathParam("id") int idFilm) throws SQLException {
+    public Film getFilm(@PathParam("id") int id_film) throws SQLException {
         //Init params
         db.connect();
         Connection connection = db.getConnection();
@@ -160,7 +160,7 @@ public class FilmImplementation extends DBConnection {
             savepoint = connection.setSavepoint();
 
             statement = connection.prepareStatement("SELECT title, genre, plot, trailer, poster FROM film where film.id_film = ?");
-            statement.setInt(1, idFilm);
+            statement.setInt(1, id_film);
             rs_first = statement.executeQuery();
             if (rs_first.next()) {
                 Blob poster = (Blob) rs_first.getBlob("poster");
@@ -168,7 +168,7 @@ public class FilmImplementation extends DBConnection {
                 poster.free();
 
                 statement = connection.prepareStatement("SELECT a.id_actor, a.name, a.surname " + "FROM cast c join actor a on a.id_actor = c.id_actor where c.id_film = ?");
-                statement.setInt(1, idFilm);
+                statement.setInt(1, id_film);
                 rs_second = statement.executeQuery();
                 actorList = new ArrayList<>();
                 while (rs_second.next()) {
@@ -176,7 +176,7 @@ public class FilmImplementation extends DBConnection {
                             rs_second.getString("surname")));
                 }
 
-                return new Film(idFilm, rs_first.getString("title"),
+                return new Film(id_film, rs_first.getString("title"),
                         EnumGenre.valueOf(rs_first.getString("genre")), rs_first.getString("plot"),
                         rs_first.getString("trailer"), posterBytes, actorList);
             } else {

@@ -148,7 +148,6 @@ public class FeedbackImplementation extends DBConnection {
         }
     }
 
-    // TODO : Chi li usa ?
     @GET
     @Path("/get-feedback-by-film/{id_film}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})

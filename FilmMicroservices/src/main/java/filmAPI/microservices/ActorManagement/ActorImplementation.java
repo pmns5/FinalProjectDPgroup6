@@ -108,7 +108,7 @@ public class ActorImplementation extends DBConnection {
     @GET
     @Path("/get-actor/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Actor getOneActor(@PathParam("id") int id_actor) throws SQLException {
+    public Actor getActor(@PathParam("id") int id_actor) throws SQLException {
         //Init params
         db.connect();
         Connection connection = db.getConnection();
@@ -142,7 +142,7 @@ public class ActorImplementation extends DBConnection {
     @GET
     @Path("/get-actors")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public ArrayList<Actor> getAllActors() throws SQLException {
+    public ArrayList<Actor> getActors() throws SQLException {
         //Init params
         db.connect();
         Connection connection = db.getConnection();

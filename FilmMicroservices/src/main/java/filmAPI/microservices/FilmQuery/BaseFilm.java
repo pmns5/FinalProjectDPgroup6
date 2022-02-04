@@ -1,7 +1,7 @@
 package filmAPI.microservices.FilmQuery;
 
 import filmAPI.EnumGenre;
-import filmAPI.Utils;
+import filmAPI.Util;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -31,7 +31,7 @@ public class BaseFilm {
         this.genre = genre.name();
         this.plot = plot;
         this.poster = new String(Base64.getEncoder().encode(poster));
-        this.trailer = Utils.extractTrailerString(trailer);
+        this.trailer = Util.extractTrailerString(trailer);
     }
 
     public BaseFilm() {

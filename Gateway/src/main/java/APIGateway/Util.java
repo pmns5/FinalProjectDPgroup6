@@ -22,6 +22,17 @@ public class Util {
     }
 
     /**
+     * Method to extract trailer's field from an entire url
+     *
+     * @param trailer: string of url
+     * @return trailer's field String
+     */
+    public static String extractTrailerString(String trailer) {
+        String[] splitted = trailer.split("/");
+        return splitted[splitted.length - 1];
+    }
+
+    /**
      * Method to validate a string in order to avoid inadmissible symbols
      *
      * @param string: object to be converted
@@ -58,8 +69,7 @@ public class Util {
         WebTarget target = client.target(url);
         Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
         Response response = invocationBuilder.put(Entity.entity(obj, MediaType.APPLICATION_JSON));
-        Object x = response.readEntity(objClass);
-        return x;
+        return response.readEntity(objClass);
     }
 
     public static Object get(String url, Class<?> objClass) {
@@ -70,8 +80,7 @@ public class Util {
         if (objClass == null) return response.readEntity(new GenericType<>() {
         });
         else {
-            Object x = response.readEntity(objClass);
-            return x;
+            return response.readEntity(objClass);
         }
     }
 
@@ -81,10 +90,5 @@ public class Util {
         Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
         Response response = invocationBuilder.delete();
         return response.getStatus();
-    }
-
-    public static String extractTrailerString(String trailer) {
-        String[] splitted = trailer.split("/");
-        return splitted[splitted.length - 1];
     }
 }

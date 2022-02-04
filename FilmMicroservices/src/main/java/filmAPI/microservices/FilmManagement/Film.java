@@ -1,6 +1,6 @@
 package filmAPI.microservices.FilmManagement;
 
-import filmAPI.Utils;
+import filmAPI.Util;
 import filmAPI.microservices.ActorManagement.Actor;
 import filmAPI.EnumGenre;
 
@@ -36,7 +36,7 @@ public class Film {
         this.genre = genre.name();
         this.plot = plot;
         this.poster = new String(Base64.getEncoder().encode(poster));
-        this.trailer = Utils.extractTrailerString(trailer);
+        this.trailer = Util.extractTrailerString(trailer);
         this.actorList = actorList;
     }
 

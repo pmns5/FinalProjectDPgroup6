@@ -19,7 +19,6 @@ public class Feedback {
     private String comment;
     @XmlAttribute
     private Float score;
-
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", locale = "it_IT", timezone = "Europe/Rome")
     private Date date = null;
 
