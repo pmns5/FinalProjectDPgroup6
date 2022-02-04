@@ -15,7 +15,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -37,21 +40,21 @@ public class APIGateway extends HttpServlet {
     private final String filmMicroservice;
     private final String feedbackMicroservice;
     private final String filmDiscovery;
-    private final String userMicroservice ;
+    private final String userMicroservice;
     private final String loginMicroservice;
 
     public APIGateway() {
         String LOGIN_APPLICATION_ENDPOINT = null;
         String FILM_APPLICATION_ENDPOINT = null;
 
-        try (InputStream input = new FileInputStream("./settings.properties")) {
+        try {
+        InputStream input = new FileInputStream("./settings.properties");
 
-            Properties prop = new Properties();
-            prop.load(input);
+        Properties prop = new Properties();
+        prop.load(input);
 
-            LOGIN_APPLICATION_ENDPOINT  = prop.getProperty("login_endpoint") + "/api-login";
-            FILM_APPLICATION_ENDPOINT = prop.getProperty("film_endpoint") + "/api";
-
+        LOGIN_APPLICATION_ENDPOINT  = prop.getProperty("login_endpoint") + "/api-login";
+        FILM_APPLICATION_ENDPOINT = prop.getProperty("film_endpoint") + "/api";
 
         } catch (IOException ex) {
             ex.printStackTrace();

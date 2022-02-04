@@ -31,9 +31,9 @@ class LoginPage {
             url: controller.addUserEndpoint,
             data: data,
         }).done(function () {
-            controller.renderAlert('Sign Up Successful', true);
+            controller.reload();
         }).fail(function () {
-            controller.renderAlert('Error: Sign Up Failed', false);
+            controller.reload();
         })
 
     }
@@ -50,9 +50,8 @@ class LoginPage {
             data = JSON.parse(data)
             setCookie(data, 1);
             controller.redirect();
-
         }).fail(function () {
-            controller.renderAlert("Error during Login. Incorrect Fields", false);
+            controller.reload();
         })
     }
 
@@ -63,5 +62,9 @@ class LoginPage {
         } else {
             $(location).attr("href", "client/mainpageClient.html");
         }
+    }
+
+    reload(){
+        $(location).attr("href", "index.html");
     }
 }

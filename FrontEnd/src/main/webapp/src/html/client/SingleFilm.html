@@ -23,9 +23,13 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link " href="AllFilms.html">All Film</a>
+                <a class="nav-link " href="ReviewFilm.html">All Film</a>
             </li>
         </ul>
+
+        <img alt="" class="user-img rounded-circle mr-2" src="../../images/user.jpeg" width="30">
+        <h4 id="name-user" style="color: #ffffff;"></h4>
+
         <div class="nav-item ml-auto">
             <div class="nav-item ml-auto">
                 <button class="btn btn-dark" onclick="logout()" value="Logout">Logout</button>
@@ -197,6 +201,7 @@
     const controller = new SingleFilm(ENDPOINT, window.location.href.split("?id=")[1]);
     $(document).ready(function () {
         checkCookie("client")
+        $('#name-user').text(getCookieUsername())
         controller.showFilm();
     });
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>All Films</title>
@@ -11,25 +12,35 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" rel="stylesheet">
 </head>
+
 <body>
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
     <a class="navbar-brand" href="mainpageClient.html">Home</a>
+
     <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
             data-target="#navbarNav" data-toggle="collapse" type="button">
         <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link " href="AllFilms.html">All Film</a>
+                <a class="nav-link " href="ReviewFilm.html">Review Film</a>
             </li>
         </ul>
+
+        <img alt="" class="user-img rounded-circle mr-2" src="../../images/user.jpeg" width="30">
+        <h4 id="name-user" style="color: #ffffff;"></h4>
+
         <div class="nav-item ml-auto">
             <button class="btn btn-dark" onclick="logout()" value="Logout">Logout</button>
         </div>
     </div>
+
 </nav>
+
 <!-- Banner Alert template and his section -->
 <template id="success-alert-template">
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -39,6 +50,7 @@
         </button>
     </div>
 </template>
+
 <template id="fail-alert-template">
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <h4>{message}</h4>
@@ -47,40 +59,47 @@
         </button>
     </div>
 </template>
+
 <div class="container message" id="response-alert-section"></div>
+
 <!-- Film space -->
 <section id="our">
     <div class="container">
         <div class="our_1">
             <h2>List Of Films</h2>
-            <p>Press on the single film to view its full data </p>
+            <p>Click on any film</p>
         </div>
         <div class="row">
             <object id="view"></object>
         </div>
     </div>
 </section>
+
 <!-- JQuery api -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.js"></script>
+
 <!-- Bootstrap api -->
 <script crossorigin="anonymous"
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
         src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+
 <!-- Custom js -->
 <script charset="utf-8" src="../../js/FormUtil.js"></script>
 <script charset="utf-8" src="../../js/client/AllFilms.js"></script>
 <script charset="utf-8" src="../../js/FilmUtil.js"></script>
 <script charset="utf-8" src="../../js/cookieManagement.js"></script>
 <script charset="utf-8" src="../../js/Util.js"></script>
+
 <script type="application/javascript">
-    // Instance controller on this page
     const controller = new AllFilms(ENDPOINT);
-    // When document is ready, get data and fill table
     $(document).ready(function () {
         checkCookie("client")
+        $('#name-user').text(getCookieUsername())
         controller.fillTable();
     });
 </script>
+
 </body>
+
 </html>
