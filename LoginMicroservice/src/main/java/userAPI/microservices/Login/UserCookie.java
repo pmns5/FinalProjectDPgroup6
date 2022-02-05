@@ -14,11 +14,14 @@ public class UserCookie {
     private String username;
     @XmlAttribute
     private String role;
+    @XmlAttribute
+    private int ban;
 
-    public UserCookie(int id_user, String username, String role) {
+    public UserCookie(int id_user, String username, String role, int ban) {
         this.id_user = id_user;
         this.username = username;
         this.role = role;
+        this.ban = ban;
     }
 
     public UserCookie() {
@@ -47,5 +50,13 @@ public class UserCookie {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public int getBan() {
+        return ban;
+    }
+
+    public void setBan(int ban) {
+        this.ban = ban;
     }
 }

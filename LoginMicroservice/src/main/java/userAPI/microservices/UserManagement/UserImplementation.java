@@ -145,4 +145,66 @@ public class UserImplementation extends DBConnection {
     }
 
 
+    @PUT
+    @Path("/toggle-ban-user/{currentStatus}")
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public boolean toggleBan(int idUser, @PathParam("currentStatus") int currentStatus) throws SQLException{
+        db.connect();
+        Connection connection = db.getConnection();
+        Savepoint savepoint = null;
+        PreparedStatement statement;
+
+        //Execute queries
+        try {
+            connection.setAutoCommit(false);
+            savepoint = connection.setSavepoint();
+
+            statement = connection.prepareStatement("UPDATE user_db.user SET ban = ? WHERE id_user = ?");
+            statement.setInt(1, currentStatus==1 ? 0 : 1);
+            statement.setInt(2, idUser);
+            statement.execute();
+
+        } catch (SQLException e) {
+            connection.rollback(savepoint);
+            return false;
+        } finally {
+            connection.commit();
+            db.disconnect();
+        }
+        return true;
+    }
+
+    @PUT
+    @Path("/toggle-role-user/{currentRole}")
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public boolean toggleRole(int idUser, @PathParam("currentRole") String currentRole) throws SQLException{
+        // Init Params
+        db.connect();
+        Connection connection = db.getConnection();
+        Savepoint savepoint = null;
+        PreparedStatement statement;
+
+        //Execute queries
+        try {
+            connection.setAutoCommit(false);
+            savepoint = connection.setSavepoint();
+
+            statement = connection.prepareStatement("UPDATE user_db.user SET role = ? WHERE id_user = ?");
+            statement.setString(1, currentRole.equals("client") ? "manager" : "client");
+            statement.setInt(2, idUser);
+            statement.execute();
+
+        } catch (SQLException e) {
+            connection.rollback(savepoint);
+            return false;
+        } finally {
+            connection.commit();
+            db.disconnect();
+        }
+        return true;
+    }
+
+
 }

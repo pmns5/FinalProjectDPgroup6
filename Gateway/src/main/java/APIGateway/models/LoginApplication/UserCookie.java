@@ -1,19 +1,10 @@
 package APIGateway.models.LoginApplication;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement(name = "UserCookie")
-@XmlAccessorType(XmlAccessType.NONE)
 public class UserCookie {
-    @XmlAttribute
     private int id_user;
-    @XmlAttribute
     private String username;
-    @XmlAttribute
     private String role;
+    private int ban;
 
     public UserCookie() {
     }
@@ -40,5 +31,13 @@ public class UserCookie {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public int getBan() {
+        return ban;
+    }
+
+    public void setBan(int ban) {
+        this.ban = ban;
     }
 }

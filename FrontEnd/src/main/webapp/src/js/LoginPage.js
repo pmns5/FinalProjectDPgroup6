@@ -37,10 +37,11 @@ class LoginPage {
 
     redirect() {
         let role = getCookieRole();
-        if (role === "manager") {
-            $(location).attr("href", "manager/MainPageManager.html");
-        } else {
+        if (role === "client") {
             $(location).attr("href", "client/MainPageClient.html");
+
+        } else {
+            $(location).attr("href", "manager/MainPageManager.html");
         }
     }
 

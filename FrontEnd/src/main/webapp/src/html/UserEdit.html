@@ -34,11 +34,11 @@
     <input id="email" name="email" placeholder="Email" required="required" type="email">
     <label for="password">Password: </label>
     <input id="password" name="password" placeholder="Password" required="required" type="password">
-    <button data-target="#edit-modal" data-toggle="modal" onclick="controller.editUser()">Edit account</button>
+    <button data-target="#edit-modal" type="button" data-toggle="modal" onclick="controller.editUser()">Edit account</button>
     <button id="cancel" name="cancel" title="Undo and exit" type="reset">
         <i aria-hidden="true" class="fas fa-redo-alt"></i>&nbsp;Empty fields
     </button>
-    <button data-target="#delete-modal" data-toggle="modal" onclick="controller.deleteUser()">Delete account</button>
+    <button id="delete-button" data-target="#delete-modal" type="button" data-toggle="modal" onclick="controller.deleteUser()">Delete account</button>
 </form>
 
 <!-- JQuery api -->

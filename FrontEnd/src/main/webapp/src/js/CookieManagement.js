@@ -25,6 +25,11 @@ function getCookieUsername() {
     return cookie === null ? null : cookie.username;
 }
 
+function getCookieBan() {
+    let cookie = getCookie()
+    return cookie === null ? null : cookie.ban;
+}
+
 function updateCookieUsername(newUsername) {
     let cookie = getCookie()
     cookie.username = newUsername;
@@ -32,9 +37,15 @@ function updateCookieUsername(newUsername) {
 }
 
 function checkCookie(role) {
-    if (getCookieRole() !== role) {
-        alert("NOT ALLOWED!! Login again!");
-        logout();
+    if (getCookieRole() !== 'admin') {
+        if (getCookieID() == null) {
+
+            alert("Login or Password wrong. Try again")
+            logout()
+        } else if (getCookieRole() !== role || getCookieBan() === 1) {
+            alert("NOT ALLOWED!! Login again!");
+            logout();
+        }
     }
 }
 

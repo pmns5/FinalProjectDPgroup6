@@ -26,11 +26,12 @@ import java.util.Properties;
 
 import static APIGateway.Util.*;
 
-@WebServlet(name = "APIGateway", value = {"/add-actor", "/edit-actor", "/delete-actor", "/get-actor", "/get-actors",
+@WebServlet(name = "APIGateway", value = {
+        "/add-actor", "/edit-actor", "/delete-actor", "/get-actor", "/get-actors",
         "/add-feedback", "/edit-feedback", "/delete-feedback", "/get-feedback", "/get-feedback-by-user", "/get-feedback-by-film",
         "/add-film", "/edit-film", "/delete-film", "/get-film",
         "/add-user", "/edit-user", "/login-user", "/delete-user", "/get-user",
-        "/ban-user", "/remove-ban-user", "/get-banned-users", "/get-no-banned-users",
+        "/toggle-ban-user", "/toggle-role-user", "/get-users",
         "/get-films-home-page", "/get-films-home-page-per-genre", "/get-film-review-page"
 })
 @MultipartConfig(maxFileSize = 16177215)
@@ -89,8 +90,14 @@ public class APIGateway extends HttpServlet {
                 // User
                 case "/add-user" -> response.setStatus(put(userMicroservice + path, new User(request, true)));
                 case "/edit-user" -> response.setStatus(put(userMicroservice + path, new User(request, false)));
+                case "/toggle-ban-user" -> response.setStatus(put(userMicroservice + path + "/"+Integer.parseInt(request.getParameter("ban")),
+                        Integer.parseInt(request.getParameter("id_user"))));
+                case "/toggle-role-user" -> response.setStatus(put(userMicroservice + path + "/"+request.getParameter("role"),
+                        Integer.parseInt(request.getParameter("id_user"))));
+
                 // Login
                 case "/login-user" -> pw.write(toJSON(put(loginMicroservice + path, new UserLogin(request), UserCookie.class)));
+
             }
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -134,6 +141,8 @@ public class APIGateway extends HttpServlet {
             // User
             case "/delete-user" -> resp.setStatus(delete(userMicroservice + path + "/" + req.getParameter("id_user")));
             case "/get-user" -> pw.write(toJSON(get(userMicroservice + path + "/" + req.getParameter("id_user"), User.class)));
+            case "/get-users" -> pw.write(toJSON(get(loginMicroservice + path, null)));
+
         }
         pw.flush();
     }

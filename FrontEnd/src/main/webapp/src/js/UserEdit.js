@@ -14,17 +14,20 @@ class UserEdit {
             $('#email').val(data.email)
             $('#username').val(data.username)
         });
+        if (getCookieRole() === 'admin') {
+            $('#delete-button').prop('hidden', true)
+        }
     }
 
     editUser() {
         let controller = this;
         let data = $('#entry-form').serialize();
         $.post(controller.editEndPoint, data, function () {
+
         }).done(function (msg) {
             updateCookieUsername(data.username)
             controller.renderAlert("Account successfully edit")
-            $(location).attr("href", "./index.html");
-            document.cookie = "data=" + null + ";expires=" + 0 + ";path=/";
+            window.location.reload(true)
         }).fail(function (msg) {
             controller.renderAlert("Error while editing this account!! Try again.")
         });
@@ -32,12 +35,13 @@ class UserEdit {
 
     deleteUser() {
         $.get(this.deleteEndPoint, {id_user: getCookieID()}, function () {
-        }).done(function () {
+        }).done(function (msg) {
             $(location).attr("href", "./index.html");
             document.cookie = "data=" + null + ";expires=" + 0 + ";path=/";
         }).fail(function (msg) {
             controller.renderAlert("Error while deleting this account!! Try again.")
         });
+
     }
 
     renderAlert(message, success) {
