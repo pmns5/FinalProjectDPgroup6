@@ -33,15 +33,27 @@ public class Util {
     }
 
     /**
-     * Method to validate a string in order to avoid inadmissible symbols
+     * Method to validate a String field in order to avoid inadmissible symbols
      *
-     * @param string: object to be converted
-     * @return if the validation succeed return the string, otherwise throws the Exception
+     * @param field: field to be checked
+     * @return if the validation succeed return the String field, otherwise throws the Exception
      * @throws Exception: any kind of Exception
      */
-    public static String validate(String string) throws Exception {
-        if (string.matches(".*<+.*>+.*")) throw new Exception();
-        return string;
+    public static String validate(String field) throws Exception {
+        if (field.matches(".*<+.*>+.*") || field.matches("^$")) throw new Exception();
+        return field;
+    }
+
+    /**
+     * Method to validate a String email in order to avoid inadmissible symbols and to check regular expression
+     *
+     * @param email: email to be checked
+     * @return if the validation succeed return the String email, otherwise throws the Exception
+     * @throws Exception: any kind of Exception
+     */
+    public static String validate_email(String email) throws Exception {
+        if (email.matches(".*<+.*>+.*") || email.matches("^$") || email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) throw new Exception();
+        return email;
     }
 
     /**

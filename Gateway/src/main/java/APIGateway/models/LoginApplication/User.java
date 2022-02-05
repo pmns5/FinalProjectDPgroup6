@@ -20,7 +20,7 @@ public class User {
             role = "client";
         }
         username = Util.validate(req.getParameter("username"));
-        email = Util.validate(req.getParameter("email"));
+        email = Util.validate_email(req.getParameter("email"));
         password = Util.validate(req.getParameter("password"));
     }
 

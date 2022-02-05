@@ -21,14 +21,6 @@ public class Feedback {
         this.score = Float.parseFloat(req.getParameter("score"));
     }
 
-    public Feedback(int id_user, int id_film, String comment, Float score, Date date) {
-        this.id_user = id_user;
-        this.id_film = id_film;
-        this.comment = comment;
-        this.score = score;
-        this.date = date;
-    }
-
     public Feedback() {
 
     }
