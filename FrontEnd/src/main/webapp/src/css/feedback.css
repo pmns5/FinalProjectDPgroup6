@@ -66,3 +66,97 @@ body {
 .checked {
     color: orange;
 }
+
+
+/* Feedback cards*/
+#feedback-section body {
+    overflow-x: hidden
+}
+
+#feedback-section .container-fluid {
+    background-image: linear-gradient(to right, #7B1FA2, #E91E63)
+}
+
+#feedback-section .sm-text {
+    font-size: 10px;
+    letter-spacing: 1px
+}
+
+#feedback-section .sm-text-1 {
+    font-size: 14px
+}
+
+#feedback-section .green-tab {
+    background-color: #00C853;
+    color: #fff;
+    border-radius: 5px;
+    padding: 5px 3px 5px 3px
+}
+
+#feedback-section .btn-red {
+    background-color: #E64A19;
+    color: #fff;
+    border-radius: 20px;
+    border: none;
+    outline: none
+}
+
+#feedback-section .btn-red:hover {
+    background-color: #BF360C
+}
+
+#feedback-section .btn-red:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    outline-width: 0
+}
+
+#feedback-section .round-icon {
+    font-size: 40px;
+    padding-bottom: 10px
+}
+
+#feedback-section .fa-circle {
+    font-size: 10px;
+    color: #EEEEEF
+}
+
+#feedback-section .green-dot {
+    color: #4CAF50
+}
+
+#feedback-section .red-dot {
+    color: #E64A19
+}
+
+#feedback-section .yellow-dot {
+    color: #FFD54F
+}
+
+#feedback-section .grey-text {
+    color: #BDBDBD
+}
+
+#feedback-section .green-text {
+    color: #4CAF50
+}
+
+#feedback-section .block {
+    border-right: 1px solid #F5EEEE;
+    border-top: 1px solid #F5EEEE;
+    border-bottom: 1px solid #F5EEEE
+}
+
+#feedback-section .profile-pic img {
+    border-radius: 50%
+}
+
+#feedback-section .rating-dot {
+    letter-spacing: 5px
+}
+
+#feedback-section .via {
+    border-radius: 20px;
+    height: 28px
+}
