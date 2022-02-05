@@ -84,7 +84,7 @@ public class UserImplementation extends DBConnection {
     @DELETE
     @Path("/delete-user/{id_user}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public boolean deleteUser(@PathParam("id_user") int idUser) throws SQLException {
+    public boolean deleteUser(@PathParam("id_user") int id_user) throws SQLException {
         //Init params
         db.connect();
         Connection connection = db.getConnection();
@@ -97,7 +97,7 @@ public class UserImplementation extends DBConnection {
             savepoint = connection.setSavepoint();
 
             statement = connection.prepareStatement("DELETE FROM user_db.user WHERE id_user = ?");
-            statement.setInt(1, idUser);
+            statement.setInt(1, id_user);
             statement.execute();
 
         } catch (SQLException e) {
@@ -113,7 +113,7 @@ public class UserImplementation extends DBConnection {
     @GET
     @Path("/get-user/{id_user}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public User getUser(@PathParam("id_user") int idUser) throws SQLException {
+    public User getUser(@PathParam("id_user") int id_user) throws SQLException {
         //Init params
         db.connect();
         Connection connection = db.getConnection();
@@ -127,7 +127,7 @@ public class UserImplementation extends DBConnection {
             savepoint = connection.setSavepoint();
 
             statement = connection.prepareStatement("SELECT * FROM user_db.user WHERE id_user = ?");
-            statement.setInt(1, idUser);
+            statement.setInt(1, id_user);
             rs = statement.executeQuery();
             if (rs.next()) {
                 return new User(rs.getInt("id_user"), rs.getString("username"), rs.getString("email"), rs.getString("password"), rs.getString("role"), rs.getInt("ban"));
@@ -149,7 +149,8 @@ public class UserImplementation extends DBConnection {
     @Path("/toggle-ban-user/{currentStatus}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public boolean toggleBan(int idUser, @PathParam("currentStatus") int currentStatus) throws SQLException{
+    public boolean toggleBan(int id_user, @PathParam("currentStatus") int currentStatus) throws SQLException {
+        //Init params
         db.connect();
         Connection connection = db.getConnection();
         Savepoint savepoint = null;
@@ -161,8 +162,8 @@ public class UserImplementation extends DBConnection {
             savepoint = connection.setSavepoint();
 
             statement = connection.prepareStatement("UPDATE user_db.user SET ban = ? WHERE id_user = ?");
-            statement.setInt(1, currentStatus==1 ? 0 : 1);
-            statement.setInt(2, idUser);
+            statement.setInt(1, currentStatus == 1 ? 0 : 1);
+            statement.setInt(2, id_user);
             statement.execute();
 
         } catch (SQLException e) {
@@ -179,8 +180,8 @@ public class UserImplementation extends DBConnection {
     @Path("/toggle-role-user/{currentRole}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public boolean toggleRole(int idUser, @PathParam("currentRole") String currentRole) throws SQLException{
-        // Init Params
+    public boolean toggleRole(int id_user, @PathParam("currentRole") String currentRole) throws SQLException {
+        // Init params
         db.connect();
         Connection connection = db.getConnection();
         Savepoint savepoint = null;
@@ -193,7 +194,7 @@ public class UserImplementation extends DBConnection {
 
             statement = connection.prepareStatement("UPDATE user_db.user SET role = ? WHERE id_user = ?");
             statement.setString(1, currentRole.equals("client") ? "manager" : "client");
-            statement.setInt(2, idUser);
+            statement.setInt(2, id_user);
             statement.execute();
 
         } catch (SQLException e) {

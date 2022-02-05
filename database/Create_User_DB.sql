@@ -11,5 +11,5 @@ CREATE TABLE user
     email    VARCHAR(50) UNIQUE,
     password VARCHAR(20),
     role     VARCHAR(7) CHECK (role = 'manager' or role = 'client' or role = 'admin') default 'client',
-    ban      INT default 0
+    ban      INT                                                                      default 0
 );

@@ -52,7 +52,8 @@ public class Util {
      * @throws Exception: any kind of Exception
      */
     public static String validate_email(String email) throws Exception {
-        if (email.matches(".*<+.*>+.*") || email.matches("^$") || email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) throw new Exception();
+        if (email.matches(".*<+.*>+.*") || email.matches("^$") || email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"))
+            throw new Exception();
         return email;
     }
 

@@ -40,7 +40,7 @@ public class LoginImplementationTest {
         expected.add(new UserCookie(6, "saverio", "client", 0));
         expected.add(new UserCookie(7, "francesco", "client", 0));
         expected.add(new UserCookie(8, "raffaele", "client", 0));
-        expected.add(new UserCookie(9, "michele", "client",0));
+        expected.add(new UserCookie(9, "michele", "client", 0));
         expected.add(new UserCookie(10, "rita", "client", 0));
         List<UserCookie> result = service.getClients();
         Assertions.assertEquals(Util.toJSON(expected), Util.toJSON(result));

@@ -1,7 +1,5 @@
 package APIGateway.models.FilmApplication;
 
-import APIGateway.EnumGenre;
-
 import java.util.List;
 
 public class ReviewPageFilm extends HomePageFilm {
