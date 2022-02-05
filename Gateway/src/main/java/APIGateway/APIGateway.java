@@ -90,9 +90,9 @@ public class APIGateway extends HttpServlet {
                 // User
                 case "/add-user" -> response.setStatus(put(userMicroservice + path, new User(request, true)));
                 case "/edit-user" -> response.setStatus(put(userMicroservice + path, new User(request, false)));
-                case "/toggle-ban-user" -> response.setStatus(put(userMicroservice + path + "/"+Integer.parseInt(request.getParameter("ban")),
+                case "/toggle-ban-user" -> response.setStatus(put(userMicroservice + path + "/" + Integer.parseInt(request.getParameter("ban")),
                         Integer.parseInt(request.getParameter("id_user"))));
-                case "/toggle-role-user" -> response.setStatus(put(userMicroservice + path + "/"+request.getParameter("role"),
+                case "/toggle-role-user" -> response.setStatus(put(userMicroservice + path + "/" + request.getParameter("role"),
                         Integer.parseInt(request.getParameter("id_user"))));
 
                 // Login
