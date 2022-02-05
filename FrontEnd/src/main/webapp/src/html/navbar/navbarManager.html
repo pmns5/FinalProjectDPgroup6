@@ -1,0 +1,81 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="../navbar/nav.css" rel="stylesheet">
+
+<!-- Navbar -->
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="../manager/MainPageManager.html">Home</a>
+    <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+        data-target="#navbarNav" data-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link " href="../manager/ManageFilm.html">Manage Film</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="../manager/ManageActor.html">Manage Actor</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="../manager/ManageUser.html">Manage User</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="../client/ReviewFilm.html">Review Film</a>
+            </li>
+        </ul>
+        <a href="../both/UserEdit.html">
+            <img alt="" class="user-img rounded-circle mr-2" src="../../images/user.jpeg" width="30">
+            <h4 id="name-user" style="color: #ffffff;"></h4>
+        </a>
+        <div class="nav-item ml-auto">
+            <div class="nav-item ml-auto">
+                <button class="btn btn-dark" onclick="logout()" value="Logout">Logout</button>
+            </div>
+        </div>
+    </div>
+</nav> -->
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="../manager/MainPageManager.html">Home</a>
+        <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+            data-target="#navbarNav" data-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+            data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="../manager/ManageFilm.html">Manage Film</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"  href="../manager/ManageActor.html">Manage Actor</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../manager/ManageUser.html">Manage User</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../client/ReviewFilm.html">Review Film</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../both/UserEdit.html">Edit</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="logout();" href="#">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<script type="application/javascript">
+    $(document).ready(function () {
+        $('#name-user').text(getCookieUsername())
+    });
+</script>
