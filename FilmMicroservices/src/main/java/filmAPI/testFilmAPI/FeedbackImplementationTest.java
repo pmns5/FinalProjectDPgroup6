@@ -43,7 +43,6 @@ public class FeedbackImplementationTest {
 
     @Test
     public final void testGetFeedbackByFilm() throws SQLException, JsonProcessingException {
-
         List<Feedback> expected = new ArrayList<>();
         expected.add(new Feedback(1, 1, "Bellissimo film", (float) 5.0, null));
         List<Feedback> result = service.getFeedbackByFilm(1);
