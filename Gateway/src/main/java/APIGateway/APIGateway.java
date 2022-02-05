@@ -131,7 +131,7 @@ public class APIGateway extends HttpServlet {
             case "/get-film-review-page" -> {
                 ReviewPageFilm film = (ReviewPageFilm) get(filmDiscovery + path + "/" + req.getParameter("id"), ReviewPageFilm.class);
                 @SuppressWarnings("unchecked")
-                List<LinkedHashMap<String, String>> users = (List<LinkedHashMap<String, String>>) get(loginMicroservice + "/get-clients", null);
+                List<LinkedHashMap<String, String>> users = (List<LinkedHashMap<String, String>>) get(loginMicroservice + "/get-no-banned-users", null);
                 List<FeedbackUsername> feedbackUsernameList = new ArrayList<>();
                 for (Feedback feedback : film.getFeedbackList()) {
                     feedbackUsernameList.add(new FeedbackUsername(feedback, users));

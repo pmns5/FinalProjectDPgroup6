@@ -52,9 +52,9 @@ public class LoginImplementation extends DBConnection {
     }
 
     @GET
-    @Path("/get-clients")
+    @Path("/get-no-banned-users")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public List<UserCookie> getClients() throws SQLException {
+    public List<UserCookie> getNoBannedUsers() throws SQLException {
         //Init params
         db.connect();
         Connection connection = db.getConnection();
@@ -68,7 +68,7 @@ public class LoginImplementation extends DBConnection {
             connection.setAutoCommit(false);
             savepoint = connection.setSavepoint();
 
-            statement = connection.prepareStatement("SELECT id_user, username, role, ban FROM user_db.user WHERE ban=0 ORDER BY id_user");
+            statement = connection.prepareStatement("SELECT id_user, username, role, ban FROM user_db.user WHERE ban=0 and role!='admin' ORDER BY id_user");
             rs = statement.executeQuery();
             while (rs.next()) {
                 userList.add(new UserCookie(rs.getInt("id_user"), rs.getString("username"), rs.getString("role"), rs.getInt("ban")));

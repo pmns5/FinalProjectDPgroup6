@@ -61,13 +61,6 @@ public class FeedbackImplementationTest {
     }
 
     @Test
-    public final void testGetAverageScore() throws SQLException {
-        float expected = (float) 5.0;
-        float result = service.getAverageScore(1);
-        Assertions.assertEquals(expected, result);
-    }
-
-    @Test
     public final void testDeleteFeedback() throws SQLException {
         Assertions.assertTrue(service.deleteFeedback(1, 1));
     }

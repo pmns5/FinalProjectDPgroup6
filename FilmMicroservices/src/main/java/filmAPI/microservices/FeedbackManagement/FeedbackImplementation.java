@@ -214,38 +214,4 @@ public class FeedbackImplementation extends DBConnection {
         }
         return feedbackList;
     }
-
-    @GET
-    @Path("/get-average-score/{id_film}")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Float getAverageScore(@PathParam("id_film") int id_film) throws SQLException {
-        //Init params
-        db.connect();
-        Connection connection = db.getConnection();
-        Savepoint savepoint = null;
-        PreparedStatement statement;
-        ResultSet rs;
-
-        //Execute queries
-        try {
-            connection.setAutoCommit(false);
-            savepoint = connection.setSavepoint();
-
-            statement = connection.prepareStatement("SELECT AVG(score) FROM feedback WHERE id_film = ?");
-            statement.setInt(1, id_film);
-            rs = statement.executeQuery();
-            if (rs.next()) {
-                return rs.getFloat(1);
-            } else {
-                return (float) 0;
-            }
-
-        } catch (SQLException e) {
-            connection.rollback(savepoint);
-            return (float) 0;
-        } finally {
-            connection.commit();
-            db.disconnect();
-        }
-    }
 }
