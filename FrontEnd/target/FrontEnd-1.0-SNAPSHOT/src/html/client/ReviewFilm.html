@@ -55,37 +55,6 @@
                     <option value="romance">Romance</option>
                 </select>
             </div>
-
-            <template id="film-template">
-
-                <div class="col-sm-4">
-                    <div class="our_2">
-                        <div class="ih-item square effect5 left_to_right">
-                            <a href="../../html/client/FeedbackFilm.html?id={ID}">
-                                <img src=data:image/jpeg;base64,{POSTER} alt="img">
-                                <div class="info">
-                                    <h3>
-                                        {TITLE}
-                                    </h3>
-                                    <p style="font-size: small">
-                                        {PLOT}
-                                    </p>
-                                    {ACTORS}
-                                    <p>{SCORE}</p>
-                                    <span class="fa fa-star {SCORE1}"></span>
-                                    <span class="fa fa-star {SCORE2}"></span>
-                                    <span class="fa fa-star {SCORE3}"></span>
-                                    <span class="fa fa-star {SCORE4}"></span>
-                                    <span class="fa fa-star {SCORE5}"></span>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-
-            </template>
-
             <div class="row">
                 <object id="view"></object>
             </div>
@@ -119,7 +88,6 @@
             controller.fillTable();
         });
     </script>
-
 
 </body>
 

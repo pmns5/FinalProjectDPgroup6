@@ -1,0 +1,14 @@
+APIGateway
+APIGateway.models.DataAggregation
+APIGateway.models.FilmApplication
+APIGateway.models.LoginApplication
+filmAPI
+filmAPI.interfaces
+filmAPI.microservices
+filmAPI.microservices.beans
+filmAPI.microservices.resources
+userAPI
+userAPI.interfaces
+userAPI.microservices
+userAPI.microservices.beans
+userAPI.microservices.resources

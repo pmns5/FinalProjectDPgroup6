@@ -43,63 +43,27 @@
         <div class="container">
             <div class="our_1">
                 <h2>List Of Films</h2>
-                <p>Click on any film for reviewing</p>
-                <div class="row">
-                    <div class= col>
-                        <button class="btn btn-outline-primary " data-target="#insert-modal" data-toggle="modal"
-                            id="insert-button" onclick="controller.insertViewFilm()">
-                            Insert
-                        </button>
-                    </div>
-                    <div class="col">
-                        <label for="genres">Filter per genre:</label>
-                        <select class="form-select form-select-lg mb-3" id="genres" name="genre" onchange="controller.getGenre()">
-                            <option value="all">All</option>
-                            <option value="action">Action</option>
-                            <option value="adventure">Adventure</option>
-                            <option value="comedy">Comedy</option>
-                            <option value="Horror">Horror</option>
-                            <option value="romance">Romance</option>
-                        </select>
-                    </div>
-                </div>
-
-                <br>
-                <template id="film-template">
-
-                    <div class="col-sm-4">
-                        <div class="our_2">
-                            <div class="ih-item square effect5 left_to_right">
-                                <a data-target="#edit-modal" data-toggle="modal"
-                                    onclick="controller.viewEditFilm({ID})">
-                                    <img src=data:image/jpeg;base64,{POSTER} alt="img">
-                                    <div class="info">
-                                        <h3>
-                                            {TITLE}
-                                        </h3>
-                                        <p style="font-size: small">
-                                            {PLOT}
-                                        </p>
-                                        {ACTORS}
-                                        <p>{SCORE}</p>
-                                        <span class="fa fa-star {SCORE1}"></span>
-                                        <span class="fa fa-star {SCORE2}"></span>
-                                        <span class="fa fa-star {SCORE3}"></span>
-                                        <span class="fa fa-star {SCORE4}"></span>
-                                        <span class="fa fa-star {SCORE5}"></span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </template>
-
-                <div class="row">
-                    <object id="view"></object>
-                </div>
+                <p>Click on any film for modifying its data or click "Insert" for adding one</p>
+                <label for="genres">Filter per genre:</label>
+                <select id="genres" name="genre" onchange="controller.getGenre()">
+                    <option value="all">All</option>
+                    <option value="action">Action</option>
+                    <option value="adventure">Adventure</option>
+                    <option value="comedy">Comedy</option>
+                    <option value="Horror">Horror</option>
+                    <option value="romance">Romance</option>
+                </select>
             </div>
+            <div class="row">
+                <button class="btn btn-outline-primary " data-target="#insert-modal" data-toggle="modal"
+                    id="insert-button" onclick="controller.insertViewFilm()">
+                    Insert
+                </button>
+            </div>
+            <div class="row">
+                <object id="view"></object>
+            </div>
+        </div>
     </section>
     <footer class="container">Copyright &copy Group 6, 2021</footer>
     <!-- Popup for inserting -->
