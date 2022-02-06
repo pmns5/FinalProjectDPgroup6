@@ -13,13 +13,14 @@ import java.util.ArrayList;
  * Resource class for managing the feedbacks
  */
 @Path("/feedbacks")
-public class FeedbackImplementation extends DBConnection {
-    public FeedbackImplementation() {
+public class FeedbackResource extends DBConnection {
+    public FeedbackResource() {
         super();
     }
 
     /**
      * Insert a new Feedback inside the database
+     *
      * @param feedback - the Feedback to be added
      * @return true if the insertion is completed correctly, false otherwise
      * @throws SQLException if the connection with the database fails
@@ -59,6 +60,7 @@ public class FeedbackImplementation extends DBConnection {
 
     /**
      * Edit the Feedback data inside the database
+     *
      * @param feedback - the Feedback to be edited
      * @return true if the edit is completed correctly, false otherwise
      * @throws SQLException if the connection with the database fails
@@ -98,6 +100,7 @@ public class FeedbackImplementation extends DBConnection {
 
     /**
      * Delete the Feedback of the specified user regarding the specified film
+     *
      * @param id_film - the id of the film the feedback refers to
      * @param id_user - the id of the user who made the feedback
      * @return true if the deletion is completed correctly, false otherwise
@@ -135,6 +138,7 @@ public class FeedbackImplementation extends DBConnection {
 
     /**
      * Retrieves the Feedback of the specified user regarding the specified film
+     *
      * @param id_film - the id of the film the feedback refers to
      * @param id_user - the id of the user who made the feedback
      * @return the Feedback object
@@ -177,6 +181,7 @@ public class FeedbackImplementation extends DBConnection {
 
     /**
      * Retrieves all data associated to all Feedbacks of the database associated to the specified film
+     *
      * @param id_film - the id of the film the feedbacks refer to
      * @return a list of Feedback objects
      * @throws SQLException if the connection with the database fails
@@ -217,6 +222,7 @@ public class FeedbackImplementation extends DBConnection {
 
     /**
      * Retrieves all data associated to all Feedbacks of the database associated to the specified user
+     *
      * @param id_user - the id of the user who made the feedback
      * @return a list of Feedback objects
      * @throws SQLException if the connection with the database fails

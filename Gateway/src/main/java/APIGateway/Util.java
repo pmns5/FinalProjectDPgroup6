@@ -32,7 +32,9 @@ public class Util {
      */
     public static String extractTrailerString(String trailer) {
         String[] splitted = trailer.split("/");
-        return splitted[splitted.length - 1];
+        splitted = splitted[splitted.length - 1].split("=");
+        splitted = splitted[1].split("&");
+        return splitted[0];
     }
 
     /**

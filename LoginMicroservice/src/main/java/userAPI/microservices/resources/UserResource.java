@@ -14,13 +14,14 @@ import java.util.List;
  * Resource class for managing the users
  */
 @Path("/users")
-public class UserImplementation extends DBConnection {
-    public UserImplementation() {
+public class UserResource extends DBConnection {
+    public UserResource() {
         super();
     }
 
     /**
      * Insert a new User inside the database
+     *
      * @param user - the User to be added
      * @return true if the insertion is completed correctly, false otherwise
      * @throws SQLException if the connection with the database fails
@@ -60,6 +61,7 @@ public class UserImplementation extends DBConnection {
 
     /**
      * Edit the User data inside the database
+     *
      * @param user - the User to be edited
      * @return true if the edit is completed correctly, false otherwise
      * @throws SQLException if the connection with the database fails
@@ -100,6 +102,7 @@ public class UserImplementation extends DBConnection {
 
     /**
      * Delete the User associated to the given id
+     *
      * @param id_user - the id of the user to delete
      * @return true if the deletion is completed correctly, false otherwise
      * @throws SQLException if the connection with the database fails
@@ -135,6 +138,7 @@ public class UserImplementation extends DBConnection {
 
     /**
      * Returns the User data associated to the passed id
+     *
      * @param id_user - the id of the user to retrieve
      * @return the User object containing all the data of the user
      * @throws SQLException if the connection with the database fails
@@ -175,6 +179,7 @@ public class UserImplementation extends DBConnection {
 
     /**
      * Retrieves the list of users.
+     *
      * @return a list of UserCookie object containing the data representing the cookie for each user
      * @throws SQLException if the connection to the database fails
      */
@@ -212,7 +217,8 @@ public class UserImplementation extends DBConnection {
 
     /**
      * Changes the status of the user, from banned to unbanned and viceversa
-     * @param id_user the id of the user target
+     *
+     * @param id_user       the id of the user target
      * @param currentStatus the current status
      * @return true if the toggle is completed correctly, false otherwise
      * @throws SQLException if the connection with the database fails
@@ -250,7 +256,8 @@ public class UserImplementation extends DBConnection {
 
     /**
      * Changes the role of the user, from client to manager and viceversa
-     * @param id_user the id of the user target
+     *
+     * @param id_user     the id of the user target
      * @param currentRole the current role of the user
      * @return true if the toggle is completed correctly, false otherwise
      * @throws SQLException if the connection with the database fails
@@ -288,6 +295,7 @@ public class UserImplementation extends DBConnection {
 
     /**
      * Retrieves the list of Not banned users.
+     *
      * @return a list of UserCookie object containing the data representing the cookie for each target user
      * @throws SQLException if the connection to the database fails
      */
@@ -323,7 +331,6 @@ public class UserImplementation extends DBConnection {
         }
         return userList;
     }
-
 
 
 }

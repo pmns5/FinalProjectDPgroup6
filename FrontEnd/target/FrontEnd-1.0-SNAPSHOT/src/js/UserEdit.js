@@ -38,8 +38,7 @@ class UserEdit {
     $.get(this.deleteEndPoint, { id_user: getCookieID() }, function () {
 
     });
-    $(location).attr("href", "./index.html");
-    document.cookie = "data=" + null + ";expires=" + 0 + ";path=/";
+    logout();
   }
 
   renderAlert(message, success) {

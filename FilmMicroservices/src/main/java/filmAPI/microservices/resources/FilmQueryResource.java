@@ -21,13 +21,14 @@ import java.util.List;
  * Resource class for querying the database about aggregated film data
  */
 @Path("/query")
-public class FilmQueryImplementation extends DBConnection {
-    public FilmQueryImplementation() {
+public class FilmQueryResource extends DBConnection {
+    public FilmQueryResource() {
         super();
     }
 
     /**
      * Retrieves a list of HomePageFilms
+     *
      * @return the list of HomePageFilms
      * @throws SQLException if the connection with the database fails
      */
@@ -91,6 +92,7 @@ public class FilmQueryImplementation extends DBConnection {
 
     /**
      * Retrieves a list of HomePageFilm associated to the specific genre
+     *
      * @param genre - the genre of the film to retrieve
      * @return the list of HomePageFilms
      * @throws SQLException if the connection with the database fails
@@ -156,6 +158,7 @@ public class FilmQueryImplementation extends DBConnection {
 
     /**
      * Retrieves the ReviewPageFilm associated to the specified id
+     *
      * @param id_film - the id of the film to retrieve
      * @return a ReviewPageFilm object
      * @throws SQLException if the connection with the database fails

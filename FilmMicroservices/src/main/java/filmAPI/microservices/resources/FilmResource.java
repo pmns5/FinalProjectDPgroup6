@@ -17,13 +17,14 @@ import java.util.List;
  * Resource class for managing the actors
  */
 @Path("/films")
-public class FilmImplementation extends DBConnection {
-    public FilmImplementation() {
+public class FilmResource extends DBConnection {
+    public FilmResource() {
         super();
     }
 
     /**
      * Insert a new Film inside the database
+     *
      * @param film - the Film to be added
      * @return true if the insertion is completed correctly, false otherwise
      * @throws SQLException if the connection with the database fails
@@ -78,6 +79,7 @@ public class FilmImplementation extends DBConnection {
 
     /**
      * Edit the Film data inside the database
+     *
      * @param film - the Film to be edited
      * @return true if the edit is completed correctly, false otherwise
      * @throws SQLException if the connection with the database fails
@@ -133,6 +135,7 @@ public class FilmImplementation extends DBConnection {
 
     /**
      * Delete the Film associated to the given id
+     *
      * @param id_film - the id of the film to delete
      * @return true if the deletion is completed correctly, false otherwise
      * @throws SQLException if the connection with the database fails
@@ -169,6 +172,7 @@ public class FilmImplementation extends DBConnection {
 
     /**
      * Returns the Film data associated to the passed id
+     *
      * @param id_film - the id of the film to retrieve
      * @return the Film object containing all the data of the Film
      * @throws SQLException if the connection with the database fails
@@ -227,6 +231,7 @@ public class FilmImplementation extends DBConnection {
 
     /**
      * Retrieves all data associated to all Films of the database
+     *
      * @return a list of Film objects
      * @throws SQLException if the connection with the database fails
      */

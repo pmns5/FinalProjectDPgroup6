@@ -5,21 +5,18 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import userAPI.Util;
-import userAPI.microservices.resources.LoginImplementation;
 import userAPI.microservices.beans.UserCookie;
 import userAPI.microservices.beans.UserLogin;
+import userAPI.microservices.resources.LoginResource;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
-public class LoginImplementationTest {
-    private LoginImplementation service;
+public class LoginResourceTest {
+    private LoginResource service;
 
     @BeforeEach
     protected void setUp() {
-        service = new LoginImplementation();
+        service = new LoginResource();
     }
 
     @Test
@@ -32,7 +29,6 @@ public class LoginImplementationTest {
         UserCookie expected = new UserCookie(2, "vincenzo", "manager", 0);
         Assertions.assertEquals(Util.toJSON(expected), Util.toJSON(result));
     }
-
 
 
     @AfterEach

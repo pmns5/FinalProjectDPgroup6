@@ -1,9 +1,8 @@
 package filmAPI;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import filmAPI.Util;
 import filmAPI.microservices.beans.Actor;
-import filmAPI.microservices.resources.ActorImplementation;
+import filmAPI.microservices.resources.ActorResource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,12 +12,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActorImplementationTest {
-    private ActorImplementation service;
+public class ActorResourceTest {
+    private ActorResource service;
 
     @BeforeEach
     protected void setUp() {
-        service = new ActorImplementation();
+        service = new ActorResource();
     }
 
     @Test

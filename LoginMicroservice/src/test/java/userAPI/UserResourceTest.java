@@ -5,21 +5,20 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import userAPI.Util;
 import userAPI.microservices.beans.User;
 import userAPI.microservices.beans.UserCookie;
-import userAPI.microservices.resources.UserImplementation;
+import userAPI.microservices.resources.UserResource;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserImplementationTest {
-    private UserImplementation service;
+public class UserResourceTest {
+    private UserResource service;
 
     @BeforeEach
     protected void setUp() {
-        service = new UserImplementation();
+        service = new UserResource();
     }
 
     @Test

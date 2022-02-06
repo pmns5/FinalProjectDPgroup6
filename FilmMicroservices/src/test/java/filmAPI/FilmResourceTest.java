@@ -1,9 +1,8 @@
 package filmAPI;
 
-import filmAPI.EnumGenre;
 import filmAPI.microservices.beans.Actor;
 import filmAPI.microservices.beans.Film;
-import filmAPI.microservices.resources.FilmImplementation;
+import filmAPI.microservices.resources.FilmResource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,12 +12,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilmImplementationTest {
-    private FilmImplementation service;
+public class FilmResourceTest {
+    private FilmResource service;
 
     @BeforeEach
     protected void setUp() {
-        service = new FilmImplementation();
+        service = new FilmResource();
     }
 
     @Test

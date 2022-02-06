@@ -1,9 +1,8 @@
 package filmAPI;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import filmAPI.Util;
 import filmAPI.microservices.beans.Feedback;
-import filmAPI.microservices.resources.FeedbackImplementation;
+import filmAPI.microservices.resources.FeedbackResource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,12 +12,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FeedbackImplementationTest {
-    private FeedbackImplementation service;
+public class FeedbackResourceTest {
+    private FeedbackResource service;
 
     @BeforeEach
     protected void setUp() {
-        service = new FeedbackImplementation();
+        service = new FeedbackResource();
     }
 
     @Test

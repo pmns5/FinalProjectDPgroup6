@@ -12,13 +12,14 @@ import java.util.ArrayList;
  * Resource class for managing the actors
  */
 @Path("/actors")
-public class ActorImplementation extends DBConnection {
-    public ActorImplementation() {
+public class ActorResource extends DBConnection {
+    public ActorResource() {
         super();
     }
 
     /**
      * Insert a new Actor inside the database
+     *
      * @param actor - the Actor to be added
      * @return true if the insertion is completed correctly, false otherwise
      * @throws SQLException if the connection with the database fails
@@ -55,6 +56,7 @@ public class ActorImplementation extends DBConnection {
 
     /**
      * Edit the Actor data inside the database
+     *
      * @param actor - the Actor to be edited
      * @return true if the edit is completed correctly, false otherwise
      * @throws SQLException if the connection with the database fails
@@ -92,6 +94,7 @@ public class ActorImplementation extends DBConnection {
 
     /**
      * Delete the Actor associated to the given id
+     *
      * @param id_actor - the id of the actor to delete
      * @return true if the deletion is completed correctly, false otherwise
      * @throws SQLException if the connection with the database fails
@@ -127,6 +130,7 @@ public class ActorImplementation extends DBConnection {
 
     /**
      * Returns the Actor data associated to the passed id
+     *
      * @param id_actor - the id of the actor to retrieve
      * @return the Actor object containing all the data of the Actor
      * @throws SQLException if the connection with the database fails
@@ -167,6 +171,7 @@ public class ActorImplementation extends DBConnection {
 
     /**
      * Retrieves all data associated to all Actors of the database
+     *
      * @return a list of Actor objects
      * @throws SQLException if the connection with the database fails
      */

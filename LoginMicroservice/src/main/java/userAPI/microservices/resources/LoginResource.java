@@ -4,18 +4,19 @@ import userAPI.interfaces.DBConnection;
 import userAPI.microservices.beans.UserCookie;
 import userAPI.microservices.beans.UserLogin;
 
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Resource class for managing the login
  */
 @Path("/login")
-public class LoginImplementation extends DBConnection {
-    public LoginImplementation() {
+public class LoginResource extends DBConnection {
+    public LoginResource() {
         super();
     }
 
@@ -23,6 +24,7 @@ public class LoginImplementation extends DBConnection {
      * Performs the login of the user.
      * It checks for the presence of the user inside the database.
      * If the data are correct, it returns the data representing the cookie
+     *
      * @param user - the user data to check for
      * @return an UserCookie object containing the data representing the cookie
      * @throws SQLException if the connection to the database fails
@@ -62,7 +64,6 @@ public class LoginImplementation extends DBConnection {
             db.disconnect();
         }
     }
-
 
 
 }
