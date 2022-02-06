@@ -1,26 +1,26 @@
 /*
  * Copyright (c) 2013, 2020, Oracle and/or its affiliates. All rights reserved.
- * ORACLE PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation.  Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
  *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
  *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ * questions.
  */
 
 var moduleSearchIndex;
@@ -28,7 +28,6 @@ var packageSearchIndex;
 var typeSearchIndex;
 var memberSearchIndex;
 var tagSearchIndex;
-
 function loadScripts(doc, tag) {
     createElem(doc, tag, 'search.js');
 
@@ -49,12 +48,12 @@ function createElem(doc, tag, path) {
 function show(tableId, selected, columns) {
     if (tableId !== selected) {
         document.querySelectorAll('div.' + tableId + ':not(.' + selected + ')')
-            .forEach(function (elem) {
+            .forEach(function(elem) {
                 elem.style.display = 'none';
             });
     }
     document.querySelectorAll('div.' + selected)
-        .forEach(function (elem, index) {
+        .forEach(function(elem, index) {
             elem.style.display = '';
             var isEvenRow = index % (columns * 2) < columns;
             elem.classList.remove(isEvenRow ? oddRowColor : evenRowColor);
@@ -64,18 +63,18 @@ function show(tableId, selected, columns) {
 }
 
 function updateTabs(tableId, selected) {
-    document.querySelector('div#' + tableId + ' .summary-table')
+    document.querySelector('div#' + tableId +' .summary-table')
         .setAttribute('aria-labelledby', selected);
     document.querySelectorAll('button[id^="' + tableId + '"]')
-        .forEach(function (tab, index) {
+        .forEach(function(tab, index) {
             if (selected === tab.id || (tableId === selected && index === 0)) {
                 tab.className = activeTableTab;
                 tab.setAttribute('aria-selected', true);
-                tab.setAttribute('tabindex', 0);
+                tab.setAttribute('tabindex',0);
             } else {
                 tab.className = tableTab;
                 tab.setAttribute('aria-selected', false);
-                tab.setAttribute('tabindex', -1);
+                tab.setAttribute('tabindex',-1);
             }
         });
 }
@@ -97,8 +96,7 @@ function switchTab(e) {
     }
 }
 
-var updateSearchResults = function () {
-};
+var updateSearchResults = function() {};
 
 function indexFilesLoaded() {
     return moduleSearchIndex
@@ -109,20 +107,20 @@ function indexFilesLoaded() {
 }
 
 // Workaround for scroll position not being included in browser history (8249133)
-document.addEventListener("DOMContentLoaded", function (e) {
+document.addEventListener("DOMContentLoaded", function(e) {
     var contentDiv = document.querySelector("div.flex-content");
-    window.addEventListener("popstate", function (e) {
+    window.addEventListener("popstate", function(e) {
         if (e.state !== null) {
             contentDiv.scrollTop = e.state;
         }
     });
-    window.addEventListener("hashchange", function (e) {
+    window.addEventListener("hashchange", function(e) {
         history.replaceState(contentDiv.scrollTop, document.title);
     });
-    contentDiv.addEventListener("scroll", function (e) {
+    contentDiv.addEventListener("scroll", function(e) {
         var timeoutID;
         if (!timeoutID) {
-            timeoutID = setTimeout(function () {
+            timeoutID = setTimeout(function() {
                 history.replaceState(contentDiv.scrollTop, document.title);
                 timeoutID = null;
             }, 100);
