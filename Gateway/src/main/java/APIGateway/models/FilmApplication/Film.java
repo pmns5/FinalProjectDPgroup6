@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
+/**
+ * Class representing the film
+ */
 public class Film {
 
     private int id;
@@ -17,6 +20,10 @@ public class Film {
     private String trailer;
     private String poster;
     private List<Actor> actorList;
+
+    public Film() {
+
+    }
 
     public Film(HttpServletRequest req, boolean add) throws Exception {
         if (!add) id = Integer.parseInt(req.getParameter("id"));
@@ -33,9 +40,18 @@ public class Film {
         actorList = list;
     }
 
-    public Film() {
-
+    public Film(int id, String title, EnumGenre genre, String plot, String trailer, byte[] poster,
+                List<Actor> actorList) {
+        this.id = id;
+        this.title = title;
+        this.genre = genre.name();
+        this.plot = plot;
+        this.poster = new String(Base64.getEncoder().encode(poster));
+        this.trailer = Util.extractTrailerString(trailer);
+        this.actorList = actorList;
     }
+
+
 
     public int getId() {
         return id;
@@ -84,7 +100,6 @@ public class Film {
     public void setPoster(byte[] poster) {
         this.poster = new String(Base64.getEncoder().encode(poster));
     }
-
 
     public List<Actor> getActorList() {
         return actorList;

@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Implements the connection to the Database MySQL
+ */
 public class MySQLDb implements DbInterface {
     private static final String url = "jdbc:mysql://localhost:3306";
     private static final String extra = "/film_db?useTimezone=true&serverTimezone=UTC";

@@ -8,6 +8,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class representing a Feedback containing the username of the reviewer. USed to perform data aggregation
+ */
 public class FeedbackUsername {
     private final String comment;
     private final float score;

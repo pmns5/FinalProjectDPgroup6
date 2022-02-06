@@ -9,6 +9,9 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+/**
+ * Utility class
+ */
 public class Util {
 
     /**
@@ -40,6 +43,7 @@ public class Util {
      * @throws Exception: any kind of Exception
      */
     public static String validate(String field) throws Exception {
+        field = field.trim();
         if (field.matches(".*<+.*>+.*") || field.matches("^$")) throw new Exception();
         return field;
     }
@@ -52,10 +56,12 @@ public class Util {
      * @throws Exception: any kind of Exception
      */
     public static String validate_email(String email) throws Exception {
+        email = email.trim();
         if (email.matches(".*<+.*>+.*") || email.matches("^$") || email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"))
             throw new Exception();
         return email;
     }
+
 
     /**
      * Method to convert an object to a JSON String
@@ -69,6 +75,13 @@ public class Util {
         return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
     }
 
+    /**
+     * Constructs a PUT request to the given url, passing the specified object as body
+     *
+     * @param url the url of the endpoint
+     * @param obj the object to send
+     * @return the status code associated to the response
+     */
     public static int put(String url, Object obj) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(url);
@@ -77,14 +90,30 @@ public class Util {
         return response.getStatus();
     }
 
-    public static Object put(String url, Object obj, Class<?> objClass) {
+    /**
+     * Constructs a PUT request to the given url, passing the specified object as body.
+     * It expects in the response body an object of the passed class
+     *
+     * @param url              the url of the endpoint
+     * @param obj              the object to send
+     * @param responseObjClass the class of the object expected inside the response
+     * @return the object extracted from the response body
+     */
+    public static Object put(String url, Object obj, Class<?> responseObjClass) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(url);
         Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
         Response response = invocationBuilder.put(Entity.entity(obj, MediaType.APPLICATION_JSON));
-        return response.readEntity(objClass);
+        return response.readEntity(responseObjClass);
     }
 
+    /**
+     * Constructs a GET request to the given url
+     *
+     * @param url      the url of the endpoint
+     * @param objClass the class of the expected object. Set to null if a collection is expected
+     * @return the object extracted from the response body
+     */
     public static Object get(String url, Class<?> objClass) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(url);
@@ -97,6 +126,12 @@ public class Util {
         }
     }
 
+    /**
+     * Constructs a DELETE request to the given url
+     *
+     * @param url the url of the endpoint
+     * @return the status code associated to the response
+     */
     public static int delete(String url) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(url);

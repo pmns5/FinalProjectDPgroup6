@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 
+/**
+ * Class representing the Feedback
+ */
 public class Feedback {
     private int id_user;
     private int id_film;

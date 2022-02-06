@@ -3,8 +3,10 @@
     <output-path>$PROJECT_DIR$/LoginMicroservice/target</output-path>
     <properties id="maven-jee-properties">
       <options>
+        <exploded>false</exploded>
         <module>LoginMicroservice</module>
         <packaging>war</packaging>
+        <unpackNestedArchives>false</unpackNestedArchives>
       </options>
     </properties>
     <root id="archive" name="LoginMicroservice-1.0-SNAPSHOT.war">

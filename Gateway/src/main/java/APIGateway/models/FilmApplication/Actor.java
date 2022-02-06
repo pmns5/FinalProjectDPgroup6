@@ -4,6 +4,9 @@ import APIGateway.Util;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Class representing the Actor
+ */
 public class Actor {
     private int id;
     private String name;

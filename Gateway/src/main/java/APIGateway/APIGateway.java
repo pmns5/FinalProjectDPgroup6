@@ -26,6 +26,12 @@ import java.util.Properties;
 
 import static APIGateway.Util.*;
 
+/**
+ * Servlet class that function as an API Gateway.
+ * It is the unique access point to the Application. Once it receives a request from the client,
+ * it performs a request to a RESTful web service and then forwards the response to the client.
+ * It also filters the incoming data and performs the data aggregation from different services , if needed
+ */
 @WebServlet(name = "APIGateway", value = {
         "/add-actor", "/edit-actor", "/delete-actor", "/get-actor", "/get-actors",
         "/add-feedback", "/edit-feedback", "/delete-feedback", "/get-feedback", "/get-feedback-by-user", "/get-feedback-by-film",
@@ -81,7 +87,7 @@ public class APIGateway extends HttpServlet {
                 // Actor
                 case "/add-actor" -> response.setStatus(put(actorMicroservice + path, new Actor(request, true)));
                 case "/edit-actor" -> response.setStatus(put(actorMicroservice + path, new Actor(request, false)));
-                // BaseFilm
+                // Film
                 case "/add-film" -> response.setStatus(put(filmMicroservice + path, new Film(request, true)));
                 case "/edit-film" -> response.setStatus(put(filmMicroservice + path, new Film(request, false)));
                 // Feedback

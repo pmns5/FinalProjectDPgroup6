@@ -35,16 +35,11 @@ class UserEdit {
   }
 
   deleteUser() {
-    $.get(this.deleteEndPoint, { id_user: getCookieID() }, function () {})
-      .done(function (msg) {
-        $(location).attr("href", "./index.html");
-        document.cookie = "data=" + null + ";expires=" + 0 + ";path=/";
-      })
-      .fail(function (msg) {
-        controller.renderAlert(
-          "Error while deleting this account!! Try again."
-        );
-      });
+    $.get(this.deleteEndPoint, { id_user: getCookieID() }, function () {
+
+    });
+    $(location).attr("href", "./index.html");
+    document.cookie = "data=" + null + ";expires=" + 0 + ";path=/";
   }
 
   renderAlert(message, success) {
