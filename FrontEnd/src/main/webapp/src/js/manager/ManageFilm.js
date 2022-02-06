@@ -215,13 +215,7 @@ class ManageFilm {
         let id = $("#edit-id").val();
         $.get(this.deleteFilmEndPoint, {id: id}, function () {
         })
-            .done(function () {
-                controller.renderAlert("Film successfully deleted.", true);
-                controller.fillTable();
-            })
-            .fail(function () {
-                controller.renderAlert("Error while deleting!! Try again.", false);
-            });
+            window.location.reload(true)
     }
 
     renderAlert(message, success) {

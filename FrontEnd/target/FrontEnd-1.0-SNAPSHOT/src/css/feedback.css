@@ -1,6 +1,7 @@
-body{
+body {
     background-color: rgba(178, 167, 185, 0.548) !important
 }
+
 .card {
     border: none;
     box-shadow: 5px 6px 6px 2px #e9ecef;
@@ -172,7 +173,6 @@ body {
 }
 
 
-
 #feedback-section .green-tab {
     background-color: #00C853;
     color: #fff;
@@ -181,10 +181,10 @@ body {
 }
 
 
-
 #feedback-section .btn-red:hover {
     background-color: #BF360C
 }
+
 #feedback-section .btn-red {
     background-color: #E64A19;
     color: #fff;
@@ -192,6 +192,7 @@ body {
     border: none;
     outline: none
 }
+
 #feedback-section .btn-red:focus {
     -moz-box-shadow: none !important;
     -webkit-box-shadow: none !important;
@@ -248,10 +249,10 @@ body {
     height: 28px
 }
 
-#my-area{
+#my-area {
     background-color: rgb(223, 216, 208);
 }
 
-#top-row > *{
+#top-row > * {
     height: 60px;
 }
