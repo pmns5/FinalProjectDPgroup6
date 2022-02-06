@@ -2,10 +2,13 @@ package userAPI.microservices.resources;
 
 import userAPI.interfaces.DBConnection;
 import userAPI.microservices.beans.User;
+import userAPI.microservices.beans.UserCookie;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Resource class for managing the users
@@ -22,8 +25,7 @@ public class UserImplementation extends DBConnection {
      * @return true if the insertion is completed correctly, false otherwise
      * @throws SQLException if the connection with the database fails
      */
-    @PUT
-    @Path("/add-user")
+    @POST
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public boolean addUser(User user) throws SQLException {
@@ -63,7 +65,6 @@ public class UserImplementation extends DBConnection {
      * @throws SQLException if the connection with the database fails
      */
     @PUT
-    @Path("/edit-user")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public boolean editUser(User user) throws SQLException {
@@ -104,7 +105,7 @@ public class UserImplementation extends DBConnection {
      * @throws SQLException if the connection with the database fails
      */
     @DELETE
-    @Path("/delete-user/{id_user}")
+    @Path("/{id_user}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public boolean deleteUser(@PathParam("id_user") int id_user) throws SQLException {
         //Init params
@@ -139,7 +140,7 @@ public class UserImplementation extends DBConnection {
      * @throws SQLException if the connection with the database fails
      */
     @GET
-    @Path("/get-user/{id_user}")
+    @Path("/{id_user}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public User getUser(@PathParam("id_user") int id_user) throws SQLException {
         //Init params
@@ -173,6 +174,43 @@ public class UserImplementation extends DBConnection {
     }
 
     /**
+     * Retrieves the list of users.
+     * @return a list of UserCookie object containing the data representing the cookie for each user
+     * @throws SQLException if the connection to the database fails
+     */
+    @GET
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public List<UserCookie> getUsers() throws SQLException {
+        //Init params
+        db.connect();
+        Connection connection = db.getConnection();
+        Savepoint savepoint = null;
+        PreparedStatement statement;
+        ResultSet rs;
+        ArrayList<UserCookie> userList = new ArrayList<>();
+
+        //Execute queries
+        try {
+            connection.setAutoCommit(false);
+            savepoint = connection.setSavepoint();
+
+            statement = connection.prepareStatement("SELECT id_user, username, role, ban FROM user_db.user WHERE role!='admin' ORDER BY id_user");
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                userList.add(new UserCookie(rs.getInt("id_user"), rs.getString("username"), rs.getString("role"), rs.getInt("ban")));
+            }
+
+        } catch (SQLException e) {
+            connection.rollback(savepoint);
+            return null;
+        } finally {
+            connection.commit();
+            db.disconnect();
+        }
+        return userList;
+    }
+
+    /**
      * Changes the status of the user, from banned to unbanned and viceversa
      * @param id_user the id of the user target
      * @param currentStatus the current status
@@ -180,7 +218,7 @@ public class UserImplementation extends DBConnection {
      * @throws SQLException if the connection with the database fails
      */
     @PUT
-    @Path("/toggle-ban-user/{currentStatus}")
+    @Path("/ban/{currentStatus}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public boolean toggleBan(int id_user, @PathParam("currentStatus") int currentStatus) throws SQLException {
@@ -218,7 +256,7 @@ public class UserImplementation extends DBConnection {
      * @throws SQLException if the connection with the database fails
      */
     @PUT
-    @Path("/toggle-role-user/{currentRole}")
+    @Path("/role/{currentRole}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public boolean toggleRole(int id_user, @PathParam("currentRole") String currentRole) throws SQLException {
@@ -247,6 +285,45 @@ public class UserImplementation extends DBConnection {
         }
         return true;
     }
+
+    /**
+     * Retrieves the list of Not banned users.
+     * @return a list of UserCookie object containing the data representing the cookie for each target user
+     * @throws SQLException if the connection to the database fails
+     */
+    @GET
+    @Path("/no-banned")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public List<UserCookie> getNoBannedUsers() throws SQLException {
+        //Init params
+        db.connect();
+        Connection connection = db.getConnection();
+        Savepoint savepoint = null;
+        PreparedStatement statement;
+        ResultSet rs;
+        ArrayList<UserCookie> userList = new ArrayList<>();
+
+        //Execute queries
+        try {
+            connection.setAutoCommit(false);
+            savepoint = connection.setSavepoint();
+
+            statement = connection.prepareStatement("SELECT id_user, username, role, ban FROM user_db.user WHERE ban=0 and role!='admin' ORDER BY id_user");
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                userList.add(new UserCookie(rs.getInt("id_user"), rs.getString("username"), rs.getString("role"), rs.getInt("ban")));
+            }
+
+        } catch (SQLException e) {
+            connection.rollback(savepoint);
+            return null;
+        } finally {
+            connection.commit();
+            db.disconnect();
+        }
+        return userList;
+    }
+
 
 
 }

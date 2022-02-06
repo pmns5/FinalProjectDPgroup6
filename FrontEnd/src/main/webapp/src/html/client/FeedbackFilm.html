@@ -11,13 +11,13 @@
     <link href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" rel="stylesheet">
 
     <link href="../../css/myStyle.css" rel="stylesheet">
-        <link href="../../css/FilmStyling.css" rel="stylesheet">
-        <link href="../../css/feedback.css" rel="stylesheet">
-        <link href="../../css/starRating.css" rel="stylesheet">
+    <link href="../../css/FilmStyling.css" rel="stylesheet">
+    <link href="../../css/feedback.css" rel="stylesheet">
+    <link href="../../css/starRating.css" rel="stylesheet">
 
 </head>
 
-<body style="background-color: rgba(241, 158, 158, 0.85)">
+<body">
 
     <!-- Navbar -->
     <div id="nav-placeholder"></div>
@@ -112,7 +112,7 @@
                     <div class="card border-0 px-3">
 
                         <!-- top row -->
-                        <div class="d-flex row py-5 px-5 bg-light">
+                        <div id="top-row" class="d-flex row py-5 px-5 bg-light">
                             <div class="green-tab p-2 px-3 mx-2">
                                 <p class="sm-text mb-0">OVERALL RATING</p>
                                 <h4 id="average">{AVERAGE}</h4>
@@ -121,12 +121,11 @@
                                 <p class="sm-text mb-0">ALL REVIEWS</p>
                                 <h4 id="all-reviews">{COUNT}</h4>
                             </div>
-
-                            <div class="ml-md-auto p-2 mx-md-2 pt-4 pt-md-3">
-
-                                <button class="btn btn-red px-4" data-target="#insert-modal" data-toggle="modal"
-                                    id="insert-button">WRITE A REVIEW
-                                </button>
+                        
+                            <button class="btn btn-red px-4" data-target="#insert-modal" data-toggle="modal"
+                            id="insert-button">WRITE A REVIEW
+                            </button>
+                            <div class="ml-md-auto p-2 mx-md-2  pt-md-3">
                                 <template id="buttons-template">
                                     <button class="btn btn-red px-4" data-target="#edit-modal" data-toggle="modal"
                                         onclick="controller.viewEditFeedback({SCORE})">Edit Review
@@ -161,12 +160,12 @@
 
                                 </div>
                                 <div class="row pb-3">
-                                    <p>{COMMENT}</p>
+                                    <p class="comment">{COMMENT}</p>
                                 </div>
 
                             </div>
                         </template>
-                        <div class="container" id="my-area" hidden style="background-color: burlywood;">
+                        <div class="container" id="my-area" hidden>
                             <object id="my-feedback-area"></object>
                         </div>
                         <div class="container">
@@ -332,12 +331,12 @@
 
     <!-- JavaScript -->
     <script charset="utf-8" src="../../js/FormUtil.js"></script>
-    <script charset="utf-8" src="../../js/client/SingleFilm.js"></script>
+    <script charset="utf-8" src="../../js/client/FeedBackFilm.js"></script>
     <script charset="utf-8" src="../../js/CookieManagement.js"></script>
     <script charset="utf-8" src="../../js/GatewayEndPoint.js"></script>
 
     <script type="application/javascript">
-        const controller = new SingleFilm(ENDPOINT, window.location.href.split("?id=")[1]);
+        const controller = new FeedBackFilm(ENDPOINT, window.location.href.split("?id=")[1]);
         $(document).ready(function () {
             if (getCookieRole() === 'manager' || getCookieRole() === 'admin') {
                 $("#nav-placeholder").load("../navbar/navbarManager.html");
@@ -363,6 +362,6 @@
         });
     </script>
 
-</body>
+    </body>
 
 </html>

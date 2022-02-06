@@ -24,8 +24,7 @@ public class FeedbackImplementation extends DBConnection {
      * @return true if the insertion is completed correctly, false otherwise
      * @throws SQLException if the connection with the database fails
      */
-    @PUT
-    @Path("/add-feedback")
+    @POST
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public boolean addFeedback(Feedback feedback) throws SQLException {
@@ -65,7 +64,6 @@ public class FeedbackImplementation extends DBConnection {
      * @throws SQLException if the connection with the database fails
      */
     @PUT
-    @Path("/edit-feedback")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public boolean editFeedback(Feedback feedback) throws SQLException {
@@ -106,7 +104,7 @@ public class FeedbackImplementation extends DBConnection {
      * @throws SQLException if the connection with the database fails
      */
     @DELETE
-    @Path("/delete-feedback/{id_film}/{id_user}")
+    @Path("/{id_film}/{id_user}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
     public boolean deleteFeedback(@PathParam("id_film") int id_film, @PathParam("id_user") int id_user) throws SQLException {
         //Init params
@@ -143,7 +141,7 @@ public class FeedbackImplementation extends DBConnection {
      * @throws SQLException if the connection with the database fails
      */
     @GET
-    @Path("/get-feedback/{id_film}/{id_user}")
+    @Path("/{id_film}/{id_user}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Feedback getFeedback(@PathParam("id_film") int id_film, @PathParam("id_user") int id_user) throws SQLException {
         //Init params
@@ -184,7 +182,7 @@ public class FeedbackImplementation extends DBConnection {
      * @throws SQLException if the connection with the database fails
      */
     @GET
-    @Path("/get-feedback-by-film/{id_film}")
+    @Path("/film/{id_film}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ArrayList<Feedback> getFeedbackByFilm(@PathParam("id_film") int id_film) throws SQLException {
         //Init params
@@ -224,7 +222,7 @@ public class FeedbackImplementation extends DBConnection {
      * @throws SQLException if the connection with the database fails
      */
     @GET
-    @Path("/get-feedback-by-user/{id_user}")
+    @Path("/user/{id_user}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ArrayList<Feedback> getFeedbackByUser(@PathParam("id_user") int id_user) throws SQLException {
         //Init params

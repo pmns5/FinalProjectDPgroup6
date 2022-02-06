@@ -34,10 +34,11 @@ function constructFilmView(obj) {
 }
 
 function addStars(avg) {
+  
   return (
     '<div class="rating">' +
     '       <div class="rating-upper" style="width: ' +
-    avg * 20 +
+    avg * 20  +
     '%">' +
     "           <span>★</span>" +
     "           <span>★</span>" +

@@ -1,7 +1,6 @@
-body {
-    background-color: #f7f6f6
+body{
+    background-color: rgba(178, 167, 185, 0.548) !important
 }
-
 .card {
     border: none;
     box-shadow: 5px 6px 6px 2px #e9ecef;
@@ -71,10 +70,6 @@ body {
 /* Feedback cards*/
 body {
     overflow-x: hidden
-}
-
-.container-fluid {
-    background-image: linear-gradient(to right, #7B1FA2, #E91E63)
 }
 
 .sm-text {
@@ -167,10 +162,6 @@ body {
     overflow-x: hidden
 }
 
-#feedback-section .container-fluid {
-    background-image: linear-gradient(to right, #7B1FA2, #E91E63)
-}
-
 #feedback-section .sm-text {
     font-size: 10px;
     letter-spacing: 1px
@@ -180,6 +171,8 @@ body {
     font-size: 14px
 }
 
+
+
 #feedback-section .green-tab {
     background-color: #00C853;
     color: #fff;
@@ -187,6 +180,11 @@ body {
     padding: 5px 3px 5px 3px
 }
 
+
+
+#feedback-section .btn-red:hover {
+    background-color: #BF360C
+}
 #feedback-section .btn-red {
     background-color: #E64A19;
     color: #fff;
@@ -194,11 +192,6 @@ body {
     border: none;
     outline: none
 }
-
-#feedback-section .btn-red:hover {
-    background-color: #BF360C
-}
-
 #feedback-section .btn-red:focus {
     -moz-box-shadow: none !important;
     -webkit-box-shadow: none !important;
@@ -229,7 +222,7 @@ body {
 }
 
 #feedback-section .grey-text {
-    color: #BDBDBD
+    color: #1d1abb
 }
 
 #feedback-section .green-text {
@@ -253,4 +246,12 @@ body {
 #feedback-section .via {
     border-radius: 20px;
     height: 28px
+}
+
+#my-area{
+    background-color: rgb(223, 216, 208);
+}
+
+#top-row > *{
+    height: 60px;
 }

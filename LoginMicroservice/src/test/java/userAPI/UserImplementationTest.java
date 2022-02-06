@@ -7,9 +7,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import userAPI.Util;
 import userAPI.microservices.beans.User;
+import userAPI.microservices.beans.UserCookie;
 import userAPI.microservices.resources.UserImplementation;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserImplementationTest {
     private UserImplementation service;
@@ -57,6 +60,35 @@ public class UserImplementationTest {
         expected.setRole("manager");
         expected.setBan(0);
         User result = service.getUser(2);
+        Assertions.assertEquals(Util.toJSON(expected), Util.toJSON(result));
+    }
+
+    @Test
+    public final void testGetNoBannedUsers() throws JsonProcessingException, SQLException {
+        List<UserCookie> expected = new ArrayList<>();
+        expected.add(new UserCookie(2, "giuseppe", "manager", 0));
+        expected.add(new UserCookie(3, "vincenzo", "manager", 0));
+        expected.add(new UserCookie(4, "paolo", "manager", 0));
+        expected.add(new UserCookie(5, "dario", "manager", 0));
+        expected.add(new UserCookie(11, "rita", "client", 0));
+        List<UserCookie> result = service.getNoBannedUsers();
+        Assertions.assertEquals(Util.toJSON(expected), Util.toJSON(result));
+    }
+
+    @Test
+    public final void testUsers() throws JsonProcessingException, SQLException {
+        List<UserCookie> expected = new ArrayList<>();
+        expected.add(new UserCookie(2, "giuseppe", "manager", 0));
+        expected.add(new UserCookie(3, "vincenzo", "manager", 0));
+        expected.add(new UserCookie(4, "paolo", "manager", 0));
+        expected.add(new UserCookie(5, "dario", "manager", 0));
+        expected.add(new UserCookie(6, "nicola", "client", 1));
+        expected.add(new UserCookie(7, "saverio", "client", 1));
+        expected.add(new UserCookie(8, "francesco", "client", 1));
+        expected.add(new UserCookie(9, "raffaele", "client", 1));
+        expected.add(new UserCookie(10, "michele", "client", 1));
+        expected.add(new UserCookie(11, "rita", "client", 0));
+        List<UserCookie> result = service.getUsers();
         Assertions.assertEquals(Util.toJSON(expected), Util.toJSON(result));
     }
 

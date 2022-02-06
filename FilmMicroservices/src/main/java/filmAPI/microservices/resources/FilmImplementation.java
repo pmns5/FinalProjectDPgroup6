@@ -28,8 +28,7 @@ public class FilmImplementation extends DBConnection {
      * @return true if the insertion is completed correctly, false otherwise
      * @throws SQLException if the connection with the database fails
      */
-    @PUT
-    @Path("/add-film")
+    @POST
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public boolean addFilm(Film film) throws SQLException {
@@ -84,7 +83,6 @@ public class FilmImplementation extends DBConnection {
      * @throws SQLException if the connection with the database fails
      */
     @PUT
-    @Path("/edit-film")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public boolean editFilm(Film film) throws SQLException {
@@ -140,7 +138,7 @@ public class FilmImplementation extends DBConnection {
      * @throws SQLException if the connection with the database fails
      */
     @DELETE
-    @Path("/delete-film/{id}")
+    @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public boolean deleteFilm(@PathParam("id") int id_film) throws SQLException {
         //Init params
@@ -176,7 +174,7 @@ public class FilmImplementation extends DBConnection {
      * @throws SQLException if the connection with the database fails
      */
     @GET
-    @Path("/get-film/{id}")
+    @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Film getFilm(@PathParam("id") int id_film) throws SQLException {
         //Init params
@@ -233,7 +231,6 @@ public class FilmImplementation extends DBConnection {
      * @throws SQLException if the connection with the database fails
      */
     @GET
-    @Path("/get-films")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public List<Film> getFilms() throws SQLException {
         //Init params

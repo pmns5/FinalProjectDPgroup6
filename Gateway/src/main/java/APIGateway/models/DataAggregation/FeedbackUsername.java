@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Class representing a Feedback containing the username of the reviewer. USed to perform data aggregation
+ * Class representing a Feedback containing the username of the reviewer. Used to perform data aggregation
  */
 public class FeedbackUsername {
     private final String comment;

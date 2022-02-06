@@ -23,8 +23,7 @@ public class ActorImplementation extends DBConnection {
      * @return true if the insertion is completed correctly, false otherwise
      * @throws SQLException if the connection with the database fails
      */
-    @PUT
-    @Path("/add-actor")
+    @POST
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public boolean addActor(Actor actor) throws SQLException {
@@ -61,7 +60,6 @@ public class ActorImplementation extends DBConnection {
      * @throws SQLException if the connection with the database fails
      */
     @PUT
-    @Path("/edit-actor")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public boolean editActor(Actor actor) throws SQLException {
@@ -99,7 +97,7 @@ public class ActorImplementation extends DBConnection {
      * @throws SQLException if the connection with the database fails
      */
     @DELETE
-    @Path("/delete-actor/{id}")
+    @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public boolean deleteActor(@PathParam("id") int id_actor) throws SQLException {
         //Init params
@@ -134,7 +132,7 @@ public class ActorImplementation extends DBConnection {
      * @throws SQLException if the connection with the database fails
      */
     @GET
-    @Path("/get-actor/{id}")
+    @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Actor getActor(@PathParam("id") int id_actor) throws SQLException {
         //Init params
@@ -173,7 +171,6 @@ public class ActorImplementation extends DBConnection {
      * @throws SQLException if the connection with the database fails
      */
     @GET
-    @Path("/get-actors")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ArrayList<Actor> getActors() throws SQLException {
         //Init params

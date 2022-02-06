@@ -32,7 +32,7 @@ public class FilmQueryImplementation extends DBConnection {
      * @throws SQLException if the connection with the database fails
      */
     @GET
-    @Path("/get-films-home-page")
+    @Path("/home-page")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public List<HomePageFilm> getFilmsHomePage() throws SQLException {
         //Init params
@@ -96,7 +96,7 @@ public class FilmQueryImplementation extends DBConnection {
      * @throws SQLException if the connection with the database fails
      */
     @GET
-    @Path("/get-films-home-page-per-genre/{genre}")
+    @Path("/home-page/{genre}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public List<HomePageFilm> getFilmsHomePagePerGenre(@PathParam("genre") String genre) throws SQLException {
         //Init params
@@ -161,7 +161,7 @@ public class FilmQueryImplementation extends DBConnection {
      * @throws SQLException if the connection with the database fails
      */
     @GET
-    @Path("/get-film-review-page/{id}")
+    @Path("/review-page/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ReviewPageFilm getFilmReviewPage(@PathParam("id") int id_film) throws SQLException {
         //Init params

@@ -85,24 +85,24 @@ public class APIGateway extends HttpServlet {
         try {
             switch (path) {
                 // Actor
-                case "/add-actor" -> response.setStatus(put(actorMicroservice + path, new Actor(request, true)));
-                case "/edit-actor" -> response.setStatus(put(actorMicroservice + path, new Actor(request, false)));
+                case "/add-actor" -> response.setStatus(post(actorMicroservice, new Actor(request, true)));
+                case "/edit-actor" -> response.setStatus(put(actorMicroservice, new Actor(request, false)));
                 // Film
-                case "/add-film" -> response.setStatus(put(filmMicroservice + path, new Film(request, true)));
-                case "/edit-film" -> response.setStatus(put(filmMicroservice + path, new Film(request, false)));
+                case "/add-film" -> response.setStatus(post(filmMicroservice, new Film(request, true)));
+                case "/edit-film" -> response.setStatus(put(filmMicroservice, new Film(request, false)));
                 // Feedback
-                case "/add-feedback" -> response.setStatus(put(feedbackMicroservice + path, new Feedback(request)));
-                case "/edit-feedback" -> response.setStatus(put(feedbackMicroservice + path, new Feedback(request)));
+                case "/add-feedback" -> response.setStatus(post(feedbackMicroservice, new Feedback(request)));
+                case "/edit-feedback" -> response.setStatus(put(feedbackMicroservice, new Feedback(request)));
                 // User
-                case "/add-user" -> response.setStatus(put(userMicroservice + path, new User(request, true)));
-                case "/edit-user" -> response.setStatus(put(userMicroservice + path, new User(request, false)));
-                case "/toggle-ban-user" -> response.setStatus(put(userMicroservice + path + "/" + Integer.parseInt(request.getParameter("ban")),
+                case "/add-user" -> response.setStatus(post(userMicroservice, new User(request, true)));
+                case "/edit-user" -> response.setStatus(put(userMicroservice, new User(request, false)));
+                case "/toggle-ban-user" -> response.setStatus(put(userMicroservice + "/ban" + "/" + Integer.parseInt(request.getParameter("ban")),
                         Integer.parseInt(request.getParameter("id_user"))));
-                case "/toggle-role-user" -> response.setStatus(put(userMicroservice + path + "/" + request.getParameter("role"),
+                case "/toggle-role-user" -> response.setStatus(put(userMicroservice + "/role" + "/" + request.getParameter("role"),
                         Integer.parseInt(request.getParameter("id_user"))));
 
                 // Login
-                case "/login-user" -> pw.write(toJSON(put(loginMicroservice + path, new UserLogin(request), UserCookie.class)));
+                case "/login-user" -> pw.write(toJSON(put(loginMicroservice, new UserLogin(request), UserCookie.class)));
 
             }
         } catch (Exception e) {
@@ -119,25 +119,25 @@ public class APIGateway extends HttpServlet {
         PrintWriter pw = resp.getWriter();
         switch (path) {
             // Actors
-            case "/get-actor" -> pw.write(toJSON(get(actorMicroservice + path + "/" + req.getParameter("id"), Actor.class)));
-            case "/get-actors" -> pw.write(toJSON(get(actorMicroservice + path, null)));
-            case "/delete-actor" -> resp.setStatus(delete(actorMicroservice + path + "/" + req.getParameter("id")));
+            case "/get-actor" -> pw.write(toJSON(get(actorMicroservice + "/" + req.getParameter("id"), Actor.class)));
+            case "/get-actors" -> pw.write(toJSON(get(actorMicroservice, null)));
+            case "/delete-actor" -> resp.setStatus(delete(actorMicroservice + "/" + req.getParameter("id")));
             // Film
-            case "/delete-film" -> resp.setStatus(delete(filmMicroservice + path + "/" + req.getParameter("id")));
-            case "/get-film" -> pw.write(toJSON(get(filmMicroservice + path + "/" + req.getParameter("id"), Film.class)));
-            case "/get-films" -> pw.write(toJSON(get(filmMicroservice + path, null)));
+            case "/delete-film" -> resp.setStatus(delete(filmMicroservice + "/" + req.getParameter("id")));
+            case "/get-film" -> pw.write(toJSON(get(filmMicroservice + "/" + req.getParameter("id"), Film.class)));
+            case "/get-films" -> pw.write(toJSON(get(filmMicroservice, null)));
             // Feedback
-            case "/delete-feedback" -> resp.setStatus(delete(feedbackMicroservice + path + "/" + req.getParameter("id_film") + "/" + req.getParameter("id_user")));
-            case "/get-feedback" -> pw.write(toJSON(get(feedbackMicroservice + path + "/" + req.getParameter("id_film") + "/" + req.getParameter("id_user"), Feedback.class)));
-            case "/get-feedback-by-film" -> pw.write(toJSON(get(feedbackMicroservice + path + "/" + req.getParameter("id_film"), null)));
-            case "/get-feedback-by-user" -> pw.write(toJSON(get(feedbackMicroservice + path + "/" + req.getParameter("id_user"), null)));
+            case "/delete-feedback" -> resp.setStatus(delete(feedbackMicroservice + "/" + req.getParameter("id_film") + "/" + req.getParameter("id_user")));
+            case "/get-feedback" -> pw.write(toJSON(get(feedbackMicroservice + "/" + req.getParameter("id_film") + "/" + req.getParameter("id_user"), Feedback.class)));
+            case "/get-feedback-by-film" -> pw.write(toJSON(get(feedbackMicroservice + "/film" + "/" + req.getParameter("id_film"), null)));
+            case "/get-feedback-by-user" -> pw.write(toJSON(get(feedbackMicroservice + "/user" + "/" + req.getParameter("id_user"), null)));
             // Film Query
-            case "/get-films-home-page" -> pw.write(toJSON(get(filmDiscovery + path, null)));
-            case "/get-films-home-page-per-genre" -> pw.write(toJSON(get(filmDiscovery + path + "/" + req.getParameter("genre"), null)));
+            case "/get-films-home-page" -> pw.write(toJSON(get(filmDiscovery + "/home-page", null)));
+            case "/get-films-home-page-per-genre" -> pw.write(toJSON(get(filmDiscovery + "/home-page" + "/" + req.getParameter("genre"), null)));
             case "/get-film-review-page" -> {
-                ReviewPageFilm film = (ReviewPageFilm) get(filmDiscovery + path + "/" + req.getParameter("id"), ReviewPageFilm.class);
+                ReviewPageFilm film = (ReviewPageFilm) get(filmDiscovery + "/review-page" + "/" + req.getParameter("id"), ReviewPageFilm.class);
                 @SuppressWarnings("unchecked")
-                List<LinkedHashMap<String, String>> users = (List<LinkedHashMap<String, String>>) get(loginMicroservice + "/get-no-banned-users", null);
+                List<LinkedHashMap<String, String>> users = (List<LinkedHashMap<String, String>>) get(userMicroservice + "/no-banned", null);
                 List<FeedbackUsername> feedbackUsernameList = new ArrayList<>();
                 for (Feedback feedback : film.getFeedbackList()) {
                     feedbackUsernameList.add(new FeedbackUsername(feedback, users));
@@ -145,9 +145,9 @@ public class APIGateway extends HttpServlet {
                 pw.write(toJSON(new FilmDetailsRecord(film, feedbackUsernameList)));
             }
             // User
-            case "/delete-user" -> resp.setStatus(delete(userMicroservice + path + "/" + req.getParameter("id_user")));
-            case "/get-user" -> pw.write(toJSON(get(userMicroservice + path + "/" + req.getParameter("id_user"), User.class)));
-            case "/get-users" -> pw.write(toJSON(get(loginMicroservice + path, null)));
+            case "/delete-user" -> resp.setStatus(delete(userMicroservice + "/" + req.getParameter("id_user")));
+            case "/get-user" -> pw.write(toJSON(get(userMicroservice + "/" + req.getParameter("id_user"), User.class)));
+            case "/get-users" -> pw.write(toJSON(get(userMicroservice, null)));
 
         }
         pw.flush();

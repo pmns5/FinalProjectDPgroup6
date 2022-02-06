@@ -28,7 +28,6 @@ public class LoginImplementation extends DBConnection {
      * @throws SQLException if the connection to the database fails
      */
     @PUT
-    @Path("/login-user")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public UserCookie loginUser(UserLogin user) throws SQLException {
@@ -64,80 +63,6 @@ public class LoginImplementation extends DBConnection {
         }
     }
 
-    /**
-     * Retrieves the list of Not banned users.
-     * @return a list of UserCookie object containing the data representing the cookie for each target user
-     * @throws SQLException if the connection to the database fails
-     */
-    @GET
-    @Path("/get-no-banned-users")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public List<UserCookie> getNoBannedUsers() throws SQLException {
-        //Init params
-        db.connect();
-        Connection connection = db.getConnection();
-        Savepoint savepoint = null;
-        PreparedStatement statement;
-        ResultSet rs;
-        ArrayList<UserCookie> userList = new ArrayList<>();
 
-        //Execute queries
-        try {
-            connection.setAutoCommit(false);
-            savepoint = connection.setSavepoint();
-
-            statement = connection.prepareStatement("SELECT id_user, username, role, ban FROM user_db.user WHERE ban=0 and role!='admin' ORDER BY id_user");
-            rs = statement.executeQuery();
-            while (rs.next()) {
-                userList.add(new UserCookie(rs.getInt("id_user"), rs.getString("username"), rs.getString("role"), rs.getInt("ban")));
-            }
-
-        } catch (SQLException e) {
-            connection.rollback(savepoint);
-            return null;
-        } finally {
-            connection.commit();
-            db.disconnect();
-        }
-        return userList;
-    }
-
-    /**
-     * Retrieves the list of users.
-     * @return a list of UserCookie object containing the data representing the cookie for each user
-     * @throws SQLException if the connection to the database fails
-     */
-    @GET
-    @Path("/get-users")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public List<UserCookie> getUsers() throws SQLException {
-        //Init params
-        db.connect();
-        Connection connection = db.getConnection();
-        Savepoint savepoint = null;
-        PreparedStatement statement;
-        ResultSet rs;
-        ArrayList<UserCookie> userList = new ArrayList<>();
-
-        //Execute queries
-        try {
-            connection.setAutoCommit(false);
-            savepoint = connection.setSavepoint();
-
-            statement = connection.prepareStatement("SELECT id_user, username, role, ban FROM user_db.user WHERE role!='admin' ORDER BY id_user");
-            rs = statement.executeQuery();
-            while (rs.next()) {
-                userList.add(new UserCookie(rs.getInt("id_user"), rs.getString("username"), rs.getString("role"), rs.getInt("ban")));
-            }
-
-        } catch (SQLException e) {
-            connection.rollback(savepoint);
-            return null;
-        } finally {
-            connection.commit();
-            db.disconnect();
-        }
-        return userList;
-    }
 
 }

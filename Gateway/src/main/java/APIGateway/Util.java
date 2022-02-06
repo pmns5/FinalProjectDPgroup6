@@ -56,9 +56,9 @@ public class Util {
      * @throws Exception: any kind of Exception
      */
     public static String validate_email(String email) throws Exception {
-        email = email.trim();
-        if (email.matches(".*<+.*>+.*") || email.matches("^$") || email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"))
-            throw new Exception();
+
+        email = validate(email);
+        if (!email.matches("[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}")) throw new Exception();
         return email;
     }
 
@@ -105,6 +105,22 @@ public class Util {
         Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
         Response response = invocationBuilder.put(Entity.entity(obj, MediaType.APPLICATION_JSON));
         return response.readEntity(responseObjClass);
+    }
+
+
+    /**
+     * Constructs a POST request to the given url, passing the specified object as body
+     *
+     * @param url the url of the endpoint
+     * @param obj the object to send
+     * @return the status code associated to the response
+     */
+    public static int post(String url, Object obj) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(url);
+        Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
+        Response response = invocationBuilder.post(Entity.entity(obj, MediaType.APPLICATION_JSON));
+        return response.getStatus();
     }
 
     /**

@@ -48,11 +48,25 @@ class ReviewFilm {
   renderGUI(data) {
     $("#view .our_2").remove();
     var array = [];
+    let static_film = $("#film-template").html()
     $.each(data, function (index, obj) {
+      let film_view = static_film
+      console.log(obj.id);
+
+      film_view = film_view.replace(/{ID}/gi, obj.id);
+      film_view = film_view.replace(/{POSTER}/gi, obj.poster)
+      film_view = film_view.replace(/{TITLE}/gi, obj.title)
+      film_view = film_view.replace(/{ACTORS}/gi, addActors(obj.actors))
+      let avg = ((Number)(obj.avgScore)).toFixed(2);
+      film_view = film_view.replace(/{SCORE}/gi,(avg==0 ? "Be the first to comment" : avg));
+      
+
       if (controller.count === 0) array.push('<div class="col-sm-12 row">');
-      array.push(constructFilmView(obj));
+
+      array.push(film_view);
       if (controller.count === 2) array.push("</div>");
       controller.count = (controller.count + 1) % 3;
+      
     });
     $("#view").append(array.join(""));
     controller.count = 0;
