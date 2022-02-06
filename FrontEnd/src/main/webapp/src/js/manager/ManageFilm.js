@@ -215,7 +215,7 @@ class ManageFilm {
         let id = $("#edit-id").val();
         $.get(this.deleteFilmEndPoint, {id: id}, function () {
         })
-            window.location.reload(true)
+        window.location.reload(true)
     }
 
     renderAlert(message, success) {

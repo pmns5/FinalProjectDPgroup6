@@ -10,56 +10,48 @@
     <link href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" rel="stylesheet">
 
     <link href="../../css/myStyle.css" rel="stylesheet">
-
 </head>
 
 <body>
+<!-- Navbar -->
+<div id="nav-placeholder"></div>
+<!-- Banner Alert template and its section -->
+<template id="success-alert-template">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <h4>{message}</h4>
+        <button aria-label="Close" class="close" data-dismiss="alert" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</template>
+<template id="fail-alert-template">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <h4>{message}</h4>
+        <button aria-label="Close" class="close" data-dismiss="alert" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</template>
+<div class="container message" id="response-alert-section"></div>
+<!-- Main Page -->
+<h1 id="welcome"></h1>
+<p id="welcome_p"></p>
 
-    <!-- Navbar -->
-    <div id="nav-placeholder"></div>
-
-    <!-- Banner Alert template and its section -->
-    <template id="success-alert-template">
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <h4>{message}</h4>
-            <button aria-label="Close" class="close" data-dismiss="alert" type="button">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    </template>
-    <template id="fail-alert-template">
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <h4>{message}</h4>
-            <button aria-label="Close" class="close" data-dismiss="alert" type="button">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    </template>
-    <div class="container message" id="response-alert-section"></div>
-
-    <!-- Main Page -->
-    <h1 id="welcome"></h1>
-    <p id="welcome_p"></p>
-
-    <!-- JQuery api -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.js"></script>
-
-    <!-- Bootstrap api -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- JavaScript -->
-    <script charset="utf-8" src="../../js/CookieManagement.js"></script>
-
-    <script type="application/javascript">
-        checkCookie(true);
-        $("#nav-placeholder").load("../navbar/navbarClient.html");
-        $('#name-client').text(getCookieUsername())
-        $('#name-user').text(getCookieUsername())
-        $('#welcome').text("Benvenuto " + getCookieUsername())
-        $('#welcome_p').text("Sei nella pagina principale.")
-    </script>
-
+<!-- JQuery api -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.js"></script>
+<!-- Bootstrap api -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- JavaScript -->
+<script charset="utf-8" src="../../js/CookieManagement.js"></script>
+<script type="application/javascript">
+    checkCookie(true);
+    $("#nav-placeholder").load("../navbar/navbarClient.html");
+    $('#name-client').text(getCookieUsername())
+    $('#name-user').text(getCookieUsername())
+    $('#welcome').text("Benvenuto " + getCookieUsername())
+    $('#welcome_p').text("Sei nella pagina principale.")
+</script>
 </body>
 
 </html>
